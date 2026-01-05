@@ -8,10 +8,10 @@ import sharp from 'sharp'
 import { Users } from './collections/Users.collection'
 import { Media } from './collections/Media.collection'
 import { Polls } from './collections/Polls.Collection'
-import { PollOptions } from './collections/pollOptions.collection'
 import { Votes } from './collections/Votes.collection'
 import { Results } from './collections/Results.collection'
 import { AuditLogs } from './collections/AuditLogs.collection'
+import { PollOptions } from './collections/PollOptions.collection'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
