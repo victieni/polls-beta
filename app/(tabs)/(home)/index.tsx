@@ -1,7 +1,8 @@
+import { UCard } from "@/components/ui";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
 import { Link } from "@/components/ui/link";
-import { UButton, UCard, UIcon, UText, UView } from "@/components/uniwind";
+import { UButton, UIcon, UText, UView } from "@/components/uniwind";
 import { useColor } from "@/hooks/useColor";
 import { LockKeyhole, Terminal } from "lucide-react-native";
 

@@ -1,6 +1,5 @@
-// src/collections/Polls.ts
 import type { CollectionConfig } from 'payload'
-import { ePollStatus } from '../../../typescript/enum'
+import { ePollStatus, ePollType } from 'typescript/enum'
 
 export const Polls: CollectionConfig = {
   slug: 'polls',
@@ -14,8 +13,9 @@ export const Polls: CollectionConfig = {
   },
   access: {
     // Creator has full control; others can read public polls
-    // create: ({ req: { user } }) => !!user, // Logged-in users can create
-    // read: ({ req: { user }, doc }) => doc.isPublic || (user && doc.creator?.id === user.id),
+    create: ({ req: { user } }) => !!user, // Logged-in users can create
+    // read: ({ req: { user,  } }) => doc.isPublic || (user && doc.creator?.id === user.id),
+    read: () => true,
     // update: ({ req: { user }, doc }) => user && doc.creator?.id === user.id,
     // delete: ({ req: { user }, doc }) => user && doc.creator?.id === user.id,
   },
@@ -27,6 +27,10 @@ export const Polls: CollectionConfig = {
     },
     {
       name: 'description',
+      type: 'textarea',
+    },
+    {
+      name: 'about',
       type: 'richText',
     },
     {
@@ -34,7 +38,6 @@ export const Polls: CollectionConfig = {
       type: 'relationship',
       relationTo: 'users',
       required: true,
-      defaultValue: ({ user }) => user?.id, // Auto-set to current user
       admin: {
         readOnly: true, // Prevent editing creator
       },
@@ -62,44 +65,35 @@ export const Polls: CollectionConfig = {
       name: 'status',
       type: 'select',
       options: Object.values(ePollStatus).map((status) => ({ label: status, value: status })),
-      // options: [
-      //   { label: 'Draft', value: 'draft' },
-      //   { label: 'Open', value: 'open' },
-      //   { label: 'Closed', value: 'closed' },
-      //   { label: 'Archived', value: 'archived' },
-      // ],
-      defaultValue: 'draft',
+      defaultValue: ePollStatus.DRAFT,
     },
     {
       name: 'pollType',
       type: 'select',
-      options: [
-        { label: 'Simple Poll', value: 'simple_poll' },
-        { label: 'Election', value: 'election' },
-        { label: 'Survey', value: 'survey' },
-      ],
-      defaultValue: 'simple_poll',
+      options: Object.values(ePollType).map((t) => ({ label: t, value: t })),
+      defaultValue: ePollType.SIMPLE,
     },
-    {
-      name: 'options',
-      type: 'relationship',
-      relationTo: 'poll-options',
-      hasMany: true,
-    },
+    // {
+    //   name: 'options',
+    //   type: 'relationship',
+    //   relationTo: 'poll-options',
+    //   hasMany: true,
+    // },
     {
       name: 'maxVotesPerUser',
       type: 'number',
       defaultValue: 1,
+      admin: { readOnly: true },
     },
     {
       name: 'allowAnonymous',
       type: 'checkbox',
       defaultValue: false,
     },
-    {
-      name: 'customSettings',
-      type: 'json', // Flexible JSON for extensible settings like vote weighting
-    },
+    // {
+    //   name: 'customSettings',
+    //   type: 'json', // Flexible JSON for extensible settings like vote weighting
+    // },
   ],
 
   versions: true, // Enable versioning for audits

@@ -15,9 +15,9 @@ export const PollOptions: CollectionConfig = {
       // Check if user is creator of related poll
       return !!user // Placeholder; enhance with hook if needed
     },
-    // read: () => true, // Options are public if poll is
-    // update: ({ req: { user }, doc }) => user && doc.poll?.creator?.id === user.id,
-    // delete: ({ req: { user }, doc }) => user && doc.poll?.creator?.id === user.id,
+    read: () => true,
+    update: () => true,
+    delete: () => true,
   },
   fields: [
     {
@@ -33,12 +33,15 @@ export const PollOptions: CollectionConfig = {
     },
     {
       name: 'description',
-      type: 'richText', // For explanations why to vote
+      type: 'text',
     },
     {
-      name: 'image',
-      type: 'upload',
-      relationTo: 'media',
+      name: 'about',
+      type: 'richText', // For  why to vote
+    },
+    {
+      name: 'imageUrl',
+      type: 'text',
     },
     {
       name: 'order',
@@ -54,12 +57,4 @@ export const PollOptions: CollectionConfig = {
   ],
 
   versions: true,
-  // indexes: [
-  //   { fields: { poll: 1, order: 1 } }, // For sorting options per poll
-  // ],
-  hooks: {
-    beforeChange: [
-      // Ensure associatedUser can only edit description if allowed
-    ],
-  },
 }

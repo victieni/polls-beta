@@ -29,7 +29,7 @@ export default buildConfig({
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
-    outputFile: path.resolve(dirname, '../../typescript/payload.d.ts'),
+    outputFile: path.resolve(dirname, '../typescript/payload.d.ts'),
   },
   db: mongooseAdapter({
     url: process.env.DATABASE_URL || '',

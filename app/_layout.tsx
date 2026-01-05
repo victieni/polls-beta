@@ -13,6 +13,7 @@ import { Platform } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-reanimated";
 import "../global.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 SplashScreen.setOptions({
 	duration: 200,
@@ -23,6 +24,9 @@ Platform.select({
 	ios: () => {},
 });
 
+const queryClient = new QueryClient();
+
+// ! Dummy Auth Guard
 const RouteGuard = ({ children }: { children: React.ReactNode }) => {
 	const isAuthenticated = false; // Replace with actual authentication logic
 	const router = useRouter();
@@ -61,57 +65,59 @@ export default function RootLayout() {
 				<StatusBar style={colorScheme === "dark" ? "light" : "dark"} animated />
 
 				<RouteGuard>
-					<Stack screenOptions={{ headerShown: false }}>
-						<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+					<QueryClientProvider client={queryClient}>
+						<Stack screenOptions={{ headerShown: false }}>
+							<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
 
-						<Stack.Screen
-							name="sheet"
-							options={{
-								headerShown: false,
-								sheetGrabberVisible: true,
-								sheetAllowedDetents: [0.4, 0.7, 1],
-								contentStyle: {
-									backgroundColor: isLiquidGlassAvailable()
-										? "transparent"
-										: colorScheme === "dark"
-										? Colors.dark.card
-										: Colors.light.card,
-								},
-								headerTransparent: Platform.OS === "ios" ? true : false,
-								headerLargeTitle: false,
-								title: "",
-								presentation:
-									Platform.OS === "ios"
-										? isLiquidGlassAvailable() && osName !== "iPadOS"
-											? "formSheet"
-											: "modal"
-										: "modal",
-								sheetInitialDetentIndex: 0,
-								headerStyle: {
-									backgroundColor:
-										Platform.OS === "ios"
+							<Stack.Screen
+								name="sheet"
+								options={{
+									headerShown: false,
+									sheetGrabberVisible: true,
+									sheetAllowedDetents: [0.4, 0.7, 1],
+									contentStyle: {
+										backgroundColor: isLiquidGlassAvailable()
 											? "transparent"
 											: colorScheme === "dark"
 											? Colors.dark.card
 											: Colors.light.card,
-								},
-								headerBlurEffect: isLiquidGlassAvailable()
-									? undefined
-									: colorScheme === "dark"
-									? "dark"
-									: "light",
-							}}
-						/>
-						<Stack.Screen name="+not-found" />
-						<Stack.Screen
-							name="auth"
-							options={{
-								headerTitle: "Authentication",
-								// headerTransparent: true,
-								// headerShown: true,
-							}}
-						/>
-					</Stack>
+									},
+									headerTransparent: Platform.OS === "ios" ? true : false,
+									headerLargeTitle: false,
+									title: "",
+									presentation:
+										Platform.OS === "ios"
+											? isLiquidGlassAvailable() && osName !== "iPadOS"
+												? "formSheet"
+												: "modal"
+											: "modal",
+									sheetInitialDetentIndex: 0,
+									headerStyle: {
+										backgroundColor:
+											Platform.OS === "ios"
+												? "transparent"
+												: colorScheme === "dark"
+												? Colors.dark.card
+												: Colors.light.card,
+									},
+									headerBlurEffect: isLiquidGlassAvailable()
+										? undefined
+										: colorScheme === "dark"
+										? "dark"
+										: "light",
+								}}
+							/>
+							<Stack.Screen name="+not-found" />
+							<Stack.Screen
+								name="auth"
+								options={{
+									headerTitle: "Authentication",
+									// headerTransparent: true,
+									// headerShown: true,
+								}}
+							/>
+						</Stack>
+					</QueryClientProvider>
 				</RouteGuard>
 			</ThemeProvider>
 		</GestureHandlerRootView>

@@ -1,10 +1,9 @@
-import { withUniwind } from "uniwind";
-import { Button, Card, Icon, Link, Text, View, Input } from "../ui";
-import { Image } from "../ui/image";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { withUniwind } from "uniwind";
+import { Button, Icon, Input, Link, Text, View } from "../ui";
+import { Image } from "../ui/image";
 
 export const UButton = withUniwind(Button);
-export const UCard = withUniwind(Card);
 export const UIcon = withUniwind(Icon);
 export const ULink = withUniwind(Link);
 export const UText = withUniwind(Text);

@@ -19,6 +19,10 @@ export const Votes: CollectionConfig = {
     // read: ({ req: { user }, doc }) => user && doc.poll?.creator?.id === user.id,
     // update: () => false, // No updates to votes
     // delete: ({ req: { user }, doc }) => user && doc.poll?.creator?.id === user.id,
+    create: () => true,
+    read: () => true,
+    update: () => true,
+    delete: () => true,
   },
   fields: [
     {
@@ -37,7 +41,7 @@ export const Votes: CollectionConfig = {
       name: 'voter',
       type: 'relationship',
       relationTo: 'users',
-      // Optional for anonymous votes
+      // ! Optional for anonymous votes
     },
     {
       name: 'voteHash',
@@ -52,6 +56,7 @@ export const Votes: CollectionConfig = {
       name: 'metadata',
       type: 'json', // Additional proofs like geolocation if enabled
     },
+    { name: 'isValid', type: 'checkbox', defaultValue: false },
   ],
 
   versions: false, // No versions for votes to save space

@@ -4,4 +4,11 @@ export enum ePollStatus {
 	CLOSED = "closed",
 	OPEN = "open",
 	ARCHIVED = "archived",
+	INVALIDATED = "invalidated",
+}
+
+export enum ePollType {
+	SIMPLE = "simple",
+	ELECTION = "election",
+	SURVEY = "survey",
 }

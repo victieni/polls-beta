@@ -180,7 +180,8 @@ export interface Media {
 export interface Poll {
   id: string;
   title: string;
-  description?: {
+  description?: string | null;
+  about?: {
     root: {
       type: string;
       children: {
@@ -199,20 +200,10 @@ export interface Poll {
   startDate?: string | null;
   endDate?: string | null;
   isPublic?: boolean | null;
-  status?: ('draft' | 'active' | 'closed' | 'open' | 'archived') | null;
-  pollType?: ('simple_poll' | 'election' | 'survey') | null;
-  options?: (string | PollOption)[] | null;
+  status?: ('draft' | 'active' | 'closed' | 'open' | 'archived' | 'invalidated') | null;
+  pollType?: ('simple' | 'election' | 'survey') | null;
   maxVotesPerUser?: number | null;
   allowAnonymous?: boolean | null;
-  customSettings?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
   updatedAt: string;
   createdAt: string;
   deletedAt?: string | null;
@@ -225,7 +216,8 @@ export interface PollOption {
   id: string;
   poll: string | Poll;
   name: string;
-  description?: {
+  description?: string | null;
+  about?: {
     root: {
       type: string;
       children: {
@@ -240,7 +232,7 @@ export interface PollOption {
     };
     [k: string]: unknown;
   } | null;
-  image?: (string | null) | Media;
+  imageUrl?: string | null;
   order?: number | null;
   associatedUser?: (string | null) | User;
   updatedAt: string;
@@ -265,6 +257,7 @@ export interface Vote {
     | number
     | boolean
     | null;
+  isValid?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -470,16 +463,15 @@ export interface MediaSelect<T extends boolean = true> {
 export interface PollsSelect<T extends boolean = true> {
   title?: T;
   description?: T;
+  about?: T;
   creator?: T;
   startDate?: T;
   endDate?: T;
   isPublic?: T;
   status?: T;
   pollType?: T;
-  options?: T;
   maxVotesPerUser?: T;
   allowAnonymous?: T;
-  customSettings?: T;
   updatedAt?: T;
   createdAt?: T;
   deletedAt?: T;
@@ -492,7 +484,8 @@ export interface PollOptionsSelect<T extends boolean = true> {
   poll?: T;
   name?: T;
   description?: T;
-  image?: T;
+  about?: T;
+  imageUrl?: T;
   order?: T;
   associatedUser?: T;
   updatedAt?: T;
@@ -508,6 +501,7 @@ export interface VotesSelect<T extends boolean = true> {
   voter?: T;
   voteHash?: T;
   metadata?: T;
+  isValid?: T;
   updatedAt?: T;
   createdAt?: T;
 }
