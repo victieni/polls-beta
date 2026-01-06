@@ -1,6 +1,8 @@
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { queryClient } from "@/lib/config/tanstackQuery";
 import { Colors } from "@/theme/colors";
 import { ThemeProvider } from "@/theme/theme-provider";
+import { QueryClientProvider } from "@tanstack/react-query";
 import { osName } from "expo-device";
 import { isLiquidGlassAvailable } from "expo-glass-effect";
 import * as NavigationBar from "expo-navigation-bar";
@@ -13,7 +15,7 @@ import { Platform } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-reanimated";
 import "../global.css";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useReactQueryDevTools } from "@dev-plugins/react-query";
 
 SplashScreen.setOptions({
 	duration: 200,
@@ -23,8 +25,6 @@ SplashScreen.setOptions({
 Platform.select({
 	ios: () => {},
 });
-
-const queryClient = new QueryClient();
 
 // ! Dummy Auth Guard
 const RouteGuard = ({ children }: { children: React.ReactNode }) => {
@@ -43,6 +43,7 @@ const RouteGuard = ({ children }: { children: React.ReactNode }) => {
 
 export default function RootLayout() {
 	const colorScheme = useColorScheme() || "light";
+	useReactQueryDevTools(queryClient);
 
 	useEffect(() => {
 		if (Platform.OS === "android") {

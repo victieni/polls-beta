@@ -1,19 +1,17 @@
 import { UView } from "@/components/uniwind";
+import { getInfiniteUsers } from "@/lib/functions/user.functions";
 import {
-	ComponentProps,
-	createContext,
-	Dispatch,
-	SetStateAction,
-	useContext,
-	useState,
-} from "react";
+	useSuspenseInfiniteQuery,
+	UseSuspenseInfiniteQueryResult,
+} from "@tanstack/react-query";
+import { ComponentProps, createContext, useContext } from "react";
 
-interface Props {
-	users: IUser[];
-	setUsers: Dispatch<SetStateAction<IUser[]>>;
-}
+type Props = UseSuspenseInfiniteQueryResult<IUser[], Error> & {
+	// users: IUser[];
+	// setUsers: Dispatch<SetStateAction<IUser[]>>;
+};
 
-const UsersContext = createContext<null | Props>(null);
+const UsersContext = createContext<Props | null>(null);
 
 export const useUsers = () => {
 	const context = useContext(UsersContext);
@@ -25,13 +23,18 @@ export const useUsers = () => {
 };
 
 export default function UsersProvider({
-	usersInit,
 	children,
 	...props
-}: { usersInit: IUser[] } & ComponentProps<typeof UView>) {
-	const [users, setUsers] = useState<IUser[]>(usersInit);
+}: {} & ComponentProps<typeof UView>) {
+	// const [users, setUsers] = useState<IUser[]>(usersInit);
+	const contextValues = useSuspenseInfiniteQuery({
+		...getInfiniteUsers({}),
+		select: (d) => d.pages.flatMap((d) => d.users),
+	});
 
-	const contextValues: Props = { users, setUsers };
+	const fetchNextPage = contextValues.fetchNextPage;
+
+	// const contextValues: Props = { users, ...results };
 
 	return (
 		<UsersContext.Provider value={contextValues}>
