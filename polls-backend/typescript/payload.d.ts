@@ -135,6 +135,7 @@ export interface User {
   clerkId: string;
   fname: string;
   lname: string;
+  username: string;
   imageUrl?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -420,6 +421,7 @@ export interface UsersSelect<T extends boolean = true> {
   clerkId?: T;
   fname?: T;
   lname?: T;
+  username?: T;
   imageUrl?: T;
   updatedAt?: T;
   createdAt?: T;

@@ -31,6 +31,7 @@ export const Users: CollectionConfig = {
       type: 'text',
       required: true,
     },
+    { name: 'username', type: 'text', required: true, unique: true },
     {
       name: 'imageUrl',
       type: 'text',
