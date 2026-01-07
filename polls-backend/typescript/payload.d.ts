@@ -137,6 +137,7 @@ export interface User {
   lname: string;
   username: string;
   imageUrl?: string | null;
+  bookmarks?: (string | Poll)[] | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -154,25 +155,6 @@ export interface User {
       }[]
     | null;
   password?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-  id: string;
-  alt: string;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -197,10 +179,26 @@ export interface Poll {
     };
     [k: string]: unknown;
   } | null;
-  creator: string | User;
+  administration: {
+    creator: string | User;
+    admins?: (string | User)[] | null;
+  };
+  tags?: string[] | null;
   startDate?: string | null;
   endDate?: string | null;
   isPublic?: boolean | null;
+  registration?: {
+    voters?:
+      | {
+          registrationId: string;
+          isApproved?: boolean | null;
+          user?: (string | null) | User;
+          id?: string | null;
+        }[]
+      | null;
+    validRegistrationIds?: string[] | null;
+  };
+  showProgress?: boolean | null;
   status?: ('draft' | 'active' | 'closed' | 'open' | 'archived' | 'invalidated') | null;
   pollType?: ('simple' | 'election' | 'survey') | null;
   maxVotesPerUser?: number | null;
@@ -208,6 +206,25 @@ export interface Poll {
   updatedAt: string;
   createdAt: string;
   deletedAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: string;
+  alt: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -423,6 +440,7 @@ export interface UsersSelect<T extends boolean = true> {
   lname?: T;
   username?: T;
   imageUrl?: T;
+  bookmarks?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -466,10 +484,30 @@ export interface PollsSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   about?: T;
-  creator?: T;
+  administration?:
+    | T
+    | {
+        creator?: T;
+        admins?: T;
+      };
+  tags?: T;
   startDate?: T;
   endDate?: T;
   isPublic?: T;
+  registration?:
+    | T
+    | {
+        voters?:
+          | T
+          | {
+              registrationId?: T;
+              isApproved?: T;
+              user?: T;
+              id?: T;
+            };
+        validRegistrationIds?: T;
+      };
+  showProgress?: T;
   status?: T;
   pollType?: T;
   maxVotesPerUser?: T;

@@ -7,7 +7,7 @@ import sharp from 'sharp'
 
 import { Users } from './collections/Users.collection'
 import { Media } from './collections/Media.collection'
-import { Polls } from './collections/Polls.Collection'
+import { Polls } from './collections/Polls.collection'
 import { Votes } from './collections/Votes.collection'
 import { Results } from './collections/Results.collection'
 import { AuditLogs } from './collections/AuditLogs.collection'

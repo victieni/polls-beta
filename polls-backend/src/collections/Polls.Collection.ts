@@ -34,14 +34,21 @@ export const Polls: CollectionConfig = {
       type: 'richText',
     },
     {
-      name: 'creator',
-      type: 'relationship',
-      relationTo: 'users',
-      required: true,
-      admin: {
-        readOnly: true, // Prevent editing creator
-      },
+      name: 'administration',
+      type: 'group',
+      fields: [
+        {
+          name: 'creator',
+          type: 'relationship',
+          relationTo: 'users',
+          required: true,
+          admin: { readOnly: true },
+        },
+        { name: 'admins', type: 'relationship', relationTo: 'users', hasMany: true, maxRows: 3 },
+      ],
     },
+    // ? Helps in search
+    { name: 'tags', type: 'text', hasMany: true },
     {
       name: 'startDate',
       type: 'date',
@@ -61,6 +68,24 @@ export const Polls: CollectionConfig = {
       type: 'checkbox',
       defaultValue: true,
     },
+    // ? Only For Private
+    {
+      name: 'registration',
+      type: 'group',
+      fields: [
+        {
+          name: 'voters',
+          type: 'array',
+          fields: [
+            { name: 'registrationId', type: 'text', required: true },
+            { name: 'isApproved', type: 'checkbox', defaultValue: false },
+            { name: 'user', type: 'relationship', relationTo: 'users' },
+          ],
+        },
+        { name: 'validRegistrationIds', type: 'text', hasMany: true },
+      ],
+    },
+    { name: 'showProgress', type: 'checkbox', defaultValue: true },
     {
       name: 'status',
       type: 'select',
@@ -73,12 +98,6 @@ export const Polls: CollectionConfig = {
       options: Object.values(ePollType).map((t) => ({ label: t, value: t })),
       defaultValue: ePollType.SIMPLE,
     },
-    // {
-    //   name: 'options',
-    //   type: 'relationship',
-    //   relationTo: 'poll-options',
-    //   hasMany: true,
-    // },
     {
       name: 'maxVotesPerUser',
       type: 'number',
@@ -105,7 +124,7 @@ export const Polls: CollectionConfig = {
   // hooks: {
   //   beforeChange: [
   //     // Validate start/end dates
-  //     async ({ value, operation }) => {
+  //     async ({ data:value, operation }) => {
   //       if (
   //         operation === 'update' &&
   //         value.startDate &&
