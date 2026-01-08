@@ -28,18 +28,17 @@ export default function HomeLayout() {
 				},
 			}}
 		>
-			<Stack.Protected guard >
-				<Stack.Screen
-					name="index"
-					options={{
-						title: "Home",
-						headerTitle: () =>
-							Platform.OS === "android" ? (
-								<Text variant="heading">Home</Text>
-							) : undefined,
-					}}
-				/>
-			</Stack.Protected>
+			<Stack.Screen
+				name="index"
+				options={{
+					title: "Home",
+					headerTitle: () =>
+						Platform.OS === "android" ? (
+							<Text variant="heading">Home</Text>
+						) : undefined,
+				}}
+			/>
+			
 		</Stack>
 	);
 }

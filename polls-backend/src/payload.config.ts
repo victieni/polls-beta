@@ -7,11 +7,11 @@ import sharp from 'sharp'
 
 import { Users } from './collections/Users.collection'
 import { Media } from './collections/Media.collection'
-import { Polls } from './collections/Polls.collection'
 import { Votes } from './collections/Votes.collection'
 import { Results } from './collections/Results.collection'
 import { AuditLogs } from './collections/AuditLogs.collection'
 import { PollOptions } from './collections/PollOptions.collection'
+import { Polls } from './collections/Polls.collection'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
