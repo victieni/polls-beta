@@ -187,6 +187,12 @@ export interface Poll {
   startDate?: string | null;
   endDate?: string | null;
   isPublic?: boolean | null;
+  allowAnonymous?: boolean | null;
+  showProgress?: boolean | null;
+  isEditable?: boolean | null;
+  status?: ('draft' | 'active' | 'closed' | 'open' | 'archived' | 'invalidated') | null;
+  pollType?: ('simple' | 'election' | 'survey') | null;
+  maxVotesPerUser?: number | null;
   registration?: {
     voters?:
       | {
@@ -198,11 +204,6 @@ export interface Poll {
       | null;
     validRegistrationIds?: string[] | null;
   };
-  showProgress?: boolean | null;
-  status?: ('draft' | 'active' | 'closed' | 'open' | 'archived' | 'invalidated') | null;
-  pollType?: ('simple' | 'election' | 'survey') | null;
-  maxVotesPerUser?: number | null;
-  allowAnonymous?: boolean | null;
   updatedAt: string;
   createdAt: string;
   deletedAt?: string | null;
@@ -494,6 +495,12 @@ export interface PollsSelect<T extends boolean = true> {
   startDate?: T;
   endDate?: T;
   isPublic?: T;
+  allowAnonymous?: T;
+  showProgress?: T;
+  isEditable?: T;
+  status?: T;
+  pollType?: T;
+  maxVotesPerUser?: T;
   registration?:
     | T
     | {
@@ -507,11 +514,6 @@ export interface PollsSelect<T extends boolean = true> {
             };
         validRegistrationIds?: T;
       };
-  showProgress?: T;
-  status?: T;
-  pollType?: T;
-  maxVotesPerUser?: T;
-  allowAnonymous?: T;
   updatedAt?: T;
   createdAt?: T;
   deletedAt?: T;

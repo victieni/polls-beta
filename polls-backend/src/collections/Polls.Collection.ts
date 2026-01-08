@@ -74,6 +74,7 @@ export const Polls: CollectionConfig = {
       defaultValue: false,
     },
     { name: 'showProgress', type: 'checkbox', defaultValue: true },
+    { name: 'isEditable', type: 'checkbox', defaultValue: true },
 
     {
       name: 'status',
