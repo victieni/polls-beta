@@ -1,17 +1,13 @@
-import { UCard } from "@/components/ui";
-import { Button } from "@/components/ui/button";
-import { Icon } from "@/components/ui/icon";
-import { Link } from "@/components/ui/link";
-import { UButton, UIcon, UText, UView } from "@/components/uniwind";
+import { Button, Card, Icon, Link, Text, View } from "@/components/ui";
 import { useColor } from "@/hooks/useColor";
-import { LockKeyhole, Terminal } from "lucide-react-native";
+import { Terminal } from "lucide-react-native";
 
 export default function HomeScreen() {
 	const green = useColor("green");
 	const muted = useColor("muted");
 
 	return (
-		<UView
+		<View
 			style={{
 				flex: 1,
 				gap: 16,
@@ -19,22 +15,22 @@ export default function HomeScreen() {
 				justifyContent: "center",
 			}}
 		>
-			<UText
+			<Text
 				variant="heading"
 				style={{
 					textAlign: "center",
 				}}
 			>
 				Built with ❤️ by BNA
-			</UText>
+			</Text>
 
-			<UView
+			<View
 				style={{
 					marginBottom: 20,
 				}}
 			>
-				<UCard>
-					<UView
+				<Card>
+					<View
 						style={{
 							gap: 8,
 							marginBottom: 16,
@@ -42,21 +38,21 @@ export default function HomeScreen() {
 							alignItems: "center",
 						}}
 					>
-						<UIcon name={Terminal} />
+						<Icon name={Terminal} />
 
-						<UText
+						<Text
 							variant="body"
 							style={{
 								fontWeight: "600",
 							}}
 						>
 							Add Components
-						</UText>
-					</UView>
-					<UText className="text-xs text-center font-medium text-red-500">
+						</Text>
+					</View>
+					<Text className="text-xs text-center font-medium text-red-500">
 						This is Uniwind
-					</UText>
-					<UView
+					</Text>
+					<View
 						style={{
 							backgroundColor: muted,
 							paddingHorizontal: 16,
@@ -66,7 +62,7 @@ export default function HomeScreen() {
 							minWidth: "100%",
 						}}
 					>
-						<UText
+						<Text
 							variant="caption"
 							style={{
 								color: green,
@@ -76,9 +72,9 @@ export default function HomeScreen() {
 							}}
 						>
 							npx bna-ui add avatar
-						</UText>
-					</UView>
-					<UText
+						</Text>
+					</View>
+					<Text
 						variant="caption"
 						style={{
 							textAlign: "center",
@@ -86,25 +82,19 @@ export default function HomeScreen() {
 						}}
 					>
 						Add components with a single command
-					</UText>
-				</UCard>
-			</UView>
+					</Text>
+				</Card>
+			</View>
 
 			<Link asChild href="/sheet">
-				<UButton
+				<Button
 					// variant="secondary"
 					size="sm"
 					className="bg-green-500 w-52 mx-auto line-clamp-1 rounded-3xl"
 				>
 					Open Components Sheet
-				</UButton>
+				</Button>
 			</Link>
-
-			<Link href="/auth" asChild>
-				<UButton size="icon" variant="outline" className="">
-					<Icon name={LockKeyhole} />
-				</UButton>
-			</Link>
-		</UView>
+		</View>
 	);
 }

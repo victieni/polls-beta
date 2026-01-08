@@ -10,7 +10,7 @@ interface CardProps {
 	style?: ViewStyle;
 }
 
-export function Card({ children, style }: CardProps) {
+export const Card = withUniwind(({ children, style }: CardProps) => {
 	const cardColor = useColor("card");
 	const foregroundColor = useColor("foreground");
 
@@ -34,26 +34,25 @@ export function Card({ children, style }: CardProps) {
 			{children}
 		</View>
 	);
-}
-
-const UCard = withUniwind(Card);
+});
 
 interface CardHeaderProps {
 	children: React.ReactNode;
 	style?: ViewStyle;
 }
 
-export function CardHeader({ children, style }: CardHeaderProps) {
-	return <View style={[{ marginBottom: 8 }, style]}>{children}</View>;
-}
-const UCardHeader = withUniwind(CardHeader);
+export const CardHeader = withUniwind(
+	({ children, style }: CardHeaderProps) => {
+		return <View style={[{ marginBottom: 8 }, style]}>{children}</View>;
+	}
+);
 
 interface CardTitleProps {
 	children: React.ReactNode;
 	style?: TextStyle;
 }
 
-export function CardTitle({ children, style }: CardTitleProps) {
+export const CardTitle = withUniwind(({ children, style }: CardTitleProps) => {
 	return (
 		<Text
 			variant="title"
@@ -67,65 +66,54 @@ export function CardTitle({ children, style }: CardTitleProps) {
 			{children}
 		</Text>
 	);
-}
-const UCardTitle = withUniwind(CardTitle);
+});
 
 interface CardDescriptionProps {
 	children: React.ReactNode;
 	style?: TextStyle;
 }
 
-export function CardDescription({ children, style }: CardDescriptionProps) {
-	return (
-		<Text variant="caption" style={[style]}>
-			{children}
-		</Text>
-	);
-}
-const UCardDescription = withUniwind(CardDescription);
+export const CardDescription = withUniwind(
+	({ children, style }: CardDescriptionProps) => {
+		return (
+			<Text variant="caption" style={[style]}>
+				{children}
+			</Text>
+		);
+	}
+);
 
 interface CardContentProps {
 	children: React.ReactNode;
 	style?: ViewStyle;
 }
 
-export function CardContent({ children, style }: CardContentProps) {
-	return <View style={[style]}>{children}</View>;
-}
-const UCardContent = withUniwind(CardContent);
+export const CardContent = withUniwind(
+	({ children, style }: CardContentProps) => {
+		return <View style={[style]}>{children}</View>;
+	}
+);
 
 interface CardFooterProps {
 	children: React.ReactNode;
 	style?: ViewStyle;
 }
 
-export function CardFooter({ children, style }: CardFooterProps) {
-	return (
-		<View
-			style={[
-				{
-					marginTop: 16,
-					flexDirection: "row",
-					gap: 8,
-				},
-				style,
-			]}
-		>
-			{children}
-		</View>
-	);
-}
-const UCardFooter = withUniwind(CardFooter);
-
-/**
- * @uniwind
- */
-
-export {
-	UCardDescription,
-	UCardContent,
-	UCardFooter,
-	UCard,
-	UCardTitle,
-	UCardHeader,
-};
+export const CardFooter = withUniwind(
+	({ children, style }: CardFooterProps) => {
+		return (
+			<View
+				style={[
+					{
+						marginTop: 16,
+						flexDirection: "row",
+						gap: 8,
+					},
+					style,
+				]}
+			>
+				{children}
+			</View>
+		);
+	}
+);

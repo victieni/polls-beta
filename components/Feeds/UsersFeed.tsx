@@ -1,11 +1,9 @@
-import { useUsers } from "@/contexts/users.context";
+import { getInfiniteUsers } from "@/lib/functions/user.functions";
+import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import React from "react";
 import { FlatList } from "react-native";
 import UserCard from "../cards/UserCard";
-import { UText, UView } from "../uniwind";
-import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
-import { getInfiniteUsers } from "@/lib/functions/user.functions";
-import { Separator } from "../ui/separator";
+import { Text, View } from "../ui";
 
 export default function UsersFeed() {
 	const {
@@ -20,7 +18,7 @@ export default function UsersFeed() {
 	console.log(users);
 
 	return (
-		<UView className="flex-1 p-3">
+		<View className="flex-1 p-3">
 			<FlatList
 				data={users}
 				renderItem={({ item }) => <UserCard user={item} className="mb-1" />}
@@ -34,14 +32,14 @@ export default function UsersFeed() {
 			{/* {users.map((u) => (
 				<UserCard user={u} key={u.id} />
 			))} */}
-		</UView>
+		</View>
 	);
 }
 
 UsersFeed.Fallback = () => {
 	return (
-		<UView>
-			<UText>Loading users...</UText>
-		</UView>
+		<View>
+			<Text>Loading users...</Text>
+		</View>
 	);
 };

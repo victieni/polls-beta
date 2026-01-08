@@ -13,35 +13,37 @@ interface AvatarProps {
 	style?: ViewStyle;
 }
 
-export function Avatar({ children, size = 40, style }: AvatarProps) {
-	return (
-		<View
-			style={[
-				{
-					width: size,
-					height: size,
-					borderRadius: size / 2,
-					overflow: "hidden",
-					position: "relative",
-				},
-				style,
-			]}
-		>
-			{children}
-		</View>
-	);
-}
-const UAvatar = withUniwind(Avatar);
+export const Avatar = withUniwind(
+	({ children, size = 40, style }: AvatarProps) => {
+		return (
+			<View
+				style={[
+					{
+						width: size,
+						height: size,
+						borderRadius: size / 2,
+						overflow: "hidden",
+						position: "relative",
+					},
+					style,
+				]}
+			>
+				{children}
+			</View>
+		);
+	}
+);
 
 interface AvatarImageProps {
 	source: ImageSource;
 	style?: ImageProps["style"];
 }
 
-export function AvatarImage({ source, style }: AvatarImageProps) {
-	return <Image source={source} style={[style]} />;
-}
-const UAvatarImage = withUniwind(AvatarImage);
+export const AvatarImage = withUniwind(
+	({ source, style }: AvatarImageProps) => {
+		return <Image source={source} style={[style]} />;
+	}
+);
 
 interface AvatarFallbackProps {
 	children: React.ReactNode;
@@ -49,42 +51,37 @@ interface AvatarFallbackProps {
 	textStyle?: TextStyle;
 }
 
-export function AvatarFallback({
-	children,
-	style,
-	textStyle,
-}: AvatarFallbackProps) {
-	const mutedColor = useColor("muted");
-	const mutedForegroundColor = useColor("mutedForeground");
+export const AvatarFallback = withUniwind(
+	({ children, style, textStyle }: AvatarFallbackProps) => {
+		const mutedColor = useColor("muted");
+		const mutedForegroundColor = useColor("mutedForeground");
 
-	return (
-		<View
-			style={[
-				{
-					width: "100%",
-					height: "100%",
-					backgroundColor: mutedColor,
-					alignItems: "center",
-					justifyContent: "center",
-				},
-				style,
-			]}
-		>
-			<Text
+		return (
+			<View
 				style={[
 					{
-						color: mutedForegroundColor,
-						fontSize: FONT_SIZE,
-						fontWeight: "500",
+						width: "100%",
+						height: "100%",
+						backgroundColor: mutedColor,
+						alignItems: "center",
+						justifyContent: "center",
 					},
-					textStyle,
+					style,
 				]}
 			>
-				{children}
-			</Text>
-		</View>
-	);
-}
-const UAvatarFallback = withUniwind(AvatarFallback);
-
-export { UAvatar, UAvatarFallback, UAvatarImage };
+				<Text
+					style={[
+						{
+							color: mutedForegroundColor,
+							fontSize: FONT_SIZE,
+							fontWeight: "500",
+						},
+						textStyle,
+					]}
+				>
+					{children}
+				</Text>
+			</View>
+		);
+	}
+);

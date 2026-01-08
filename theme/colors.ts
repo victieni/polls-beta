@@ -27,42 +27,24 @@ export const Fonts = Platform.select({
 });
 
 export const lightColors = {
-	// Base colors
-	background: "#FFFFFF",
-	foreground: "#000000",
-
-	// Card colors
-	card: "#F2F2F7",
-	cardForeground: "#000000",
-
-	// Popover colors
-	popover: "#F2F2F7",
-	popoverForeground: "#000000",
-
-	// Primary colors
-	primary: "#18181b",
-	primaryForeground: "#FFFFFF",
-
-	// Secondary colors
-	secondary: "#F2F2F7",
-	secondaryForeground: "#18181b",
-
-	// Muted colors
-	muted: "#78788033",
-	mutedForeground: "#71717a",
-
-	// Accent colors
-	accent: "#F2F2F7",
-	accentForeground: "#18181b",
-
-	// Destructive colors
-	destructive: "#ef4444",
-	destructiveForeground: "#FFFFFF",
-
-	// Border and input
-	border: "#C6C6C8",
-	input: "#e4e4e7",
-	ring: "#a1a1aa",
+  background: "#fcfcfc",
+  foreground: "#313e38",
+  card: "#ffffff",
+  cardForeground: "#313e38",
+  popover: "#ffffff",
+  popoverForeground: "#313e38",
+  primary: "#00b262",
+  primaryForeground: "#effffa",
+  secondary: "#d2e0ea",
+  secondaryForeground: "#12161f",
+  muted: "#d3e0ea",
+  mutedForeground: "#5c6375",
+  accent: "#d3e0ea",
+  accentForeground: "#313e38",
+  destructive: "#f1113e",
+  border: "#e5ecf1",
+  input: "#c3d0da",
+  ring: "#00b262",
 
 	// Text colors
 	text: "#000000",
@@ -103,42 +85,24 @@ export const lightColors = {
 };
 
 export const darkColors = {
-	// Base colors
-	background: "#000000",
-	foreground: "#FFFFFF",
-
-	// Card colors
-	card: "#1C1C1E",
-	cardForeground: "#FFFFFF",
-
-	// Popover colors
-	popover: "#18181b",
-	popoverForeground: "#FFFFFF",
-
-	// Primary colors
-	primary: "#e4e4e7",
-	primaryForeground: "#18181b",
-
-	// Secondary colors
-	secondary: "#1C1C1E",
-	secondaryForeground: "#FFFFFF",
-
-	// Muted colors
-	muted: "#78788033",
-	mutedForeground: "#a1a1aa",
-
-	// Accent colors
-	accent: "#1C1C1E",
-	accentForeground: "#FFFFFF",
-
-	// Destructive colors
-	destructive: "#dc2626",
-	destructiveForeground: "#FFFFFF",
-
-	// Border and input - using alpha values for better blending
-	border: "#38383A",
-	input: "rgba(255, 255, 255, 0.15)",
-	ring: "#71717a",
+  background: "#080b14",
+  foreground: "#e9f0f5",
+  card: "#12161f",
+  cardForeground: "#e9f0f5",
+  popover: "#12161f",
+  popoverForeground: "#e9f0f5",
+  primary: "#00b262",
+  primaryForeground: "#080b14",
+  secondary: "#282d3d",
+  secondaryForeground: "#e9f0f5",
+  muted: "#282d3d",
+  mutedForeground: "#798093",
+  accent: "#282d3d",
+  accentForeground: "#e9f0f5",
+  destructive: "#ff1648",
+  border: "#e9f0f526",
+  input: "#e9f0f533",
+  ring: "#00b262",
 
 	// Text colors
 	text: "#FFFFFF",

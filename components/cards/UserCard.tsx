@@ -1,7 +1,5 @@
 import React from "react";
-import { UCard, UCardContent } from "../ui";
-import { UAvatar, UAvatarFallback, UAvatarImage } from "../ui/avatar";
-import { UText, UView } from "../uniwind";
+import { Avatar, AvatarFallback, AvatarImage, Card, CardContent, Text, View } from "../ui";
 
 export default function UserCard({
 	user,
@@ -11,21 +9,21 @@ export default function UserCard({
 	className?: string;
 }) {
 	return (
-		<UCard className={className}>
-			<UCardContent className="flex-row gap-x-2">
-				<UAvatar>
-					<UAvatarImage source={{ uri: user.imageUrl! }} />
-					<UAvatarFallback>{user.fname[0]}</UAvatarFallback>
-				</UAvatar>
-				<UView>
-					<UText variant="subtitle">
+		<Card className={className}>
+			<CardContent className="flex-row gap-x-2">
+				<Avatar>
+					<AvatarImage source={{ uri: user.imageUrl! }} />
+					<AvatarFallback>{user.fname[0]}</AvatarFallback>
+				</Avatar>
+				<View>
+					<Text variant="subtitle">
 						{user.fname} {user.lname}
-					</UText>
-					<UText variant="caption" className="text-muted-foreground">
+					</Text>
+					<Text variant="caption" className="text-muted-foreground">
 						@{user.username}
-					</UText>
-				</UView>
-			</UCardContent>
-		</UCard>
+					</Text>
+				</View>
+			</CardContent>
+		</Card>
 	);
 }

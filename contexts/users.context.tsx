@@ -1,4 +1,4 @@
-import { UView } from "@/components/uniwind";
+import { View } from "@/components/ui";
 import { getInfiniteUsers } from "@/lib/functions/user.functions";
 import {
 	useSuspenseInfiniteQuery,
@@ -25,7 +25,7 @@ export const useUsers = () => {
 export default function UsersProvider({
 	children,
 	...props
-}: {} & ComponentProps<typeof UView>) {
+}: {} & ComponentProps<typeof View>) {
 	// const [users, setUsers] = useState<IUser[]>(usersInit);
 	const contextValues = useSuspenseInfiniteQuery({
 		...getInfiniteUsers({}),
@@ -38,7 +38,7 @@ export default function UsersProvider({
 
 	return (
 		<UsersContext.Provider value={contextValues}>
-			<UView {...props}>{children}</UView>
+			<View {...props}>{children}</View>
 		</UsersContext.Provider>
 	);
 }
