@@ -68,24 +68,13 @@ export const Polls: CollectionConfig = {
       type: 'checkbox',
       defaultValue: true,
     },
-    // ? Only For Private
     {
-      name: 'registration',
-      type: 'group',
-      fields: [
-        {
-          name: 'voters',
-          type: 'array',
-          fields: [
-            { name: 'registrationId', type: 'text', required: true },
-            { name: 'isApproved', type: 'checkbox', defaultValue: false },
-            { name: 'user', type: 'relationship', relationTo: 'users' },
-          ],
-        },
-        { name: 'validRegistrationIds', type: 'text', hasMany: true },
-      ],
+      name: 'allowAnonymous',
+      type: 'checkbox',
+      defaultValue: false,
     },
     { name: 'showProgress', type: 'checkbox', defaultValue: true },
+
     {
       name: 'status',
       type: 'select',
@@ -104,11 +93,24 @@ export const Polls: CollectionConfig = {
       defaultValue: 1,
       admin: { readOnly: true },
     },
+    // ? Only For Private
     {
-      name: 'allowAnonymous',
-      type: 'checkbox',
-      defaultValue: false,
+      name: 'registration',
+      type: 'group',
+      fields: [
+        {
+          name: 'voters',
+          type: 'array',
+          fields: [
+            { name: 'registrationId', type: 'text', required: true },
+            { name: 'isApproved', type: 'checkbox', defaultValue: false },
+            { name: 'user', type: 'relationship', relationTo: 'users' },
+          ],
+        },
+        { name: 'validRegistrationIds', type: 'text', hasMany: true },
+      ],
     },
+
     // {
     //   name: 'customSettings',
     //   type: 'json', // Flexible JSON for extensible settings like vote weighting
