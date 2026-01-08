@@ -163,6 +163,7 @@ export interface User {
 export interface Poll {
   id: string;
   title: string;
+  prompt: string;
   description?: string | null;
   about?: {
     root: {
@@ -483,6 +484,7 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface PollsSelect<T extends boolean = true> {
   title?: T;
+  prompt?: T;
   description?: T;
   about?: T;
   administration?:

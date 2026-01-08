@@ -25,6 +25,8 @@ export const Polls: CollectionConfig = {
       type: 'text',
       required: true,
     },
+    // ? Poll prompt for the App.
+    { name: 'prompt', type: 'text', required: true },
     {
       name: 'description',
       type: 'textarea',
@@ -75,7 +77,6 @@ export const Polls: CollectionConfig = {
     },
     { name: 'showProgress', type: 'checkbox', defaultValue: true },
     { name: 'isEditable', type: 'checkbox', defaultValue: true },
-
     {
       name: 'status',
       type: 'select',

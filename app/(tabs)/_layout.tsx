@@ -1,5 +1,5 @@
 import { useColor } from "@/hooks/useColor";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import Ionicons from "@expo/vector-icons/Octicons";
 import { isLiquidGlassAvailable } from "expo-glass-effect";
 import {
 	Badge,
@@ -31,19 +31,20 @@ export default function TabsLayout() {
 			disableTransparentOnScrollEdge={true}
 			badgeTextColor={red}
 		>
-			<NativeTabs.Trigger name="(home)">
+			<NativeTabs.Trigger options={{}} name="(home)">
 				{Platform.select({
-					ios: <Icon sf="house.fill" />,
+					ios: <Icon sf="cube.box.fill" />,
+					// ios: <Icon src={<VectorIcon family={Ionicons} name="home" />} />,
 					android: <Icon src={<VectorIcon family={Ionicons} name="home" />} />,
 				})}
-				<Label>Home</Label>
+				<Label>Polls</Label>
 			</NativeTabs.Trigger>
 
 			<NativeTabs.Trigger name="profile">
 				{Platform.select({
-					ios: <Icon sf="person.2.fill" />,
+					ios: <Icon sf="person.crop.circle" />,
 					android: (
-						<Icon src={<VectorIcon family={Ionicons} name="person-circle" />} />
+						<Icon src={<VectorIcon family={Ionicons} name="person" />} />
 					),
 				})}
 				<Label>Profile</Label>
@@ -53,9 +54,7 @@ export default function TabsLayout() {
 			<NativeTabs.Trigger name="settings">
 				{Platform.select({
 					ios: <Icon sf="gear" />,
-					android: (
-						<Icon src={<VectorIcon family={Ionicons} name="settings" />} />
-					),
+					android: <Icon src={<VectorIcon family={Ionicons} name="gear" />} />,
 				})}
 				<Label>Settings</Label>
 				<Badge>1</Badge>
@@ -63,9 +62,9 @@ export default function TabsLayout() {
 
 			<NativeTabs.Trigger name="new">
 				{Platform.select({
-					ios: <Icon sf={"plus.bubble"} />,
+					ios: <Icon sf={"plus.circle"} />,
 					android: (
-						<Icon src={<VectorIcon family={Ionicons} name="pulse-outline" />} />
+						<Icon src={<VectorIcon family={Ionicons} name="plus-circle" />} />
 					),
 				})}
 
