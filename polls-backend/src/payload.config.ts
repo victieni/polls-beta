@@ -11,7 +11,7 @@ import { Votes } from './collections/Votes.collection'
 import { Results } from './collections/Results.collection'
 import { AuditLogs } from './collections/AuditLogs.collection'
 import { PollOptions } from './collections/PollOptions.collection'
-import { Polls } from './collections/Polls.collection'
+import { Polls } from './collections/Polls.Collection'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
