@@ -66,16 +66,21 @@ export const Polls: CollectionConfig = {
       },
     },
     {
-      name: 'isPublic',
+      name: 'isPrivate',
       type: 'checkbox',
-      defaultValue: true,
+      defaultValue: false,
+    },
+    {
+      name: 'isMultipleChoice',
+      type: 'checkbox',
+      defaultValue: false,
     },
     {
       name: 'allowAnonymous',
       type: 'checkbox',
       defaultValue: false,
     },
-    { name: 'showProgress', type: 'checkbox', defaultValue: true },
+    { name: 'hideProgress', type: 'checkbox', defaultValue: false },
     { name: 'isEditable', type: 'checkbox', defaultValue: true },
     {
       name: 'status',
@@ -84,22 +89,18 @@ export const Polls: CollectionConfig = {
       defaultValue: ePollStatus.DRAFT,
     },
     {
-      name: 'pollType',
+      name: 'type',
       type: 'select',
       options: Object.values(ePollType).map((t) => ({ label: t, value: t })),
       defaultValue: ePollType.SIMPLE,
     },
-    {
-      name: 'maxVotesPerUser',
-      type: 'number',
-      defaultValue: 1,
-      admin: { readOnly: true },
-    },
+
     // ? Only For Private
     {
       name: 'registration',
       type: 'group',
       fields: [
+        // ! Enable Creators to select Users who will take part.
         {
           name: 'voters',
           type: 'array',

@@ -187,13 +187,13 @@ export interface Poll {
   tags?: string[] | null;
   startDate?: string | null;
   endDate?: string | null;
-  isPublic?: boolean | null;
+  isPrivate?: boolean | null;
+  isMultipleChoice?: boolean | null;
   allowAnonymous?: boolean | null;
-  showProgress?: boolean | null;
+  hideProgress?: boolean | null;
   isEditable?: boolean | null;
   status?: ('draft' | 'active' | 'closed' | 'open' | 'archived' | 'invalidated') | null;
-  pollType?: ('simple' | 'election' | 'survey') | null;
-  maxVotesPerUser?: number | null;
+  type?: ('simple' | 'election' | 'survey') | null;
   registration?: {
     voters?:
       | {
@@ -496,13 +496,13 @@ export interface PollsSelect<T extends boolean = true> {
   tags?: T;
   startDate?: T;
   endDate?: T;
-  isPublic?: T;
+  isPrivate?: T;
+  isMultipleChoice?: T;
   allowAnonymous?: T;
-  showProgress?: T;
+  hideProgress?: T;
   isEditable?: T;
   status?: T;
-  pollType?: T;
-  maxVotesPerUser?: T;
+  type?: T;
   registration?:
     | T
     | {

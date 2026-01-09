@@ -179,6 +179,7 @@ export const Input = withUniwind(
 													variant="caption"
 													numberOfLines={1}
 													ellipsizeMode="tail"
+													className="font-medium"
 													style={[
 														{
 															color: error ? danger : muted,

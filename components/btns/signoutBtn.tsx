@@ -1,15 +1,19 @@
 import { useClerk } from "@clerk/clerk-expo";
-import * as Linking from "expo-linking";
-import { Text, TouchableOpacity } from "react-native";
+import { LogOut } from "lucide-react-native";
+import { Text } from "react-native";
+import { AlertDialog, Button, Icon, useAlertDialog } from "../ui";
+import { useTransition } from "react";
 
 export const SignOutButton = () => {
-	// Use `useClerk()` to access the `signOut()` function
+	const { isVisible, close, open } = useAlertDialog();
+	const [isPending, startTransition] = useTransition();
 	const { signOut } = useClerk();
-	const handleSignOut = async () => {
+
+	const handleSignOut = () => {
 		try {
-			await signOut();
+			startTransition(async () => await signOut());
 			// Redirect to your desired page
-			Linking.openURL(Linking.createURL("/"));
+			// Linking.openURL(Linking.createURL("/"));
 		} catch (err) {
 			// See https://clerk.com/docs/custom-flows/error-handling
 			// for more info on error handling
@@ -17,8 +21,25 @@ export const SignOutButton = () => {
 		}
 	};
 	return (
-		<TouchableOpacity onPress={handleSignOut}>
-			<Text>Sign out</Text>
-		</TouchableOpacity>
+		<>
+			<Button
+				onPress={open}
+				disabled={isPending}
+				loading={isPending}
+				className="flex"
+			>
+				<Icon name={LogOut} size={24} className="text-foreground" />
+				<Text>Sign out</Text>
+			</Button>
+
+			<AlertDialog
+				isVisible={isVisible}
+				title="Confirm Sign out"
+				description="Are you sure you want to sign out?"
+				confirmText="Sign out"
+				onClose={close}
+				onConfirm={handleSignOut}
+			/>
+		</>
 	);
 };

@@ -14,18 +14,17 @@ export default function TabsLayout() {
 	const red = useColor("red");
 	const primary = useColor("primary");
 	const foreground = useColor("foreground");
-	
 
 	return (
 		<NativeTabs
 			minimizeBehavior="onScrollDown"
 			labelStyle={{
-				default: { color: primary },
-				selected: { color: foreground },
+				default: { color: foreground },
+				selected: { color: primary },
 			}}
 			iconColor={{
-				default: primary,
-				selected: foreground,
+				default: foreground,
+				selected: primary,
 			}}
 			badgeBackgroundColor={red}
 			labelVisibilityMode="labeled"
@@ -52,16 +51,16 @@ export default function TabsLayout() {
 				<Badge>3</Badge>
 			</NativeTabs.Trigger>
 
-			<NativeTabs.Trigger name="settings">
+			{/* <NativeTabs.Trigger name="settings">
 				{Platform.select({
 					ios: <Icon sf="gear" />,
 					android: <Icon src={<VectorIcon family={Ionicons} name="gear" />} />,
 				})}
 				<Label>Settings</Label>
 				<Badge>1</Badge>
-			</NativeTabs.Trigger>
+			</NativeTabs.Trigger> */}
 
-			<NativeTabs.Trigger name="new">
+			<NativeTabs.Trigger name="create">
 				{Platform.select({
 					ios: <Icon sf={"plus.circle"} />,
 					android: (

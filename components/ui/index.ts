@@ -16,5 +16,10 @@ export * from "./tabs";
 export * from "./avatar";
 export * from "./separator";
 export * from "./skeleton";
+export * from "./alert-dialog";
+export * from "./checkbox";
+export * from "./switch";
+export * from "./picker";
+export * from "./date-picker";
 
 export const SafeAreaView = withUniwind(SAV);

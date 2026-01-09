@@ -16,4 +16,7 @@ declare global {
 	type IVote = Vote;
 	type IResults = Result;
 	type IAuditLog = AuditLog;
+
+	type IPollCreate = Omit<Poll, "id" | "createdAt" | "sizes" | "updatedAt"> &
+		Partial<Pick<Poll, "id" | "createdAt" | "sizes" | "updatedAt">>;
 }

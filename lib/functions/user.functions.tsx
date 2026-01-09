@@ -3,10 +3,8 @@ import {
 	mutationOptions,
 	queryOptions,
 } from "@tanstack/react-query";
-import { getPayload } from "../config/payload";
+import { payload } from "../config/payload";
 import { queryClient } from "../config/tanstackQuery";
-
-const payload = getPayload();
 
 /**
  * @Mutations

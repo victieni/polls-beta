@@ -1,10 +1,12 @@
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 
-import { Link } from "@/components/ui/link";
+import { Button } from "@/components/ui";
 import { Text } from "@/components/ui/text";
 import { View } from "@/components/ui/view";
 
 export default function NotFoundScreen() {
+	const router = useRouter();
+
 	return (
 		<>
 			<Stack.Screen options={{ title: "Oops!" }} />
@@ -17,7 +19,7 @@ export default function NotFoundScreen() {
 				}}
 			>
 				<Text>This screen does not exist.</Text>
-				<Link href="/">Go to home screen!</Link>
+				<Button onPress={() => router.back()}>Back</Button>
 			</View>
 		</>
 	);

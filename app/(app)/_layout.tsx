@@ -68,6 +68,7 @@ export default function AppLayout() {
 									headerShown: false,
 									sheetGrabberVisible: true,
 									sheetAllowedDetents: [0.4, 0.7, 1],
+									sheetInitialDetentIndex: 0,
 									contentStyle: {
 										backgroundColor: isLiquidGlassAvailable()
 											? "transparent"
@@ -84,7 +85,6 @@ export default function AppLayout() {
 												? "formSheet"
 												: "modal"
 											: "modal",
-									sheetInitialDetentIndex: 0,
 									headerStyle: {
 										backgroundColor:
 											Platform.OS === "ios"
@@ -98,6 +98,23 @@ export default function AppLayout() {
 										: colorScheme === "dark"
 										? "dark"
 										: "light",
+								}}
+							/>
+						</Stack.Protected>
+
+						<Stack.Protected guard={!isSignedIn}>
+							<Stack.Screen
+								name="settings"
+								options={{
+									presentation: "formSheet",
+									sheetGrabberVisible: true,
+									sheetAllowedDetents: [0.4, 0.7, 1],
+									sheetInitialDetentIndex: 0,
+									sheetExpandsWhenScrolledToEdge: true,
+									contentStyle: {
+										// backgroundColor: cardColor,
+										backgroundColor: "transparent",
+									},
 								}}
 							/>
 						</Stack.Protected>

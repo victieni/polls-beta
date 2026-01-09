@@ -48,12 +48,12 @@ export const lightColors = {
 
 	// Text colors
 	text: "#000000",
-	textMuted: "#71717a",
+	textMuted: "#5c6375",
 
 	// Legacy support for existing components
 	tint: "#18181b",
-	icon: "#71717a",
-	tabIconDefault: "#71717a",
+	icon: "#313e38",
+	tabIconDefault: "#313e38",
 	tabIconSelected: "#18181b",
 
 	// Default buttons, links, Send button, selected tabs
@@ -106,12 +106,12 @@ export const darkColors = {
 
 	// Text colors
 	text: "#FFFFFF",
-	textMuted: "#a1a1aa",
+	textMuted: "#798093",
 
 	// Legacy support for existing components
 	tint: "#FFFFFF",
-	icon: "#a1a1aa",
-	tabIconDefault: "#a1a1aa",
+	icon: "#e9f0f5",
+	tabIconDefault: "#e9f0f5",
 	tabIconSelected: "#FFFFFF",
 
 	// Default buttons, links, Send button, selected tabs

@@ -324,8 +324,9 @@ export function Picker({
 
       <Modal
         visible={isOpen}
+        
         transparent
-        animationType='fade'
+        animationType='slide'
         onRequestClose={() => setIsOpen(false)}
       >
         <Pressable
