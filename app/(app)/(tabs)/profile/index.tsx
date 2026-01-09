@@ -20,7 +20,7 @@ export default function ProfileScreen() {
 			</View>
 
 			{/* <Link href="/sheet" asChild> */}
-			<Link href="/settings" asChild>
+			<Link href="/(app)/(tabs)/profile/settings" asChild>
 				<Button icon={Settings} size="icon" variant="outline" />
 			</Link>
 

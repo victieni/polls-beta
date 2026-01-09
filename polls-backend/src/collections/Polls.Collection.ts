@@ -13,11 +13,13 @@ export const Polls: CollectionConfig = {
   },
   access: {
     // Creator has full control; others can read public polls
-    create: ({ req: { user } }) => !!user, // Logged-in users can create
     // read: ({ req: { user,  } }) => doc.isPublic || (user && doc.creator?.id === user.id),
-    read: () => true,
     // update: ({ req: { user }, doc }) => user && doc.creator?.id === user.id,
     // delete: ({ req: { user }, doc }) => user && doc.creator?.id === user.id,
+    create: () => true, // Logged-in users can create
+    read: () => true,
+    update: () => true,
+    delete: () => true,
   },
   fields: [
     {

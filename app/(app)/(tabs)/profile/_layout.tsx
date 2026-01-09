@@ -12,10 +12,10 @@ export default function UserLayout() {
 			}}
 		>
 			<Stack.Screen name="index" />
-			{/* <Stack.Screen
+			<Stack.Screen
 				name="settings"
 				options={{
-					presentation: "formSheet",
+					presentation: "pageSheet",
 					sheetGrabberVisible: true,
 					sheetAllowedDetents: [0.4, 0.7, 1],
 					sheetInitialDetentIndex: 0,
@@ -25,7 +25,7 @@ export default function UserLayout() {
 						backgroundColor: "transparent",
 					},
 				}}
-			/> */}
+			/>
 		</Stack>
 	);
 }

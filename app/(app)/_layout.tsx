@@ -102,7 +102,7 @@ export default function AppLayout() {
 							/>
 						</Stack.Protected>
 
-						<Stack.Protected guard={!isSignedIn}>
+						{/* <Stack.Protected guard={!isSignedIn}>
 							<Stack.Screen
 								name="settings"
 								options={{
@@ -117,7 +117,7 @@ export default function AppLayout() {
 									},
 								}}
 							/>
-						</Stack.Protected>
+						</Stack.Protected> */}
 
 						<Stack.Protected guard={!isSignedIn}>
 							<Stack.Screen name="auth" />
