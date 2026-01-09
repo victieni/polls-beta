@@ -19,9 +19,7 @@ export default function UsersScreen() {
 						User Accounts
 					</Text>
 				</View>
-			
 			</View>
-
 
 			{/* <ScrollView> */}
 			<Text>Users page experimental</Text>

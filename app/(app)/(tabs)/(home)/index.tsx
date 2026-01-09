@@ -1,4 +1,12 @@
-import { Button, Card, Icon, Link, Text, View } from "@/components/ui";
+import {
+	Button,
+	Card,
+	Icon,
+	Link,
+	SafeAreaView,
+	Text,
+	View,
+} from "@/components/ui";
 import { useColor } from "@/hooks/useColor";
 import { Terminal } from "lucide-react-native";
 
@@ -7,14 +15,7 @@ export default function HomeScreen() {
 	const muted = useColor("muted");
 
 	return (
-		<View
-			style={{
-				flex: 1,
-				gap: 16,
-				padding: 24,
-				justifyContent: "center",
-			}}
-		>
+		<SafeAreaView className={"flex-1 p-3 bg-background"}>
 			<Text
 				variant="heading"
 				style={{
@@ -24,12 +25,8 @@ export default function HomeScreen() {
 				Built with ❤️ by BNA
 			</Text>
 
-			<View
-				style={{
-					marginBottom: 20,
-				}}
-			>
-				<Card>
+			<View >
+				<Card className="shadow rounded-sm">
 					<View
 						style={{
 							gap: 8,
@@ -95,6 +92,6 @@ export default function HomeScreen() {
 					Open Components Sheet
 				</Button>
 			</Link>
-		</View>
+		</SafeAreaView>
 	);
 }

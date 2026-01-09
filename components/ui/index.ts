@@ -15,5 +15,6 @@ export * from "./link";
 export * from "./tabs";
 export * from "./avatar";
 export * from "./separator";
+export * from "./skeleton";
 
 export const SafeAreaView = withUniwind(SAV);

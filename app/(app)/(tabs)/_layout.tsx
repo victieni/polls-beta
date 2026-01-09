@@ -14,6 +14,7 @@ export default function TabsLayout() {
 	const red = useColor("red");
 	const primary = useColor("primary");
 	const foreground = useColor("foreground");
+	
 
 	return (
 		<NativeTabs
