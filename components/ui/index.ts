@@ -21,5 +21,6 @@ export * from "./checkbox";
 export * from "./switch";
 export * from "./picker";
 export * from "./date-picker";
+export * from "./bottom-sheet";
 
 export const SafeAreaView = withUniwind(SAV);

@@ -58,6 +58,7 @@ export const Input = withUniwind(
 			// Theme colors
 			const cardColor = useColor("card");
 			const textColor = useColor("text");
+			const foreground = useColor("foreground");
 			const muted = useColor("textMuted");
 			const borderColor = useColor("border");
 			const primary = useColor("primary");
@@ -171,7 +172,7 @@ export const Input = withUniwind(
 												<Icon
 													name={icon}
 													size={16}
-													color={error ? danger : muted}
+													color={error ? danger : foreground}
 												/>
 											)}
 											{label && (
@@ -182,7 +183,7 @@ export const Input = withUniwind(
 													className="font-medium"
 													style={[
 														{
-															color: error ? danger : muted,
+															color: error ? danger : foreground,
 														},
 														labelStyle,
 													]}
@@ -236,7 +237,7 @@ export const Input = withUniwind(
 										<Icon
 											name={icon}
 											size={16}
-											color={error ? danger : muted}
+											color={error ? danger : foreground}
 										/>
 									)}
 									{label && (
@@ -244,9 +245,10 @@ export const Input = withUniwind(
 											variant="caption"
 											numberOfLines={1}
 											ellipsizeMode="tail"
+											className="font-medium"
 											style={[
 												{
-													color: error ? danger : muted,
+													color: error ? danger : foreground,
 												},
 												labelStyle,
 											]}

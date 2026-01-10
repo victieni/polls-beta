@@ -22,7 +22,7 @@ export function Switch({ label, error, labelStyle, ...props }: SwitchProps) {
 	const danger = useColor("red");
 
 	return (
-		<View style={{ marginBottom: 8 }}>
+		<View style={{ marginBottom: 4 }}>
 			<View
 				style={{
 					flexDirection: "row",

@@ -252,7 +252,7 @@ export interface PollOption {
     };
     [k: string]: unknown;
   } | null;
-  imageUrl?: string | null;
+  thumbnail?: string | null;
   order?: number | null;
   associatedUser?: (string | null) | User;
   updatedAt: string;
@@ -529,7 +529,7 @@ export interface PollOptionsSelect<T extends boolean = true> {
   name?: T;
   description?: T;
   about?: T;
-  imageUrl?: T;
+  thumbnail?: T;
   order?: T;
   associatedUser?: T;
   updatedAt?: T;

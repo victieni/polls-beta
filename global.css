@@ -5,7 +5,7 @@
 @layer theme {
 	:root {
 		@variant light {
-			--color-background: #fcfcfc;
+			--color-background: #eeeeee;
 			--color-foreground: #313e38;
 			--color-card: #ffffff;
 			--color-card-foreground: #313e38;

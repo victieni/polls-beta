@@ -11,10 +11,8 @@ export const PollOptions: CollectionConfig = {
   },
   access: {
     // Tied to poll creator's control
-    create: ({ req: { user }, data }) => {
-      // Check if user is creator of related poll
-      return !!user // Placeholder; enhance with hook if needed
-    },
+    // create: ({ req: { user }, data }) => !!user,
+    create: () => true,
     read: () => true,
     update: () => true,
     delete: () => true,
@@ -40,7 +38,7 @@ export const PollOptions: CollectionConfig = {
       type: 'richText', // For  why to vote
     },
     {
-      name: 'imageUrl',
+      name: 'thumbnail',
       type: 'text',
     },
     {

@@ -16,7 +16,7 @@ export const Polls: CollectionConfig = {
     // read: ({ req: { user,  } }) => doc.isPublic || (user && doc.creator?.id === user.id),
     // update: ({ req: { user }, doc }) => user && doc.creator?.id === user.id,
     // delete: ({ req: { user }, doc }) => user && doc.creator?.id === user.id,
-    create: () => true, // Logged-in users can create
+    create: () => true,
     read: () => true,
     update: () => true,
     delete: () => true,
@@ -128,36 +128,45 @@ export const Polls: CollectionConfig = {
   // indexes: [
   //   { fields: { creator: 1, status: 1 } }, // Compound index for queries
   // ],
-  // hooks: {
-  //   beforeChange: [
-  //     // Validate start/end dates
-  //     async ({ data:value, operation }) => {
-  //       if (
-  //         operation === 'update' &&
-  //         value.startDate &&
-  //         value.endDate &&
-  //         new Date(value.startDate) > new Date(value.endDate)
-  //       ) {
-  //         throw new Error('Start date must be before end date')
-  //       }
-  //       return value
-  //     },
-  //   ],
-  //   afterOperation: [
-  //     // Example: Log changes to AuditLogs
-  //     async ({ operation, result, req }) => {
-  //       if (operation === 'create' || operation === 'update') {
-  //         await req.payload.create({
-  //           collection: 'audit-logs',
-  //           data: {
-  //             actionType: operation === 'create' ? 'create_poll' : 'update_poll',
-  //             entityId: result.id,
-  //             user: req.user?.id,
-  //             details: { changes: result },
-  //           },
-  //         })
-  //       }
-  //     },
-  //   ],
-  // },
+  hooks: {
+    beforeRead: [
+      async (d) => {
+        try {
+          
+        } catch (error:any) {
+          throw new Error(error)
+        }
+      }
+    ],
+    beforeChange: [
+      // ? Validate start/end dates
+      async ({ data: value, operation }) => {
+        if (
+          operation === 'update' &&
+          value.startDate &&
+          value.endDate &&
+          new Date(value.startDate) > new Date(value.endDate)
+        ) {
+          throw new Error('Start date must be before end date')
+        }
+        return value
+      },
+    ],
+    afterOperation: [
+      // ? Example: Log changes to AuditLogs
+      // async ({ operation, result, req }) => {
+      //   if (operation === 'create' || operation === 'update') {
+      //     await req.payload.create({
+      //       collection: 'audit-logs',
+      //       data: {
+      //         actionType: operation === 'create' ? 'create_poll' : 'edit_option',
+      //         entityId: result.id,
+      //         user: req.user?.id,
+      //         details: { changes: result },
+      //       },
+      //     })
+      //   }
+      // },
+    ],
+  },
 }

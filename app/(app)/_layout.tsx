@@ -16,6 +16,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useReactQueryDevTools } from "@dev-plugins/react-query";
 import { useAuth } from "@clerk/clerk-expo";
 import { View } from "@/components/ui";
+import { useColor } from "@/hooks/useColor";
 
 export const unstable_settings = {
 	initialRouteName: "(tabs)",
@@ -29,6 +30,9 @@ SplashScreen.setOptions({
 export default function AppLayout() {
 	const { isSignedIn, isLoaded } = useAuth();
 	const colorScheme = useColorScheme() || "light";
+
+	const primary = useColor("primary");
+
 	useReactQueryDevTools(queryClient);
 
 	useEffect(() => {
@@ -49,7 +53,7 @@ export default function AppLayout() {
 	if (!isLoaded)
 		return (
 			<View className="flex-1 items-center justify-center">
-				<ActivityIndicator size="large" color={"#00f"} />
+				<ActivityIndicator size="large" color={primary} />
 			</View>
 		);
 

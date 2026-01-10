@@ -19,4 +19,13 @@ declare global {
 
 	type IPollCreate = Omit<Poll, "id" | "createdAt" | "sizes" | "updatedAt"> &
 		Partial<Pick<Poll, "id" | "createdAt" | "sizes" | "updatedAt">>;
+	type IPollOptionCreate = Omit<
+		PollOption,
+		"id" | "createdAt" | "sizes" | "updatedAt"
+	> &
+		Partial<Pick<PollOption, "id" | "createdAt" | "sizes" | "updatedAt">>;
+
+	interface IContext {
+		reset: () => void;
+	}
 }

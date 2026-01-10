@@ -4,7 +4,7 @@ import React from "react";
 
 export default function NewPoll() {
 	return (
-		<SafeAreaView className="flex-1  p-3">
+		<SafeAreaView className="flex-1  p-3 bg-background">
 			<Text variant="title" className="p-3">
 				Create new Poll
 			</Text>
