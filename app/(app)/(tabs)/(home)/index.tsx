@@ -35,11 +35,13 @@ export default function HomeScreen() {
 						<PollsFeed type={ePollType.ELECTION} />
 					</Suspense>
 				</TabsContent>
+
 				<TabsContent value="Simple" className="h-screen">
 					<Suspense fallback={<PollsFeed.Fallback />}>
 						<PollsFeed type={ePollType.SIMPLE} />
 					</Suspense>
 				</TabsContent>
+
 				<TabsContent value="Surveys" className="h-screen">
 					<Suspense fallback={<PollsFeed.Fallback />}>
 						<PollsFeed type={ePollType.SURVEY} />

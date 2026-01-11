@@ -54,12 +54,12 @@ export default function ProfileScreen() {
 
 				<TabsContent value="Bookmarks" className="h-screen">
 					<Suspense fallback={<PollsFeed.Fallback />}>
-						<PollsFeed />
+						<PollsFeed bookmark={"661a3b4c5e6f7a8b9c0d1e33"} />
 					</Suspense>
 				</TabsContent>
 				<TabsContent value="Following" className="h-screen">
 					<Suspense fallback={<PollsFeed.Fallback />}>
-						<PollsFeed />
+						<PollsFeed follower={"661a3b4c5e6f7a8b9c0d1e33"} />
 					</Suspense>
 				</TabsContent>
 				<TabsContent value="Participated" className="h-screen">

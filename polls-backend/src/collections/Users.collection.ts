@@ -36,6 +36,5 @@ export const Users: CollectionConfig = {
       name: 'imageUrl',
       type: 'text',
     },
-    { name: 'bookmarks', type: 'relationship', relationTo: 'polls', hasMany: true },
   ],
 }

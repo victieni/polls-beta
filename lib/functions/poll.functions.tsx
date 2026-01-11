@@ -95,6 +95,8 @@ export const getPolls = ({
 	status,
 	type,
 	creator,
+	bookmark,
+	follower,
 }: {
 	isPrivate?: boolean;
 	anonymous?: boolean;
@@ -102,6 +104,8 @@ export const getPolls = ({
 	status?: ePollStatus;
 	type?: ePollType;
 	creator?: string;
+	bookmark?: string;
+	follower?: string;
 }) =>
 	infiniteQueryOptions({
 		queryKey: ["polls", isPrivate, anonymous, isEditable, status, type],
@@ -121,6 +125,8 @@ export const getPolls = ({
 							{ type: { equals: type } },
 							{ anonymous: { equals: anonymous } },
 							{ creator: { equals: creator } },
+							{ bookmarks: { contains: bookmark } },
+							{ followers: { contains: follower } },
 						],
 					},
 					page,

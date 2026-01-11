@@ -3,6 +3,7 @@ import {
 	Config,
 	Poll,
 	PollOption,
+	Registration,
 	User,
 } from "@/polls-backend/typescript/payload";
 
@@ -16,6 +17,7 @@ declare global {
 	type IVote = Vote;
 	type IResults = Result;
 	type IAuditLog = AuditLog;
+	type IRegistration = Registration;
 
 	type IPollCreate = Omit<Poll, "id" | "createdAt" | "sizes" | "updatedAt"> &
 		Partial<Pick<Poll, "id" | "createdAt" | "sizes" | "updatedAt">>;
@@ -24,6 +26,12 @@ declare global {
 		"id" | "createdAt" | "sizes" | "updatedAt"
 	> &
 		Partial<Pick<PollOption, "id" | "createdAt" | "sizes" | "updatedAt">>;
+
+	type IRegistrationCreate = Omit<
+		Registration,
+		"id" | "createdAt" | "sizes" | "updatedAt"
+	> &
+		Partial<Pick<Registration, "id" | "createdAt" | "sizes" | "updatedAt">>;
 
 	interface IContext {
 		reset: () => void;

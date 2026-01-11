@@ -50,6 +50,9 @@ export default function AppLayout() {
 		);
 	}, [colorScheme]);
 
+
+	console.log("isLoaded", isLoaded);
+
 	if (!isLoaded)
 		return (
 			<View className="flex-1 items-center justify-center">
