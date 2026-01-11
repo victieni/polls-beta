@@ -124,7 +124,7 @@ export const getPolls = ({
 							{ status: { equals: status } },
 							{ type: { equals: type } },
 							{ anonymous: { equals: anonymous } },
-							{ creator: { equals: creator } },
+							{ "administration.creator": { equals: creator } },
 							{ "meta.bookmarks": { contains: bookmark } },
 							{ "meta.followers": { contains: follower } },
 						],
