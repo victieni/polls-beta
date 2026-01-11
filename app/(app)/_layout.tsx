@@ -50,7 +50,6 @@ export default function AppLayout() {
 		);
 	}, [colorScheme]);
 
-
 	console.log("isLoaded", isLoaded);
 
 	if (!isLoaded)
