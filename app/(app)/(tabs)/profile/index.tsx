@@ -1,8 +1,19 @@
 import { SignOutButton } from "@/components/btns/signoutBtn";
-import UsersFeed from "@/components/Feeds/UsersFeed";
-import { Button, Icon, Link, SafeAreaView, Text, View } from "@/components/ui";
+import PollsFeed from "@/components/Feeds/PollsFeed";
+import {
+	Button,
+	Icon,
+	Link,
+	SafeAreaView,
+	Tabs,
+	TabsContent,
+	TabsList,
+	TabsTrigger,
+	Text,
+	View,
+} from "@/components/ui";
 import { useColor } from "@/hooks/useColor";
-import { Settings, UserCircle, UsersIcon } from "lucide-react-native";
+import { Settings, UserCircle } from "lucide-react-native";
 import React, { Suspense } from "react";
 
 export default function ProfileScreen() {
@@ -10,28 +21,53 @@ export default function ProfileScreen() {
 
 	return (
 		<SafeAreaView className="flex-1 p-3">
-			<View className="flex-row gap-x-2 items-center justify-between">
-				<View className="flex-row items-center gap-x-1">
-					<Icon name={UserCircle} size={30} color={primary} />
-					<Text variant="heading" className="text-primary">
-						Profile
-					</Text>
+			<View className="flex-row justify-between gap-x-3">
+				<View className="flex-row gap-x-2 items-center justify-between">
+					<View className="flex-row items-center gap-x-1">
+						<Icon name={UserCircle} size={30} color={primary} />
+						<Text variant="heading" className="text-primary">
+							Profile
+						</Text>
+					</View>
 				</View>
-			</View>
 
-			{/* <Link href="/sheet" asChild> */}
-			<Link href="/profile/settings" asChild>
-				<Button icon={Settings} size="icon" variant="outline" />
-			</Link>
+				<Link href="/profile/settings" asChild>
+					<Button icon={Settings} size="icon" variant="outline" />
+				</Link>
+			</View>
 
 			<SignOutButton />
 
-			<Text>Users page experimental</Text>
-			<Text>{process.env.EXPO_PUBLIC_API}</Text>
+			<Tabs defaultValue="Polls" className="flex-1">
+				<TabsList>
+					<TabsTrigger value="Polls">Polls</TabsTrigger>
+					<TabsTrigger value="Bookmarks">Bookmarks</TabsTrigger>
+					<TabsTrigger value="Following">Following</TabsTrigger>
+					<TabsTrigger value="Participated">Participated</TabsTrigger>
+				</TabsList>
 
-			<Suspense fallback={<UsersFeed.Fallback />}>
-				<UsersFeed />
-			</Suspense>
+				<TabsContent value="Polls" className="h-screen">
+					<Suspense fallback={<PollsFeed.Fallback />}>
+						<PollsFeed creator={"661a3b4c5e6f7a8b9c0d1e33"} />
+					</Suspense>
+				</TabsContent>
+
+				<TabsContent value="Bookmarks" className="h-screen">
+					<Suspense fallback={<PollsFeed.Fallback />}>
+						<PollsFeed />
+					</Suspense>
+				</TabsContent>
+				<TabsContent value="Following" className="h-screen">
+					<Suspense fallback={<PollsFeed.Fallback />}>
+						<PollsFeed />
+					</Suspense>
+				</TabsContent>
+				<TabsContent value="Participated" className="h-screen">
+					<Suspense fallback={<PollsFeed.Fallback />}>
+						<PollsFeed />
+					</Suspense>
+				</TabsContent>
+			</Tabs>
 		</SafeAreaView>
 	);
 }

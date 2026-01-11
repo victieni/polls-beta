@@ -6,24 +6,24 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 // export const usePollForm = ({default}: {default?: IPoll}) => //! fix types
-export const usePollForm = () =>
+export const usePollForm = ({ poll }: { poll?: IPoll }) =>
 	useForm({
 		resolver: zodResolver(PollSchema),
 		// reValidateMode: "onBlur",
 		defaultValues: {
-			title: "",
-			prompt: "",
-			description: "",
-			startDate: new Date().toISOString(),
-			endDate: addDaysAndToISO(new Date(), 14),
-			status: ePollStatus.DRAFT,
-			tags: "",
-			isEditable: true,
-			isMultipleChoice: false,
-			isPrivate: false,
-			hideProgress: false,
-			allowAnonymous: false,
-			type: ePollType.SIMPLE,
+			title: poll?.title || "",
+			prompt: poll?.prompt || "",
+			description: poll?.description || "",
+			startDate: poll?.startDate || new Date().toISOString(),
+			endDate: poll?.endDate || addDaysAndToISO(new Date(), 14),
+			status: poll?.status || ePollStatus.DRAFT,
+			tags: poll?.tags?.join(", ") || "",
+			isEditable: poll?.isEditable || true,
+			isMultipleChoice: poll?.isMultipleChoice || false,
+			isPrivate: poll?.isPrivate || false,
+			hideProgress: poll?.hideProgress || false,
+			allowAnonymous: poll?.allowAnonymous || false,
+			type: poll?.type || ePollType.SIMPLE,
 		},
 	});
 

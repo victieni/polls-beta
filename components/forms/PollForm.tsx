@@ -15,10 +15,14 @@ import {
 import { usePolls } from "@/contexts/polls.context";
 import { usePollForm } from "@/hooks/formHooks";
 import { useColor } from "@/hooks/useColor";
-import { createPoll, updatePoll } from "@/lib/functions/poll.functions";
+import {
+	createPoll,
+	getPoll,
+	updatePoll,
+} from "@/lib/functions/poll.functions";
 import { PollFormData } from "@/lib/schemas/poll.schema";
 import { ePollStatus, ePollType } from "@/polls-backend/typescript/enum";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
 import {
 	BookmarkCheck,
@@ -28,7 +32,7 @@ import {
 	GitFork,
 	Settings2,
 } from "lucide-react-native";
-import React, { useTransition } from "react";
+import React, { useEffect, useTransition } from "react";
 import { Controller } from "react-hook-form";
 import { AvoidKeyboard } from "../ui/avoid-keyboard";
 import PollOptionsForm from "./PollOptionsForm";
@@ -40,6 +44,12 @@ export default function PollForm() {
 		pollOptions,
 		reset: resetPollsContext,
 	} = usePolls();
+
+	// ! demo only
+	const { data: poll } = useQuery(getPoll("69625140cfbbf666ccd94d2d"));
+	useEffect(() => {
+		setNewPoll(poll);
+	}, [poll]);
 
 	const { mutate: create, isPending: isCreating } = useMutation(createPoll());
 	const { mutate: update, isPending: isUpdating } = useMutation(updatePoll());
@@ -55,7 +65,7 @@ export default function PollForm() {
 		control,
 		formState: { errors },
 		reset: resetForm,
-	} = usePollForm();
+	} = usePollForm({ poll });
 
 	const submitHandler = (data: PollFormData) => {
 		const cleanData: IPollCreate = {

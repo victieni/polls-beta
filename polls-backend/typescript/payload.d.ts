@@ -71,6 +71,7 @@ export interface Config {
     media: Media;
     polls: Poll;
     'poll-options': PollOption;
+    registration: Registration;
     votes: Vote;
     results: Result;
     'audit-logs': AuditLog;
@@ -85,6 +86,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     polls: PollsSelect<false> | PollsSelect<true>;
     'poll-options': PollOptionsSelect<false> | PollOptionsSelect<true>;
+    registration: RegistrationSelect<false> | RegistrationSelect<true>;
     votes: VotesSelect<false> | VotesSelect<true>;
     results: ResultsSelect<false> | ResultsSelect<true>;
     'audit-logs': AuditLogsSelect<false> | AuditLogsSelect<true>;
@@ -194,16 +196,9 @@ export interface Poll {
   isEditable?: boolean | null;
   status?: ('draft' | 'active' | 'closed' | 'open' | 'archived' | 'invalidated') | null;
   type?: ('simple' | 'election' | 'survey') | null;
-  registration?: {
-    voters?:
-      | {
-          registrationId: string;
-          isApproved?: boolean | null;
-          user?: (string | null) | User;
-          id?: string | null;
-        }[]
-      | null;
-    validRegistrationIds?: string[] | null;
+  meta?: {
+    followers?: (string | User)[] | null;
+    bookmarks?: (string | User)[] | null;
   };
   updatedAt: string;
   createdAt: string;
@@ -255,6 +250,27 @@ export interface PollOption {
   thumbnail?: string | null;
   order?: number | null;
   associatedUser?: (string | null) | User;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "registration".
+ */
+export interface Registration {
+  id: string;
+  poll: string | User;
+  prompt: string;
+  description?: string | null;
+  voters?:
+    | {
+        registrationId: string;
+        isApproved?: boolean | null;
+        user?: (string | null) | User;
+        id?: string | null;
+      }[]
+    | null;
+  validRegistrationIds?: string[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -377,6 +393,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'poll-options';
         value: string | PollOption;
+      } | null)
+    | ({
+        relationTo: 'registration';
+        value: string | Registration;
       } | null)
     | ({
         relationTo: 'votes';
@@ -503,18 +523,11 @@ export interface PollsSelect<T extends boolean = true> {
   isEditable?: T;
   status?: T;
   type?: T;
-  registration?:
+  meta?:
     | T
     | {
-        voters?:
-          | T
-          | {
-              registrationId?: T;
-              isApproved?: T;
-              user?: T;
-              id?: T;
-            };
-        validRegistrationIds?: T;
+        followers?: T;
+        bookmarks?: T;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -532,6 +545,26 @@ export interface PollOptionsSelect<T extends boolean = true> {
   thumbnail?: T;
   order?: T;
   associatedUser?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "registration_select".
+ */
+export interface RegistrationSelect<T extends boolean = true> {
+  poll?: T;
+  prompt?: T;
+  description?: T;
+  voters?:
+    | T
+    | {
+        registrationId?: T;
+        isApproved?: T;
+        user?: T;
+        id?: T;
+      };
+  validRegistrationIds?: T;
   updatedAt?: T;
   createdAt?: T;
 }

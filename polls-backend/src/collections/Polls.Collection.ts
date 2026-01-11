@@ -97,22 +97,12 @@ export const Polls: CollectionConfig = {
       defaultValue: ePollType.SIMPLE,
     },
 
-    // ? Only For Private
     {
-      name: 'registration',
+      name: 'meta',
       type: 'group',
       fields: [
-        // ! Enable Creators to select Users who will take part.
-        {
-          name: 'voters',
-          type: 'array',
-          fields: [
-            { name: 'registrationId', type: 'text', required: true },
-            { name: 'isApproved', type: 'checkbox', defaultValue: false },
-            { name: 'user', type: 'relationship', relationTo: 'users' },
-          ],
-        },
-        { name: 'validRegistrationIds', type: 'text', hasMany: true },
+        { name: 'followers', type: 'relationship', relationTo: 'users', hasMany: true },
+        { name: 'bookmarks', type: 'relationship', relationTo: 'users', hasMany: true },
       ],
     },
 
@@ -132,11 +122,10 @@ export const Polls: CollectionConfig = {
     beforeRead: [
       async (d) => {
         try {
-          
-        } catch (error:any) {
+        } catch (error: any) {
           throw new Error(error)
         }
-      }
+      },
     ],
     beforeChange: [
       // ? Validate start/end dates

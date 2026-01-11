@@ -94,12 +94,14 @@ export const getPolls = ({
 	isEditable,
 	status,
 	type,
+	creator,
 }: {
 	isPrivate?: boolean;
 	anonymous?: boolean;
 	isEditable?: boolean;
 	status?: ePollStatus;
 	type?: ePollType;
+	creator?: string;
 }) =>
 	infiniteQueryOptions({
 		queryKey: ["polls", isPrivate, anonymous, isEditable, status, type],
@@ -111,6 +113,16 @@ export const getPolls = ({
 					nextPage,
 				} = await payload.find({
 					collection: "polls",
+					where: {
+						or: [
+							{ isPrivate: { equals: isPrivate } },
+							{ isEditable: { equals: isEditable } },
+							{ status: { equals: status } },
+							{ type: { equals: type } },
+							{ anonymous: { equals: anonymous } },
+							{ creator: { equals: creator } },
+						],
+					},
 					page,
 				});
 

@@ -6,7 +6,7 @@ import { TextStyle, ViewStyle } from "react-native";
 import { withUniwind } from "uniwind";
 
 interface CardProps {
-	children: React.ReactNode;
+	children?: React.ReactNode;
 	style?: ViewStyle;
 }
 
