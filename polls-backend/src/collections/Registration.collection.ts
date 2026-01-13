@@ -8,6 +8,7 @@ export const Registration: CollectionConfig = {
     update: () => true,
     delete: () => true,
   },
+  // todo In client, Limit Duplication registration to Same Poll.
   fields: [
     {
       name: 'poll',

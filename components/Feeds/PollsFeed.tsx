@@ -33,7 +33,7 @@ export default function PollsFeed({
 					showsVerticalScrollIndicator={false}
 				/>
 			) : (
-				<Void msg={voidMsg ?? "No Polls Found."} />
+				<Void msg={voidMsg ?? "Sorry no polls found😢."} />
 			)}
 		</View>
 	);

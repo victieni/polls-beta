@@ -21,13 +21,14 @@ export const Polls: CollectionConfig = {
     update: () => true,
     delete: () => true,
   },
+  // todo Add "Allow Custom Response" Field
+  // todo Create "Custom Response" Collection - figure out how to make it Anonymous.
   fields: [
     {
       name: 'title',
       type: 'text',
       required: true,
     },
-    // ? Poll prompt for the App.
     { name: 'prompt', type: 'text', required: true },
     {
       name: 'description',
@@ -82,6 +83,7 @@ export const Polls: CollectionConfig = {
       type: 'checkbox',
       defaultValue: false,
     },
+    { name: 'allowCustomResponse', type: 'checkbox', defaultValue: true },
     { name: 'hideProgress', type: 'checkbox', defaultValue: false },
     { name: 'isEditable', type: 'checkbox', defaultValue: true },
     {

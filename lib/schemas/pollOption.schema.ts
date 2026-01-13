@@ -16,11 +16,7 @@ export const PollOptionSchema = z.object({
 	thumbnail: z.url("Thumbnail must be a valid URL").optional(),
 
 	// Ordering
-	order: z
-		.number()
-		.int("Order must be an integer")
-		.min(0, "Order cannot be negative")
-		.default(0),
+	order: z.number().min(1, "Order cannot be negative").default(1),
 });
 
 // Schema for creating a new poll option

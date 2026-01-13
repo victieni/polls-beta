@@ -27,13 +27,13 @@ export const usePollForm = ({ poll }: { poll?: IPoll }) =>
 		},
 	});
 
-export const usePollOptionForm = () =>
+export const usePollOptionForm = (opt?: IPollOption) =>
 	useForm({
 		resolver: zodResolver(PollOptionSchema),
 		defaultValues: {
-			name: "",
-			description: "",
-			order: 0,
-			thumbnail: "",
+			name: opt?.name || "",
+			description: opt?.description || "",
+			order: opt?.order || 1,
+			// thumbnail: "",
 		},
 	});

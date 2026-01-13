@@ -44,9 +44,10 @@ export const Votes: CollectionConfig = {
       // ! Optional for anonymous votes
     },
     {
+      // For anonymized uniqueness (e.g., hash of userID)
       name: 'voteHash',
       type: 'text',
-      // For anonymized uniqueness (e.g., hash of IP/device)
+      required: true,
       unique: true,
       admin: {
         readOnly: true,

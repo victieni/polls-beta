@@ -73,6 +73,7 @@ export interface Config {
     'poll-options': PollOption;
     registration: Registration;
     votes: Vote;
+    responses: Response;
     results: Result;
     'audit-logs': AuditLog;
     'payload-kv': PayloadKv;
@@ -88,6 +89,7 @@ export interface Config {
     'poll-options': PollOptionsSelect<false> | PollOptionsSelect<true>;
     registration: RegistrationSelect<false> | RegistrationSelect<true>;
     votes: VotesSelect<false> | VotesSelect<true>;
+    responses: ResponsesSelect<false> | ResponsesSelect<true>;
     results: ResultsSelect<false> | ResultsSelect<true>;
     'audit-logs': AuditLogsSelect<false> | AuditLogsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -210,6 +212,7 @@ export interface Poll {
   isPrivate?: boolean | null;
   isMultipleChoice?: boolean | null;
   allowAnonymous?: boolean | null;
+  allowCustomResponse?: boolean | null;
   hideProgress?: boolean | null;
   isEditable?: boolean | null;
   status?: ('draft' | 'active' | 'closed' | 'open' | 'archived' | 'invalidated') | null;
@@ -282,7 +285,7 @@ export interface Vote {
   poll: string | Poll;
   option: string | PollOption;
   voter?: (string | null) | User;
-  voteHash?: string | null;
+  voteHash: string;
   metadata?:
     | {
         [k: string]: unknown;
@@ -293,6 +296,23 @@ export interface Vote {
     | boolean
     | null;
   isValid?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "responses".
+ */
+export interface Response {
+  id: string;
+  user?: (string | null) | User;
+  userHash: string;
+  poll: string | Poll;
+  body: string;
+  meta?: {
+    likes?: (string | User)[] | null;
+    dislikes?: (string | User)[] | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -400,6 +420,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'votes';
         value: string | Vote;
+      } | null)
+    | ({
+        relationTo: 'responses';
+        value: string | Response;
       } | null)
     | ({
         relationTo: 'results';
@@ -517,6 +541,7 @@ export interface PollsSelect<T extends boolean = true> {
   isPrivate?: T;
   isMultipleChoice?: T;
   allowAnonymous?: T;
+  allowCustomResponse?: T;
   hideProgress?: T;
   isEditable?: T;
   status?: T;
@@ -577,6 +602,24 @@ export interface VotesSelect<T extends boolean = true> {
   voteHash?: T;
   metadata?: T;
   isValid?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "responses_select".
+ */
+export interface ResponsesSelect<T extends boolean = true> {
+  user?: T;
+  userHash?: T;
+  poll?: T;
+  body?: T;
+  meta?:
+    | T
+    | {
+        likes?: T;
+        dislikes?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

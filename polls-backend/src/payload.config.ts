@@ -13,6 +13,7 @@ import { AuditLogs } from './collections/AuditLogs.collection'
 import { PollOptions } from './collections/PollOptions.collection'
 import { Polls } from './collections/Polls.Collection'
 import { Registration } from './collections/Registration.collection'
+import { Responses } from './collections/Response.collection'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -24,7 +25,17 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Polls, PollOptions, Registration, Votes, Results, AuditLogs],
+  collections: [
+    Users,
+    Media,
+    Polls,
+    PollOptions,
+    Registration,
+    Votes,
+    Responses,
+    Results,
+    AuditLogs,
+  ],
   // cors: ['exp://172.20.10.2:8081'],
   cors: '*',
   editor: lexicalEditor(),

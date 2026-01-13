@@ -372,7 +372,7 @@ PollForm.OptionsBottomSheet = ({
 			isVisible={isVisible}
 			onClose={close}
 			title="Add Options"
-			snapPoints={[0.5, 0.9]}
+			snapPoints={[0.5, 0.7, 0.95]}
 		>
 			<ScrollView>
 				<PollOptionsForm />
