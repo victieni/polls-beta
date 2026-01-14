@@ -1,24 +1,52 @@
-import { View, Text, Input, Icon, Button } from "@/components/ui";
+import {
+	View,
+	Text,
+	Input,
+	Icon,
+	Button,
+	ScrollView,
+	BottomSheet,
+	useBottomSheet,
+} from "@/components/ui";
 import { usePolls } from "@/contexts/polls.context";
 import { usePollOptionForm } from "@/hooks/formHooks";
-import React, { Suspense, useState } from "react";
+import React, { ComponentProps, ReactNode, Suspense, useState } from "react";
 import OptionsFeed from "../Feeds/OptionsFeed";
 import { Controller } from "react-hook-form";
-import { Plus } from "lucide-react-native";
+import { Edit3, Image, Plus, Trash2 } from "lucide-react-native";
 import { AvoidKeyboard } from "../ui/avoid-keyboard";
 import { useMutation } from "@tanstack/react-query";
-import { createPollOption } from "@/lib/functions/PollOption.functions";
+import {
+	createPollOption,
+	deletePollOption,
+	updatePollOption,
+} from "@/lib/functions/PollOption.functions";
 import { PollOptionFormData } from "@/lib/schemas/pollOption.schema";
+import { MediaAsset, MediaPicker } from "../ui/media-picker";
+import { useColor } from "@/hooks/useColor";
 
-export default function PollOptionsForm() {
-	const [thumbnail, setThumbnail] = useState<string>("");
+const Main = ({ successAction }: { successAction?: () => void }) => {
+	const { poll, pollOption, setPollOption } = usePolls();
+	const [selectedAsset, setSelectedAsset] = useState<MediaAsset[]>([]);
+	const [thumbnail, setThumbnail] = useState<string>(
+		pollOption?.thumbnail ?? ""
+	);
 
-	const { editPoll, newPoll } = usePolls();
-	const poll = newPoll || editPoll;
+	const destructiveColor = useColor("destructive");
+
 	const { mutate: create, isPending: isCreating } =
 		useMutation(createPollOption);
 
-	const form = usePollOptionForm();
+	const { mutate: update, isPending: isUpdating } =
+		useMutation(updatePollOption);
+
+	const { mutate: deleteOption, isPending: isDeleting } =
+		useMutation(deletePollOption);
+
+	const form = usePollOptionForm(pollOption);
+	console.log("Editing opt:", pollOption);
+
+	if (!poll) return;
 
 	// if (!editPoll && !newPoll) return;
 
@@ -27,22 +55,45 @@ export default function PollOptionsForm() {
 
 		const cleanData: IPollOptionCreate = {
 			...data,
-			poll: poll!.id,
+			poll: poll.id,
 			thumbnail,
 		};
 
-		// create(cleanData, {
-		// 	onSuccess: (opt) => {
-		// 		console.log("created Option:", opt);
-		// 	},
-		// });
+		if (pollOption) {
+			update(
+				{ ...pollOption, ...cleanData },
+				{
+					onSuccess: (opt) => {
+						if (successAction) successAction();
+						setPollOption(undefined);
+
+						console.log("Updated Option:", opt);
+					},
+				}
+			);
+		} else {
+			create(cleanData, {
+				onSuccess: (opt) => {
+					if (successAction) successAction();
+					setPollOption(undefined);
+
+					console.log("created Option:", opt);
+				},
+			});
+		}
 	};
 
+	const deleteHandler = (id: IPollOption["id"]) =>
+		deleteOption(id, {
+			onSuccess: (opt) => {
+				if (successAction) successAction();
+				setPollOption(undefined);
+				console.log("deleted Option:", opt);
+			},
+		});
+
 	return (
-		<View className="gap-y-3">
-			<Suspense fallback={<OptionsFeed.Fallback />}>
-				<OptionsFeed poll={poll!} />
-			</Suspense>
+		<ScrollView>
 			<View className="gap-y-2">
 				<Controller
 					control={form.control}
@@ -72,33 +123,122 @@ export default function PollOptionsForm() {
 						/>
 					)}
 				/>
+
 				<Controller
 					control={form.control}
-					name="thumbnail"
+					name="description"
 					render={({ field }) => (
 						<Input
 							{...field}
 							onChangeText={field.onChange}
-							label="Description"
+							label="Description (opt)"
 							type="textarea"
 							placeholder="Enter extra details about this option..."
 							error={form.formState.errors.description?.message}
 						/>
 					)}
 				/>
+
+				{/* Image picker */}
+				<MediaPicker
+					mediaType="image"
+					buttonText="Select thumbnail"
+					multiple={false}
+					maxSelection={1}
+					icon={Image}
+					variant="secondary"
+					// onError={}
+					selectedAssets={selectedAsset}
+					onSelectionChange={setSelectedAsset}
+				/>
 			</View>
 
-			<Button
-				size="sm"
-				disabled={isCreating}
-				loading={isCreating}
-				onPress={form.handleSubmit(submitHandler, (err) => console.log(err))}
-			>
-				<Text>Add</Text>
-				<Icon name={Plus} />
-			</Button>
+			{/* Actions CREATE | UPDATE | DELETE */}
+			{pollOption ? (
+				<View className="flex-row items-center gap-x-3">
+					<Button
+						size="icon"
+						variant="secondary"
+						// icon={Trash2}
+						disabled={isDeleting}
+						loading={isDeleting}
+						onPress={() => deleteHandler(pollOption.id)}
+						className="mt-3 text-destructive"
+					>
+						<Icon name={Trash2} color={destructiveColor} />
+					</Button>
 
-			<AvoidKeyboard />
-		</View>
+					<Button
+						size="sm"
+						icon={Edit3}
+						disabled={isUpdating}
+						loading={isUpdating}
+						onPress={form.handleSubmit(submitHandler, (err) =>
+							console.log(err)
+						)}
+						className="mt-3 flex-1"
+					>
+						Edit
+					</Button>
+				</View>
+			) : (
+				<Button
+					size="sm"
+					icon={Plus}
+					disabled={isCreating}
+					loading={isCreating}
+					onPress={form.handleSubmit(submitHandler, (err) => console.log(err))}
+					className="mt-3"
+				>
+					<Text>Add</Text>
+				</Button>
+			)}
+
+			{/* <AvoidKeyboard /> */}
+		</ScrollView>
 	);
-}
+};
+
+const SheetTrigger = ({
+	className,
+	children,
+	touchAction,
+	...props
+}: { touchAction?: () => void; children?: ReactNode } & ComponentProps<
+	typeof Main
+> &
+	ComponentProps<typeof Button>) => {
+	const { isVisible, close, open } = useBottomSheet();
+
+	const touchHandler = () => {
+		if (touchAction) touchAction();
+		open();
+	};
+
+	return (
+		<>
+			{children ? (
+				<View onTouchStart={touchHandler}>{children}</View>
+			) : (
+				<Button
+					{...props}
+					icon={Plus}
+					onPress={open}
+					className={`${className}`}
+				>
+					Add Option
+				</Button>
+			)}
+			<BottomSheet
+				isVisible={isVisible}
+				onClose={close}
+				title="Add Option"
+				snapPoints={[0.6, 0.95]}
+			>
+				<Main successAction={close} />
+			</BottomSheet>
+		</>
+	);
+};
+
+export const PollOptionsForm = { Main, SheetTrigger };

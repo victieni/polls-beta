@@ -1,27 +1,47 @@
-import { View, Text, Skeleton } from "@/components/ui";
+import { Skeleton, View } from "@/components/ui";
+import { usePolls } from "@/contexts/polls.context";
 import { getPollOptions } from "@/lib/functions/PollOption.functions";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useEffect } from "react";
 import { FlatList } from "react-native";
-import PollOptionCard from "../cards/PollOptionCard";
+import { PollOptionCard } from "../cards/PollOptionCard";
+import Void from "../layout/Void";
 
-export default function OptionsFeed({ poll }: { poll: IPoll }) {
-	const { data: pollOptions, isPending } = useSuspenseQuery(
-		getPollOptions(poll.id)
+export default function OptionsFeed({ isProgress }: { isProgress?: boolean }) {
+	const { poll, setPollOptions } = usePolls();
+
+	const { data: pollOptions, isFetching } = useSuspenseQuery(
+		getPollOptions(poll!.id)
 	);
 
-	console.log("isPending", isPending, "Poll Options", pollOptions);
+	useEffect(() => {
+		setPollOptions(pollOptions);
+	}, [isFetching]);
 
-	if (pollOptions.length < 1) return;
+	if (!poll) return;
+
+	// if (pollOptions.length < 1) return;
 
 	return (
 		<View>
-			<FlatList
-				data={pollOptions}
-				keyExtractor={(opt) => opt.id}
-				renderItem={({ item: opt }) => <PollOptionCard opt={opt} />}
-				showsVerticalScrollIndicator={false}
-			/>
+			{pollOptions.length > 0 ? (
+				<FlatList
+					data={pollOptions.sort((a, b) => a.order! - b.order!)} // ? Sort by order
+					keyExtractor={(opt) => opt.id}
+					renderItem={({ item: opt }) =>
+						isProgress ? (
+							<PollOptionCard.Progress opt={opt} className="mb-2" />
+						) : (
+							<PollOptionCard.Main opt={opt} className="mb-2" />
+						)
+					}
+					showsVerticalScrollIndicator={false}
+					contentContainerStyle={{ columnGap: 2 }}
+					// className="gap-3"
+				/>
+			) : (
+				<Void msg="No poll options! Click button bellow to add." />
+			)}
 		</View>
 	);
 }

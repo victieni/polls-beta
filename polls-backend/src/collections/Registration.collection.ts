@@ -25,10 +25,11 @@ export const Registration: CollectionConfig = {
       fields: [
         { name: 'registrationId', type: 'text', required: true },
         { name: 'isApproved', type: 'checkbox', defaultValue: false },
-        { name: 'user', type: 'relationship', relationTo: 'users' },
+        { name: 'user', type: 'relationship', relationTo: 'users', required: true },
       ],
     },
-    // ? Allow Automatic Verification`
+    // todo Allow Automatic Verification
+    // todo Allow creator to Invite via Usernames and rename this field accordingly
     { name: 'validRegistrationIds', type: 'text', hasMany: true },
   ],
 }

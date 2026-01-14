@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { ePollStatus, ePollType } from 'typescript/enum'
+import { eAdminPermissions, ePollStatus, ePollType } from 'typescript/enum'
 
 export const Polls: CollectionConfig = {
   slug: 'polls',
@@ -21,8 +21,8 @@ export const Polls: CollectionConfig = {
     update: () => true,
     delete: () => true,
   },
-  // todo Add "Allow Custom Response" Field
-  // todo Create "Custom Response" Collection - figure out how to make it Anonymous.
+
+  // todo Add Virtual unique Field for easy sharing
   fields: [
     {
       name: 'title',
@@ -49,7 +49,23 @@ export const Polls: CollectionConfig = {
           required: true,
           admin: { readOnly: true },
         },
-        { name: 'admins', type: 'relationship', relationTo: 'users', hasMany: true, maxRows: 3 },
+        // { name: 'admins', type: 'relationship', relationTo: 'users', hasMany: true, maxRows: 5 },
+        {
+          name: 'admins',
+          type: 'array',
+          fields: [
+            { name: 'user', type: 'relationship', relationTo: 'users', required: true },
+            {
+              name: 'permissions',
+              type: 'select',
+              hasMany: true,
+              options: Object.entries(eAdminPermissions).map(([label, value]) => ({
+                label,
+                value,
+              })),
+            },
+          ],
+        },
       ],
     },
     // ? Helps in search
@@ -69,23 +85,33 @@ export const Polls: CollectionConfig = {
       },
     },
     {
-      name: 'isPrivate',
-      type: 'checkbox',
-      defaultValue: false,
+      name: 'controls',
+      type: 'group',
+      fields: [
+        {
+          name: 'isPrivate',
+          type: 'checkbox',
+          defaultValue: false,
+        },
+        {
+          name: 'isMultipleChoice',
+          type: 'checkbox',
+          defaultValue: false,
+        },
+        {
+          name: 'allowAnonymous',
+          type: 'checkbox',
+          defaultValue: true, // ? @STRG To Reduce paranoia in new users
+        },
+        { name: 'allowCustomResponse', type: 'checkbox', defaultValue: true },
+        { name: 'isEditable', type: 'checkbox', defaultValue: true },
+        { name: 'progressIsHidden', type: 'checkbox', defaultValue: false },
+        { name: 'candidateIsAllowedToEditOption', type: 'checkbox', defaultValue: true },
+        { name: 'registrationIsRequired', type: 'checkbox', defaultValue: false },
+        { name: 'votesNumberIsLimited', type: 'checkbox', defaultValue: false },
+        { name: 'maxVotes', type: 'number' },
+      ],
     },
-    {
-      name: 'isMultipleChoice',
-      type: 'checkbox',
-      defaultValue: false,
-    },
-    {
-      name: 'allowAnonymous',
-      type: 'checkbox',
-      defaultValue: false,
-    },
-    { name: 'allowCustomResponse', type: 'checkbox', defaultValue: true },
-    { name: 'hideProgress', type: 'checkbox', defaultValue: false },
-    { name: 'isEditable', type: 'checkbox', defaultValue: true },
     {
       name: 'status',
       type: 'select',

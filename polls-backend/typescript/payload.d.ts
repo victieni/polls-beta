@@ -204,19 +204,33 @@ export interface Poll {
   } | null;
   administration: {
     creator: string | User;
-    admins?: (string | User)[] | null;
+    admins?:
+      | {
+          user: string | User;
+          permissions?:
+            | ('update_poll' | 'update_controls' | 'update_OPTIONS' | 'read_results' | 'registration_verification')[]
+            | null;
+          id?: string | null;
+        }[]
+      | null;
   };
   tags?: string[] | null;
   startDate?: string | null;
   endDate?: string | null;
-  isPrivate?: boolean | null;
-  isMultipleChoice?: boolean | null;
-  allowAnonymous?: boolean | null;
-  allowCustomResponse?: boolean | null;
-  hideProgress?: boolean | null;
-  isEditable?: boolean | null;
+  controls?: {
+    isPrivate?: boolean | null;
+    isMultipleChoice?: boolean | null;
+    allowAnonymous?: boolean | null;
+    allowCustomResponse?: boolean | null;
+    isEditable?: boolean | null;
+    progressIsHidden?: boolean | null;
+    candidateIsAllowedToEditOption?: boolean | null;
+    registrationIsRequired?: boolean | null;
+    votesNumberIsLimited?: boolean | null;
+    maxVotes?: number | null;
+  };
   status?: ('draft' | 'active' | 'closed' | 'open' | 'archived' | 'invalidated') | null;
-  type?: ('simple' | 'election' | 'survey') | null;
+  type?: ('simple' | 'election' | 'survey' | 'award') | null;
   meta?: {
     followers?: (string | User)[] | null;
     bookmarks?: (string | User)[] | null;
@@ -251,7 +265,7 @@ export interface PollOption {
   } | null;
   thumbnail?: string | null;
   order?: number | null;
-  associatedUser?: (string | null) | User;
+  candidate?: (string | null) | User;
   updatedAt: string;
   createdAt: string;
 }
@@ -268,7 +282,7 @@ export interface Registration {
     | {
         registrationId: string;
         isApproved?: boolean | null;
-        user?: (string | null) | User;
+        user: string | User;
         id?: string | null;
       }[]
     | null;
@@ -533,17 +547,31 @@ export interface PollsSelect<T extends boolean = true> {
     | T
     | {
         creator?: T;
-        admins?: T;
+        admins?:
+          | T
+          | {
+              user?: T;
+              permissions?: T;
+              id?: T;
+            };
       };
   tags?: T;
   startDate?: T;
   endDate?: T;
-  isPrivate?: T;
-  isMultipleChoice?: T;
-  allowAnonymous?: T;
-  allowCustomResponse?: T;
-  hideProgress?: T;
-  isEditable?: T;
+  controls?:
+    | T
+    | {
+        isPrivate?: T;
+        isMultipleChoice?: T;
+        allowAnonymous?: T;
+        allowCustomResponse?: T;
+        isEditable?: T;
+        progressIsHidden?: T;
+        candidateIsAllowedToEditOption?: T;
+        registrationIsRequired?: T;
+        votesNumberIsLimited?: T;
+        maxVotes?: T;
+      };
   status?: T;
   type?: T;
   meta?:
@@ -567,7 +595,7 @@ export interface PollOptionsSelect<T extends boolean = true> {
   about?: T;
   thumbnail?: T;
   order?: T;
-  associatedUser?: T;
+  candidate?: T;
   updatedAt?: T;
   createdAt?: T;
 }

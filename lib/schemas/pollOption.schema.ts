@@ -12,11 +12,8 @@ export const PollOptionSchema = z.object({
 		.max(500, "Description must be less than 500 characters")
 		.optional(),
 
-	// Thumbnail URL or path
-	thumbnail: z.url("Thumbnail must be a valid URL").optional(),
-
 	// Ordering
-	order: z.number().min(1, "Order cannot be negative").default(1),
+	order: z.coerce.number().min(1, "Order cannot be negative").default(1),
 });
 
 // Schema for creating a new poll option

@@ -34,7 +34,7 @@ export const lightColors = {
 	popover: "#ffffff",
 	popoverForeground: "#313e38",
 	primary: "#00b262",
-	primaryForeground: "#effffa",
+	primaryForeground: "#080b14",
 	secondary: "#d2e0ea",
 	secondaryForeground: "#12161f",
 	muted: "#d3e0ea",

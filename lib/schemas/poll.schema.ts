@@ -1,6 +1,20 @@
 import { ePollStatus, ePollType } from "@/polls-backend/typescript/enum";
 import { z } from "zod";
 
+export const PollControlsSchema = z.object({
+	// Control fields
+	isPrivate: z.boolean().default(false),
+	isMultipleChoice: z.boolean().default(false),
+	progressIsHidden: z.boolean().default(false),
+	allowAnonymous: z.boolean().default(false),
+	allowCustomResponse: z.boolean().default(true),
+	isEditable: z.boolean().default(true),
+	registrationIsRequired: z.boolean().default(false),
+	candidateIsAllowedToEditOption: z.boolean().default(true),
+	votesNumberIsLimited: z.boolean().default(false),
+	maxVotes: z.coerce.number().optional(),
+});
+
 export const PollSchema = z
 	.object({
 		title: z
@@ -17,15 +31,11 @@ export const PollSchema = z
 			.max(500, "Description must be less than 3000 characters")
 			.optional(),
 
+		controls: PollControlsSchema,
+
 		// status: z.enum(["draft", "published", "archived"]).default("draft"),
 		status: z.enum(ePollStatus).default(ePollStatus.DRAFT),
 		type: z.enum(ePollType).default(ePollType.SIMPLE),
-
-		hideProgress: z.boolean().default(false),
-		isPrivate: z.boolean().default(false),
-		isEditable: z.boolean().default(true),
-		isMultipleChoice: z.boolean().default(false),
-		allowAnonymous: z.boolean().default(false),
 
 		startDate: z
 			.string()
@@ -52,3 +62,4 @@ export const PollSchema = z
 
 // TypeScript types derived from schemas
 export type PollFormData = z.infer<typeof PollSchema>;
+export type PollControlsFormData = z.infer<typeof PollControlsSchema>;

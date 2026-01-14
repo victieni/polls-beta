@@ -38,7 +38,7 @@ export interface ButtonProps extends Omit<TouchableOpacityProps, "style"> {
 	animation?: boolean;
 	haptic?: boolean;
 	icon?: React.ComponentType<LucideProps>;
-	onPress?: () => void;
+	onTouch?: () => void;
 	variant?: ButtonVariant;
 	size?: ButtonSize;
 	disabled?: boolean;
@@ -49,21 +49,14 @@ export interface ButtonProps extends Omit<TouchableOpacityProps, "style"> {
 }
 
 export const Button = withUniwind(
-	forwardRef<View, ButtonProps>(
+	forwardRef<View, ViewProps>(
 		(
 			{
 				children,
-				icon,
-				onPress,
-				variant = "default",
-				size = "default",
-				disabled = false,
-				loading = false,
+				onTouch,
 				animation = true,
 				haptic = true,
-				loadingVariant = "default",
 				style,
-				textStyle,
 				...props
 			},
 			ref
@@ -88,53 +81,6 @@ export const Button = withUniwind(
 					alignItems: "center",
 					justifyContent: "center",
 				};
-
-				// Size variants
-				switch (size) {
-					case "sm":
-						Object.assign(baseStyle, { height: 44, paddingHorizontal: 24 });
-						break;
-					case "lg":
-						Object.assign(baseStyle, { height: 54, paddingHorizontal: 36 });
-						break;
-					case "icon":
-						Object.assign(baseStyle, {
-							height: HEIGHT,
-							width: HEIGHT,
-							paddingHorizontal: 0,
-						});
-						break;
-					default:
-						Object.assign(baseStyle, { height: HEIGHT, paddingHorizontal: 32 });
-				}
-
-				// Variant styles
-				switch (variant) {
-					case "destructive":
-						return { ...baseStyle, backgroundColor: destructiveColor };
-					case "success":
-						return { ...baseStyle, backgroundColor: greenColor };
-					case "outline":
-						return {
-							...baseStyle,
-							backgroundColor: "transparent",
-							borderWidth: 1,
-							borderColor,
-						};
-					case "secondary":
-						return { ...baseStyle, backgroundColor: secondaryColor };
-					case "ghost":
-						return { ...baseStyle, backgroundColor: "transparent" };
-					case "link":
-						return {
-							...baseStyle,
-							backgroundColor: "transparent",
-							height: "auto",
-							paddingHorizontal: 0,
-						};
-					default:
-						return { ...baseStyle, backgroundColor: primaryColor };
-				}
 			};
 
 			const getButtonTextStyle = (): TextStyle => {
@@ -142,27 +88,6 @@ export const Button = withUniwind(
 					fontSize: FONT_SIZE,
 					fontWeight: "500",
 				};
-
-				switch (variant) {
-					case "destructive":
-						return { ...baseTextStyle, color: destructiveForegroundColor };
-					case "success":
-						return { ...baseTextStyle, color: destructiveForegroundColor };
-					case "outline":
-						return { ...baseTextStyle, color: primaryColor };
-					case "secondary":
-						return { ...baseTextStyle, color: secondaryForegroundColor };
-					case "ghost":
-						return { ...baseTextStyle, color: primaryColor };
-					case "link":
-						return {
-							...baseTextStyle,
-							color: primaryColor,
-							textDecorationLine: "underline",
-						};
-					default:
-						return { ...baseTextStyle, color: primaryForegroundColor };
-				}
 			};
 
 			const getColor = (): string => {
@@ -184,19 +109,6 @@ export const Button = withUniwind(
 				}
 			};
 
-			// Helper function to get icon size based on button size
-			const getIconSize = (): number => {
-				switch (size) {
-					case "sm":
-						return 16;
-					case "lg":
-						return 24;
-					case "icon":
-						return 20;
-					default:
-						return 18;
-				}
-			};
 
 			// Trigger haptic feedback
 			const triggerHapticFeedback = () => {
@@ -252,8 +164,8 @@ export const Button = withUniwind(
 
 			// Handle actual press action
 			const handlePress = () => {
-				if (onPress && !disabled && !loading) {
-					onPress();
+				if (onTouch && !disabled && !loading) {
+					onTouch();
 				}
 			};
 
@@ -324,10 +236,10 @@ export const Button = withUniwind(
 			const iconSize = getIconSize();
 			const styleWithoutFlex = getStyleWithoutFlex();
 
-			return animation ? (
-				<Pressable
+			return (
+				<View
 					ref={ref}
-					onPress={handlePress}
+					onTouch={handlePress}
 					onPressIn={handlePressIn}
 					onPressOut={handlePressOut}
 					disabled={disabled || loading}
@@ -346,7 +258,7 @@ export const Button = withUniwind(
 								style={{ flexDirection: "row", alignItems: "center", gap: 6 }}
 							>
 								{icon && (
-									<Icon name={icon} color={contentColor} strokeWidth={2.5} size={iconSize} />
+									<Icon name={icon} color={contentColor} size={iconSize} />
 								)}
 								<Text style={[finalTextStyle, textStyle]}>{children}</Text>
 							</View>
@@ -361,35 +273,7 @@ export const Button = withUniwind(
 							</View>
 						)}
 					</Animated.View>
-				</Pressable>
-			) : (
-				<TouchableOpacity
-					ref={ref}
-					style={[buttonStyle, disabled && { opacity: 0.5 }, styleWithoutFlex]}
-					onPress={handleTouchablePress}
-					disabled={disabled || loading}
-					activeOpacity={0.8}
-					{...props}
-				>
-					{loading ? (
-						<ButtonSpinner
-							size={size}
-							variant={loadingVariant}
-							color={contentColor}
-						/>
-					) : typeof children === "string" ? (
-						<View
-							style={{ flexDirection: "row", alignItems: "center", gap: 6 }}
-						>
-							{icon && (
-								<Icon name={icon} color={contentColor} size={iconSize} />
-							)}
-							<Text style={[finalTextStyle, textStyle]}>{children}</Text>
-						</View>
-					) : (
-						children
-					)}
-				</TouchableOpacity>
+				</View>
 			);
 		}
 	)

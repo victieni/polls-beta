@@ -9,13 +9,11 @@ import {
 
 interface Props extends IContext {
 	poll?: IPoll;
-	editPoll?: IPoll;
-	newPoll?: IPoll;
+	pollOption?: IPollOption;
 	pollOptions: IPollOption[];
 
 	setPoll: Dispatch<SetStateAction<IPoll | undefined>>;
-	setEditPoll: Dispatch<SetStateAction<IPoll | undefined>>;
-	setNewPoll: Dispatch<SetStateAction<IPoll | undefined>>;
+	setPollOption: Dispatch<SetStateAction<IPollOption | undefined>>;
 	setPollOptions: Dispatch<SetStateAction<IPollOption[]>>;
 }
 
@@ -29,29 +27,31 @@ export const usePolls = () => {
 	return context;
 };
 
-export const PollsProvider = ({ children }: { children: ReactNode }) => {
-	const [poll, setPoll] = useState<IPoll>();
-	const [editPoll, setEditPoll] = useState<IPoll>();
-	const [newPoll, setNewPoll] = useState<IPoll>();
+export const PollsProvider = ({
+	children,
+	initPoll,
+}: {
+	children: ReactNode;
+	initPoll?: IPoll;
+}) => {
+	const [poll, setPoll] = useState<IPoll | undefined>(initPoll);
+	const [pollOption, setPollOption] = useState<IPollOption>();
 	const [pollOptions, setPollOptions] = useState<IPollOption[]>([]);
 
 	const reset = () => {
 		setPoll(undefined);
-		setEditPoll(undefined);
-		setNewPoll(undefined);
+		setPollOption(undefined);
 		setPollOptions([]);
 	};
 
 	const contextValue: Props = {
 		poll,
-		setPoll,
-		pollOptions,
-		setPollOptions,
-		editPoll,
-		setEditPoll,
-		newPoll,
-		setNewPoll,
 		reset,
+		setPoll,
+		pollOption,
+		pollOptions,
+		setPollOption,
+		setPollOptions,
 	};
 
 	return (

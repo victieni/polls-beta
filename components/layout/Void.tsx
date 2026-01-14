@@ -23,7 +23,10 @@ export default function Void({
 				className="text-primary size-50"
 				color={muted}
 			/>
-			<Text variant="title" className="font-medium text-muted font-mono">
+			<Text
+				variant="caption"
+				className="font-medium text-muted-foreground font-mono text-center"
+			>
 				{msg}
 			</Text>
 		</View>

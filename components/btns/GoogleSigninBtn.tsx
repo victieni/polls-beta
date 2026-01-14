@@ -1,12 +1,13 @@
-import React, { ComponentProps, useCallback, useEffect } from "react";
-import * as WebBrowser from "expo-web-browser";
-import * as AuthSession from "expo-auth-session";
+import { Button, Text } from "@/components/ui";
+import { useColor } from "@/hooks/useColor";
 import { useSSO } from "@clerk/clerk-expo";
-import { View, Button, Text, Icon } from "@/components/ui";
-import { Platform } from "react-native";
-import { useRouter } from "expo-router";
-import {} from "lucide-react-native";
 import VectorIcon from "@expo/vector-icons/AntDesign";
+import * as AuthSession from "expo-auth-session";
+import { useRouter } from "expo-router";
+import * as WebBrowser from "expo-web-browser";
+import { } from "lucide-react-native";
+import React, { ComponentProps, useCallback, useEffect } from "react";
+import { Platform } from "react-native";
 
 // Preloads the browser for Android devices to reduce authentication load time
 // See: https://docs.expo.dev/guides/authentication/#improving-user-experience
@@ -30,6 +31,7 @@ export default function GoogleSigninBtn({
 }: ComponentProps<typeof Button>) {
 	useWarmUpBrowser();
 	const router = useRouter();
+	const primaryColor = useColor("primary");
 
 	// Use the `useSSO()` hook to access the `startSSOFlow()` method
 	const { startSSOFlow } = useSSO();
@@ -81,7 +83,7 @@ export default function GoogleSigninBtn({
 			variant="secondary"
 			className={`flex flex-row items-center ${className}`}
 		>
-			<VectorIcon name="google" size={27} />
+			<VectorIcon name="google" size={27} color={primaryColor} />
 			<Text className="text-primary! font-medium">Continue with Google</Text>
 		</Button>
 	);

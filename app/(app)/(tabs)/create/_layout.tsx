@@ -11,6 +11,15 @@ export default function Layout() {
 				}}
 			>
 				<Stack.Screen name="index" />
+				<Stack.Screen
+					name="[id]"
+					options={{
+						presentation: "modal",
+						sheetGrabberVisible: true,
+
+						// sheetInitialDetentIndex: 1,
+					}}
+				/>
 			</Stack>
 		</PollsProvider>
 	);

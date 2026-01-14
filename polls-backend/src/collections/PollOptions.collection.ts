@@ -17,6 +17,8 @@ export const PollOptions: CollectionConfig = {
     update: () => true,
     delete: () => true,
   },
+  // todo Add a Brand color field.
+  // todo Add Allow Associated
   fields: [
     {
       name: 'poll',
@@ -32,10 +34,11 @@ export const PollOptions: CollectionConfig = {
     {
       name: 'description',
       type: 'text',
+      maxLength: 500,
     },
     {
       name: 'about',
-      type: 'richText', // For  why to vote
+      type: 'richText', // For  why to vote (only editable for associated user.)
     },
     {
       name: 'thumbnail',
@@ -47,10 +50,11 @@ export const PollOptions: CollectionConfig = {
       defaultValue: 0,
     },
     {
-      name: 'associatedUser',
+      name: 'candidate',
       type: 'relationship',
       relationTo: 'users',
-      // Allow candidates to edit their own if permitted
+      // todo Allow candidates to edit their own if permitted
+      // todo Candidates can edit Description & About & thumbnail.
     },
   ],
 

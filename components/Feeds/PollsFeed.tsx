@@ -3,15 +3,15 @@ import { getPolls } from "@/lib/functions/poll.functions";
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import React from "react";
 import { FlatList } from "react-native";
-import PollCard from "../cards/PollCard";
 import { ePollType } from "@/polls-backend/typescript/enum";
 import Void from "../layout/Void";
+import { PollCard } from "../cards/PollCard";
 
 export default function PollsFeed({
 	voidMsg,
 	...queryParams
 }: { voidMsg?: string } & Parameters<typeof getPolls>["0"]) {
-	const { data: polls, isPending } = useSuspenseInfiniteQuery({
+	const { data: polls } = useSuspenseInfiniteQuery({
 		...getPolls(queryParams),
 		select: (data) => data.pages.flatMap((d) => d.polls),
 	});
@@ -27,7 +27,7 @@ export default function PollsFeed({
 					keyExtractor={(poll) => poll.id}
 					renderItem={({ item: poll, separators }) => (
 						<View className="mb-3">
-							<PollCard poll={poll} />
+							<PollCard.Main poll={poll} />
 						</View>
 					)}
 					showsVerticalScrollIndicator={false}

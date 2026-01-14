@@ -20,7 +20,8 @@ export * from "./alert-dialog";
 export * from "./checkbox";
 export * from "./switch";
 export * from "./picker";
-export * from "./date-picker";
 export * from "./bottom-sheet";
+export * from "./date-picker";
+export * from "./media-picker";
 
 export const SafeAreaView = withUniwind(SAV);

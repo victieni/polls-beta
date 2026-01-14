@@ -31,7 +31,7 @@ export default function TabsLayout() {
 			disableTransparentOnScrollEdge={true}
 			badgeTextColor={red}
 		>
-			<NativeTabs.Trigger options={{}} name="(home)">
+			<NativeTabs.Trigger options={{}} name="polls">
 				{Platform.select({
 					ios: <Icon sf="cube.box.fill" />,
 					// ios: <Icon src={<VectorIcon family={Ionicons} name="home" />} />,
