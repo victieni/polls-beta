@@ -8,7 +8,7 @@ import {
 	Separator,
 	Switch,
 	Text,
-	View
+	View,
 } from "@/components/ui";
 import { usePolls } from "@/contexts/polls.context";
 import { usePollForm } from "@/hooks/formHooks";
