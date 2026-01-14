@@ -3,6 +3,7 @@ import { CollectionConfig } from 'payload'
 export const Responses: CollectionConfig = {
   slug: 'responses',
   access: {},
+  // Todo Create Hook to convert user ID to userHash
   fields: [
     { name: 'user', type: 'relationship', relationTo: 'users' },
     { name: 'userHash', type: 'text', unique: true, required: true, admin: { readOnly: true } },

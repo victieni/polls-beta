@@ -44,8 +44,8 @@ export const Votes: CollectionConfig = {
       // ! Optional for anonymous votes
     },
     {
-      // Todo hash userID 
-      name: 'voteHash',
+      // Todo hash userID
+      name: 'voterHash',
       type: 'text',
       required: true,
       unique: true,

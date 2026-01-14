@@ -299,7 +299,7 @@ export interface Vote {
   poll: string | Poll;
   option: string | PollOption;
   voter?: (string | null) | User;
-  voteHash: string;
+  voterHash: string;
   metadata?:
     | {
         [k: string]: unknown;
@@ -627,7 +627,7 @@ export interface VotesSelect<T extends boolean = true> {
   poll?: T;
   option?: T;
   voter?: T;
-  voteHash?: T;
+  voterHash?: T;
   metadata?: T;
   isValid?: T;
   updatedAt?: T;

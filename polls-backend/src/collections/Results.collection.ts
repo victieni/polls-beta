@@ -15,6 +15,10 @@ export const Results: CollectionConfig = {
     // read: ({ doc }) => doc.isPublished,
     // update: ({ req: { user }, doc }) => user && doc.poll?.creator?.id === user.id,
     // delete: ({ req: { user }, doc }) => user && doc.poll?.creator?.id === user.id,
+    create: () => true,
+    read: () => true,
+    update: () => true,
+    delete: () => true,
   },
   fields: [
     {
