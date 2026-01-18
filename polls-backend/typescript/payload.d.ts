@@ -207,9 +207,13 @@ export interface Poll {
     admins?:
       | {
           user: string | User;
-          permissions?:
-            | ('update_poll' | 'update_controls' | 'update_OPTIONS' | 'read_results' | 'registration_verification')[]
-            | null;
+          permissions?: {
+            updatePolls?: boolean | null;
+            updateControls?: boolean | null;
+            updateOptions?: boolean | null;
+            updateRegistration?: boolean | null;
+            verifyVoters?: boolean | null;
+          };
           id?: string | null;
         }[]
       | null;
@@ -551,7 +555,15 @@ export interface PollsSelect<T extends boolean = true> {
           | T
           | {
               user?: T;
-              permissions?: T;
+              permissions?:
+                | T
+                | {
+                    updatePolls?: T;
+                    updateControls?: T;
+                    updateOptions?: T;
+                    updateRegistration?: T;
+                    verifyVoters?: T;
+                  };
               id?: T;
             };
       };

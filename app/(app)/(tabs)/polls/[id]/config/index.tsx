@@ -8,10 +8,11 @@ export default function ConfigScreen() {
 				<Text>results</Text>
 			</View>
 
-
-      {/* Administrations configs */}
-      {/* Controls configs */}
-      {/* Results configs */}
+			{/* Administrations configs => Creator Only */}
+			{/* Controls configs */}
+			{/* Registration details */}
+			{/* Results configs */}
+			{/* Options configs => Bottom Sheet trigger*/}
 
 			{/* Config Recommendations */}
 			{/* 1. Private Polls to set up registration */}

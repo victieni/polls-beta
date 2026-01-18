@@ -15,6 +15,17 @@ export const PollControlsSchema = z.object({
 	maxVotes: z.coerce.number().optional(),
 });
 
+export const adminFormSchema = z.object({
+	user: z.string().min(1, "Please select admin user"),
+	permissions: z.object({
+		updatePolls: z.boolean().default(false),
+		updateControls: z.boolean().default(true),
+		updateOptions: z.boolean().default(false),
+		updateRegistration: z.boolean().default(false),
+		verifyVoters: z.boolean().default(true),
+	}),
+});
+
 export const PollSchema = z
 	.object({
 		title: z
@@ -63,3 +74,4 @@ export const PollSchema = z
 // TypeScript types derived from schemas
 export type PollFormData = z.infer<typeof PollSchema>;
 export type PollControlsFormData = z.infer<typeof PollControlsSchema>;
+export type AdminFormData = z.infer<typeof adminFormSchema>;

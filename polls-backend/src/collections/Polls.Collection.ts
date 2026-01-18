@@ -57,12 +57,14 @@ export const Polls: CollectionConfig = {
             { name: 'user', type: 'relationship', relationTo: 'users', required: true },
             {
               name: 'permissions',
-              type: 'select',
-              hasMany: true,
-              options: Object.entries(eAdminPermissions).map(([label, value]) => ({
-                label,
-                value,
-              })),
+              type: 'group',
+              fields: [
+                { name: 'updatePolls', type: 'checkbox', defaultValue: false },
+                { name: 'updateControls', type: 'checkbox', defaultValue: true },
+                { name: 'updateOptions', type: 'checkbox', defaultValue: false },
+                { name: 'updateRegistration', type: 'checkbox', defaultValue: false },
+                { name: 'verifyVoters', type: 'checkbox', defaultValue: true },
+              ],
             },
           ],
         },

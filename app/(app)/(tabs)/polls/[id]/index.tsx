@@ -1,10 +1,9 @@
-import { PollCard } from "@/components/cards/PollCard";
 import OptionsFeed from "@/components/Feeds/OptionsFeed";
-import { View, Text, Skeleton, SafeAreaView } from "@/components/ui";
+import { SafeAreaView, Skeleton, Text, View } from "@/components/ui";
 import { usePolls } from "@/contexts/polls.context";
 import { getPoll } from "@/lib/functions/poll.functions";
 import { getPollOptions } from "@/lib/functions/PollOption.functions";
-import { useSuspenseQueries, useSuspenseQuery } from "@tanstack/react-query";
+import { useSuspenseQueries } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
 import React, { Suspense, useEffect } from "react";
 
