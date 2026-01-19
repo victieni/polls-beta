@@ -1,6 +1,6 @@
 import React from 'react'
+import AuthProvider from '@/providers/AuthProvider'
 import './styles.css'
-import AuthProvider from 'providers/AuthProvider'
 
 export const metadata = {
   description: 'A blank template using Payload in a Next.js app.',
