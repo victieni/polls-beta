@@ -7,7 +7,8 @@ export default clerkMiddleware(async (auth, req: NextRequest) => {
   const { isAuthenticated, sessionClaims, redirectToSignIn, userId } = await auth()
 
   if (!isPublicRoute(req)) {
-    await auth.protect()
+    return redirectToSignIn({ returnBackUrl: req.url })
+    // await auth.protect()
   }
 
   // For users visiting /onboarding, don't try to redirect
