@@ -25,7 +25,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
     components: {
-      providers: ['@/providers/AuthProvider'],
+      providers: ['../providers/AuthProvider'],
     },
   },
   collections: [

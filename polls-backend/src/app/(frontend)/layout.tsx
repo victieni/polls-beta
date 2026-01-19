@@ -1,5 +1,5 @@
 import React from 'react'
-import AuthProvider from '@/providers/AuthProvider'
+import AuthProvider from '../providers/AuthProvider'
 import './styles.css'
 
 export const metadata = {
