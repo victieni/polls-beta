@@ -140,6 +140,7 @@ export interface User {
   fname: string;
   lname: string;
   username: string;
+  email: string;
   imageUrl?: string | null;
   meta?: {
     followers?: (string | User)[] | null;
@@ -489,6 +490,7 @@ export interface UsersSelect<T extends boolean = true> {
   fname?: T;
   lname?: T;
   username?: T;
+  email?: T;
   imageUrl?: T;
   meta?:
     | T
