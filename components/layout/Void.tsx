@@ -1,8 +1,7 @@
+import { useColor } from "@/hooks/useColor";
+import { Omega } from "lucide-react-native";
 import React, { ComponentProps } from "react";
 import { Icon, Text, View } from "../ui";
-import { Omega } from "lucide-react-native";
-import { useColor } from "@/hooks/useColor";
-import { useCSSVariable, useUniwind } from "uniwind";
 
 export default function Void({
 	msg,

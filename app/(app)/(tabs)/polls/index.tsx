@@ -1,5 +1,4 @@
 import PollsFeed from "@/components/Feeds/PollsFeed";
-import PollsSuspenseBoundary from "@/components/layout/PollsSuspenseBoundary";
 import {
 	SafeAreaView,
 	Tabs,

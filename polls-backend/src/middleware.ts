@@ -6,7 +6,7 @@ const isPublicRoute = createRouteMatcher(['/', '/api/webhooks/clerk', '/api/uplo
 export default clerkMiddleware(async (auth, req: NextRequest) => {
   const { isAuthenticated, sessionClaims, redirectToSignIn, userId } = await auth()
 
-  if (!isPublicRoute(req)) {
+  if (!isPublicRoute(req) && !isAuthenticated) {
     return redirectToSignIn({ returnBackUrl: req.url })
     // await auth.protect()
   }
