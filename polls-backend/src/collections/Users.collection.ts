@@ -1,4 +1,4 @@
-import { ClerkAuthStrategy } from 'lib/clerkAuthStrategy'
+import { ClerkAuthStrategy } from 'lib/ClerkAuthStrategy'
 import type { CollectionConfig } from 'payload'
 
 export const Users: CollectionConfig = {
