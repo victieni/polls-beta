@@ -22,9 +22,7 @@ export default async function HomePage() {
         <div className="links">
           <SignedOut>
             <SignInButton mode="modal">
-              <button className="py-2 px-4 font-medium text-center rounded-lg text-green-600">
-                Sign in
-              </button>
+              <a className="admin">Sign in</a>
             </SignInButton>
           </SignedOut>
 
