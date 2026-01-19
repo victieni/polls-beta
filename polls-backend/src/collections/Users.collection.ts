@@ -1,3 +1,4 @@
+import { ClerkAuthStrategy } from 'lib/clerkAuthStrategy'
 import type { CollectionConfig } from 'payload'
 
 export const Users: CollectionConfig = {
@@ -5,7 +6,10 @@ export const Users: CollectionConfig = {
   admin: {
     useAsTitle: 'email',
   },
-  auth: true,
+  auth: {
+    disableLocalStrategy: true,
+    strategies: [ClerkAuthStrategy],
+  },
   access: {
     create: () => true,
     read: () => true,
