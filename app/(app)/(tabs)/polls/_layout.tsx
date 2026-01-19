@@ -1,12 +1,14 @@
-import { PollsProvider } from "@/contexts/polls.context";
+import PollsSuspenseBoundary from "@/components/layout/PollsSuspenseBoundary";
 import { Stack } from "expo-router";
 import React from "react";
 
 export default function PollLayout() {
 	return (
-		<Stack screenOptions={{ headerShown: false }}>
-			<Stack.Screen name="index" />
-			<Stack.Screen name="[id]" />
-		</Stack>
+		<PollsSuspenseBoundary>
+			<Stack screenOptions={{ headerShown: false }}>
+				<Stack.Screen name="index" />
+				<Stack.Screen name="[id]" />
+			</Stack>
+		</PollsSuspenseBoundary>
 	);
 }

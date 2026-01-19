@@ -19,6 +19,8 @@
     "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts"
   },
   "dependencies": {
+    "@clerk/nextjs": "^6.36.8",
+    "@payloadcms/db-mongodb": "3.69.0",
     "@payloadcms/next": "3.69.0",
     "@payloadcms/richtext-lexical": "3.69.0",
     "@payloadcms/ui": "3.69.0",
@@ -30,7 +32,7 @@
     "react": "19.2.1",
     "react-dom": "19.2.1",
     "sharp": "0.34.2",
-    "@payloadcms/db-mongodb": "3.69.0"
+    "svix": "^1.84.1"
   },
   "devDependencies": {
     "@playwright/test": "1.56.1",

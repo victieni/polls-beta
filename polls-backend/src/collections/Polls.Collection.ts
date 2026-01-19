@@ -131,7 +131,7 @@ export const Polls: CollectionConfig = {
       name: 'meta',
       type: 'group',
       fields: [
-        { name: 'followers', type: 'relationship', relationTo: 'users', hasMany: true },
+        // { name: 'followers', type: 'relationship', relationTo: 'users', hasMany: true },
         { name: 'bookmarks', type: 'relationship', relationTo: 'users', hasMany: true },
       ],
     },

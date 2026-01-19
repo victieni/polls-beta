@@ -1,4 +1,6 @@
+import UsersProvider from "@/contexts/users.context";
 import { useColor } from "@/hooks/useColor";
+import { useAuth } from "@clerk/clerk-expo";
 import Ionicons from "@expo/vector-icons/Octicons";
 import { isLiquidGlassAvailable } from "expo-glass-effect";
 import {
@@ -50,15 +52,6 @@ export default function TabsLayout() {
 				<Label>Profile</Label>
 				<Badge>3</Badge>
 			</NativeTabs.Trigger>
-
-			{/* <NativeTabs.Trigger name="settings">
-				{Platform.select({
-					ios: <Icon sf="gear" />,
-					android: <Icon src={<VectorIcon family={Ionicons} name="gear" />} />,
-				})}
-				<Label>Settings</Label>
-				<Badge>1</Badge>
-			</NativeTabs.Trigger> */}
 
 			<NativeTabs.Trigger name="create">
 				{Platform.select({

@@ -36,5 +36,11 @@ export const Users: CollectionConfig = {
       name: 'imageUrl',
       type: 'text',
     },
+
+    {
+      name: 'meta',
+      type: 'group',
+      fields: [{ name: 'followers', type: 'relationship', relationTo: 'users', hasMany: true }],
+    },
   ],
 }

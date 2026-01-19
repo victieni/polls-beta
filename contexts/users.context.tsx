@@ -1,15 +1,11 @@
 import { View } from "@/components/ui";
 import { getInfiniteUsers } from "@/lib/functions/user.functions";
-import {
-	useSuspenseInfiniteQuery,
-	UseSuspenseInfiniteQueryResult,
-} from "@tanstack/react-query";
-import { ComponentProps, createContext, useContext } from "react";
+import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
+import { ComponentProps, createContext, useContext, useState } from "react";
 
-type Props = UseSuspenseInfiniteQueryResult<IUser[], Error> & {
-	// users: IUser[];
-	// setUsers: Dispatch<SetStateAction<IUser[]>>;
-};
+interface Props {
+	currentUser: IUser;
+}
 
 const UsersContext = createContext<Props | null>(null);
 
@@ -24,15 +20,12 @@ export const useUsers = () => {
 
 export default function UsersProvider({
 	children,
+	currentUserInit,
 	...props
-}: {} & ComponentProps<typeof View>) {
-	// const [users, setUsers] = useState<IUser[]>(usersInit);
-	const contextValues = useSuspenseInfiniteQuery({
-		...getInfiniteUsers({}),
-		select: (d) => d.pages.flatMap((d) => d.users),
-	});
+}: { currentUserInit: IUser } & ComponentProps<typeof View>) {
+	const [currentUser, setCurrentUser] = useState<IUser>(currentUserInit);
 
-	const fetchNextPage = contextValues.fetchNextPage;
+	const contextValues: Props = { currentUser };
 
 	// const contextValues: Props = { users, ...results };
 

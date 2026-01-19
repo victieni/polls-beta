@@ -15,9 +15,9 @@ export default function WebTabsLayout() {
 			}}
 		>
 			<Tabs.Screen
-				name="index"
+				name="polls"
 				options={{
-					title: "Home",
+					title: "Polls",
 					tabBarIcon: ({ color }) => (
 						<Icon name={Home} size={24} color={color} />
 					),
@@ -33,7 +33,7 @@ export default function WebTabsLayout() {
 					),
 				}}
 			/>
-      
+
 			<Tabs.Screen
 				name="settings"
 				options={{

@@ -14,13 +14,7 @@ import { AvoidKeyboard } from "@/components/ui/avoid-keyboard";
 import { InputOTP } from "@/components/ui/input-otp";
 import { useSignUp } from "@clerk/clerk-expo";
 import { useRouter } from "expo-router";
-import {
-	BadgeCheck,
-	LockIcon,
-	LogIn,
-	Mail,
-	UserCircle,
-} from "lucide-react-native";
+import { BadgeCheck, LockIcon, Mail, UserCircle } from "lucide-react-native";
 import { useState, useTransition } from "react";
 
 export default function SignUpScreen() {
@@ -77,7 +71,7 @@ export default function SignUpScreen() {
 				// and redirect the user
 				if (signUpAttempt.status === "complete") {
 					await setActive({ session: signUpAttempt.createdSessionId });
-					router.replace("/");
+					router.replace("/polls");
 				} else {
 					// If the status is not complete, check why. User may need to
 					// complete further steps.

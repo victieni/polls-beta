@@ -61,7 +61,7 @@ export default function GoogleSigninBtn({
 							return;
 						}
 
-						router.push("/");
+						router.push("/polls");
 					},
 				});
 			} else {

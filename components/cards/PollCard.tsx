@@ -24,7 +24,7 @@ function Main({
 
 	return (
 		<PollsProvider initPoll={poll}>
-			<Card {...props} className={`${className} h-fit shadow-md`}>
+			<Card {...props} className={`${className} h-[70vh] shadow-md`}>
 				<CardContent className="gap-y-3">
 					<CardHeader>
 						<CardTitle>{poll.title}</CardTitle>
@@ -42,7 +42,7 @@ function Main({
 
 					<Link
 						asChild
-						href={{ pathname: "/poll/[id]", params: { id: poll.id } }}
+						href={{ pathname: "/polls/[id]", params: { id: poll.id } }}
 					>
 						<Button icon={ArrowRight} size={"icon"} className="rounded-full" />
 					</Link>
@@ -61,9 +61,7 @@ const Skeleton = ({ className, ...props }: ComponentProps<typeof Card>) => (
 			</CardHeader>
 			<Skeleton className="my-3" />
 
-			<View>
-				
-			</View>
+			<View></View>
 		</CardContent>
 	</Card>
 );

@@ -1,7 +1,11 @@
+import { View } from "@/components/ui";
+import { useColor } from "@/hooks/useColor";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { queryClient } from "@/lib/config/tanstackQuery";
 import { Colors } from "@/theme/colors";
 import { ThemeProvider } from "@/theme/theme-provider";
+import { useAuth } from "@clerk/clerk-expo";
+import { useReactQueryDevTools } from "@dev-plugins/react-query";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { osName } from "expo-device";
 import { isLiquidGlassAvailable } from "expo-glass-effect";
@@ -13,10 +17,6 @@ import { setBackgroundColorAsync } from "expo-system-ui";
 import React, { useEffect } from "react";
 import { ActivityIndicator, Platform } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { useReactQueryDevTools } from "@dev-plugins/react-query";
-import { useAuth } from "@clerk/clerk-expo";
-import { View } from "@/components/ui";
-import { useColor } from "@/hooks/useColor";
 
 export const unstable_settings = {
 	initialRouteName: "(tabs)",
@@ -29,6 +29,7 @@ SplashScreen.setOptions({
 
 export default function AppLayout() {
 	const { isSignedIn, isLoaded } = useAuth();
+
 	const colorScheme = useColorScheme() || "light";
 
 	const primary = useColor("primary");
@@ -107,23 +108,6 @@ export default function AppLayout() {
 								}}
 							/>
 						</Stack.Protected>
-
-						{/* <Stack.Protected guard={!isSignedIn}>
-							<Stack.Screen
-								name="settings"
-								options={{
-									presentation: "formSheet",
-									sheetGrabberVisible: true,
-									sheetAllowedDetents: [0.4, 0.7, 1],
-									sheetInitialDetentIndex: 0,
-									sheetExpandsWhenScrolledToEdge: true,
-									contentStyle: {
-										// backgroundColor: cardColor,
-										backgroundColor: "transparent",
-									},
-								}}
-							/>
-						</Stack.Protected> */}
 
 						<Stack.Protected guard={!isSignedIn}>
 							<Stack.Screen name="auth" />

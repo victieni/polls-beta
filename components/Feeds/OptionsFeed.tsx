@@ -10,8 +10,9 @@ import Void from "../layout/Void";
 export default function OptionsFeed({ isProgress }: { isProgress?: boolean }) {
 	const { poll, setPollOptions } = usePolls();
 
+
 	const { data: pollOptions, isFetching } = useSuspenseQuery(
-		getPollOptions(poll!.id)
+		getPollOptions(poll?.id!)
 	);
 
 	useEffect(() => {
@@ -20,14 +21,12 @@ export default function OptionsFeed({ isProgress }: { isProgress?: boolean }) {
 
 	if (!poll) return;
 
-	// if (pollOptions.length < 1) return;
-
 	return (
 		<View>
 			{pollOptions.length > 0 ? (
 				<FlatList
 					data={pollOptions.sort((a, b) => a.order! - b.order!)} // ? Sort by order
-					keyExtractor={(opt) => opt.id}
+					// keyExtractor={(opt) => opt.id}
 					renderItem={({ item: opt }) =>
 						isProgress ? (
 							<PollOptionCard.Progress opt={opt} className="mb-2" />

@@ -15,12 +15,11 @@ import { usePollForm } from "@/hooks/formHooks";
 import { useColor } from "@/hooks/useColor";
 import {
 	createPoll,
-	getPoll,
-	updatePoll,
+	updatePoll
 } from "@/lib/functions/poll.functions";
 import { PollFormData } from "@/lib/schemas/poll.schema";
 import { ePollStatus, ePollType } from "@/polls-backend/typescript/enum";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
 import {
 	BookmarkCheck,
@@ -32,21 +31,21 @@ import {
 	Settings2,
 	Share,
 } from "lucide-react-native";
-import React, { useEffect, useTransition } from "react";
+import React, { useTransition } from "react";
 import { Controller } from "react-hook-form";
 import { AvoidKeyboard } from "../ui/avoid-keyboard";
 
 export default function PollForm() {
 	const { poll, setPoll, pollOptions, reset: resetPollsContext } = usePolls();
 
-	// ! demo only
-	const { data } = useQuery(getPoll("69625140cfbbf666ccd94d2d"));
-	useEffect(() => {
-		setPoll(data);
-	}, [data]);
+	// // ! demo only
+	// const { data } = useQuery(getPoll("69625140cfbbf666ccd94d2d"));
+	// useEffect(() => {
+	// 	setPoll(data);
+	// }, [data]);
 
-	const { mutate: create, isPending: isCreating } = useMutation(createPoll());
-	const { mutate: update, isPending: isUpdating } = useMutation(updatePoll());
+	const { mutate: create, isPending: isCreating } = useMutation(createPoll);
+	const { mutate: update, isPending: isUpdating } = useMutation(updatePoll);
 	const [isPending, startTransition] = useTransition();
 
 	const router = useRouter();
@@ -86,7 +85,7 @@ export default function PollForm() {
 					console.log("Published");
 					resetForm();
 					resetPollsContext();
-					router.replace({ pathname: "/poll/[id]", params: { id } });
+					router.replace({ pathname: "/polls/[id]", params: { id } });
 				},
 			}
 		);

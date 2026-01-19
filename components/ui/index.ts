@@ -23,5 +23,6 @@ export * from "./picker";
 export * from "./bottom-sheet";
 export * from "./date-picker";
 export * from "./media-picker";
+export * from "./badge";
 
 export const SafeAreaView = withUniwind(SAV);

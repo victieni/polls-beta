@@ -10,45 +10,43 @@ import { ePollStatus, ePollType } from "@/polls-backend/typescript/enum";
 /**
  * @mutations
  */
-export const createPoll = () =>
-	mutationOptions({
-		mutationFn: async (data: IPollCreate) => {
-			try {
-				return await payload.create({
-					collection: "polls",
-					data,
-				});
-			} catch (error: any) {
-				throw new Error(error);
-			}
-		},
-		onSuccess(data) {
-			queryClient.invalidateQueries({
-				queryKey: [getPoll(data.id).queryKey, getPolls({}).queryKey],
+export const createPoll = mutationOptions({
+	mutationFn: async (data: IPollCreate) => {
+		try {
+			return await payload.create({
+				collection: "polls",
+				data,
 			});
-		},
-	});
+		} catch (error: any) {
+			throw new Error(error);
+		}
+	},
+	onSuccess(data) {
+		queryClient.invalidateQueries({
+			queryKey: [getPoll(data.id).queryKey, getPolls({}).queryKey],
+		});
+	},
+});
 
-export const updatePoll = () =>
-	mutationOptions({
-		mutationFn: async (data: IPoll) => {
-			try {
-				return await payload.update({
-					collection: "polls",
-					id: data.id,
-					data,
-				});
-			} catch (error: any) {
-				throw new Error(error);
-			}
-		},
-
-		onSuccess: (data) => {
-			queryClient.invalidateQueries({
-				queryKey: [getPoll(data.id).queryKey, getPolls({}).queryKey],
+export const updatePoll = mutationOptions({
+	mutationFn: async (data: IPoll) => {
+		try {
+			return await payload.update({
+				collection: "polls",
+				id: data.id,
+				data,
 			});
-		},
-	});
+		} catch (error: any) {
+			throw new Error(error);
+		}
+	},
+
+	onSuccess: (data) => {
+		queryClient.invalidateQueries({
+			queryKey: [getPoll(data.id).queryKey, getPolls({}).queryKey],
+		});
+	},
+});
 
 export const deletePoll = () =>
 	mutationOptions({
@@ -96,7 +94,6 @@ export const getPolls = ({
 	type,
 	creator,
 	bookmark,
-	follower,
 }: {
 	isPrivate?: boolean;
 	anonymous?: boolean;
@@ -105,7 +102,6 @@ export const getPolls = ({
 	type?: ePollType;
 	creator?: string;
 	bookmark?: string;
-	follower?: string;
 }) =>
 	infiniteQueryOptions({
 		queryKey: ["polls", isPrivate, anonymous, isEditable, status, type],
@@ -126,7 +122,6 @@ export const getPolls = ({
 							{ anonymous: { equals: anonymous } },
 							{ "administration.creator": { equals: creator } },
 							{ "meta.bookmarks": { contains: bookmark } },
-							{ "meta.followers": { contains: follower } },
 						],
 					},
 					page,

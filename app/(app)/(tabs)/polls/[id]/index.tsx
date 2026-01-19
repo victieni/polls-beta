@@ -1,17 +1,30 @@
+import BackBtn from "@/components/btns/BackBtn";
+import BookmarkBtn from "@/components/btns/BookmarkBtn";
 import OptionsFeed from "@/components/Feeds/OptionsFeed";
-import { SafeAreaView, Skeleton, Text, View } from "@/components/ui";
+import {
+	Badge,
+	Button,
+	Icon,
+	SafeAreaView,
+	ScrollView,
+	Skeleton,
+	Text,
+	View,
+} from "@/components/ui";
 import { usePolls } from "@/contexts/polls.context";
+import { useColor } from "@/hooks/useColor";
 import { getPoll } from "@/lib/functions/poll.functions";
 import { getPollOptions } from "@/lib/functions/PollOption.functions";
 import { useSuspenseQueries } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
+import { ArrowRight, GitFork } from "lucide-react-native";
 import React, { Suspense, useEffect } from "react";
 
 export default function PollScreen() {
 	const { id } = useLocalSearchParams();
 
 	return (
-		<SafeAreaView className="px-3">
+		<SafeAreaView className="flex-1 px-3">
 			<Suspense fallback={<Fallback />}>
 				<Main id={id as string} />
 			</Suspense>
@@ -23,6 +36,7 @@ const Main = ({ id }: { id: string }) => {
 	const [{ data: poll }, { data: pollOptions }] = useSuspenseQueries({
 		queries: [getPoll(id), getPollOptions(id)],
 	});
+	const primaryColor = useColor("primary");
 
 	const { setPoll, setPollOptions } = usePolls();
 
@@ -33,14 +47,50 @@ const Main = ({ id }: { id: string }) => {
 
 	return (
 		<View>
-			<View>
-				<Text variant="heading">{poll.title}</Text>
+			<View className="p-2 flex-row items-center gap-x-2">
+				<BackBtn />
+				<Text variant="heading" className="text-primary line-clamp-1">
+					{poll.title}
+				</Text>
 			</View>
 
-			<View>
+			<ScrollView className="" contentContainerClassName="flex1 gap-y-4">
+				<View className="gap-y-3">
+					<Text variant="heading">{poll.prompt}</Text>
+
+					<View className="p-2  bg-muted rounded-3xl">
+						<Text variant="caption" className="px-3">
+							{poll.description}
+						</Text>
+						{poll.about && (
+							// Bottom Sheet for about
+							<Button size="sm" variant="ghost" className="w-fit ml-auto">
+								<Text className="text-primary">More</Text>
+								<Icon name={ArrowRight} size={20} color={primaryColor} />
+							</Button>
+						)}
+					</View>
+
+					<View className="flex-row items-center justify-between">
+						<Badge className="w-fit flex-row items-center gap-x-1 bg-primary/40 dark:bg-primary/20 border-2 border-primary py-1">
+							<Icon
+								name={GitFork}
+								size="15"
+								color={primaryColor}
+								strokeWidth={3}
+							/>
+							<Text className="capitalize font-medium text-primary text-sm">
+								{poll.type}
+							</Text>
+						</Badge>
+
+						<BookmarkBtn poll={poll} />
+					</View>
+				</View>
+
 				<OptionsFeed isProgress />
-			</View>
-			{/* <PollCard.Main poll={poll} /> */}
+				{/* <PollCard.Main poll={poll} /> */}
+			</ScrollView>
 		</View>
 	);
 };

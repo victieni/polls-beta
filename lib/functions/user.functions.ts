@@ -104,12 +104,16 @@ export const getUser = (clerkId: IUser["clerkId"]) =>
 		queryKey: ["users", clerkId],
 		queryFn: async () => {
 			try {
-				return await payload.find({
+				const {
+					docs: [user],
+				} = await payload.find({
 					collection: "users",
 					where: {
 						clerkId: { equals: clerkId },
 					},
 				});
+
+				return user;
 			} catch (error: any) {
 				throw new Error(error);
 			}

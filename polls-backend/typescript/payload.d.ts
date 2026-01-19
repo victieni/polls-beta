@@ -141,6 +141,9 @@ export interface User {
   lname: string;
   username: string;
   imageUrl?: string | null;
+  meta?: {
+    followers?: (string | User)[] | null;
+  };
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -236,7 +239,6 @@ export interface Poll {
   status?: ('draft' | 'active' | 'closed' | 'open' | 'archived' | 'invalidated') | null;
   type?: ('simple' | 'election' | 'survey' | 'award') | null;
   meta?: {
-    followers?: (string | User)[] | null;
     bookmarks?: (string | User)[] | null;
   };
   updatedAt: string;
@@ -503,6 +505,11 @@ export interface UsersSelect<T extends boolean = true> {
   lname?: T;
   username?: T;
   imageUrl?: T;
+  meta?:
+    | T
+    | {
+        followers?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -589,7 +596,6 @@ export interface PollsSelect<T extends boolean = true> {
   meta?:
     | T
     | {
-        followers?: T;
         bookmarks?: T;
       };
   updatedAt?: T;

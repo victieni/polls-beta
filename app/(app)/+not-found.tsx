@@ -19,7 +19,7 @@ export default function NotFoundScreen() {
 				}}
 			>
 				<Text>This screen does not exist.</Text>
-				<Button onPress={() => router.back()}>Back</Button>
+				<Button onPress={() => router.replace("/polls")}>Back</Button>
 			</View>
 		</>
 	);
