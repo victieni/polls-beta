@@ -47,7 +47,7 @@ export const POST = async (req: Request) => {
         collection: 'users',
         data: {
           clerkId,
-          username: username!,
+          username: username ?? `${fname}_${lname![0].toUpperCase()}`, // ? Custom User name
           fname: fname!,
           lname: lname!,
           imageUrl,
