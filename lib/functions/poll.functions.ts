@@ -149,3 +149,61 @@ export const getPolls = ({
 		},
 		getNextPageParam: (lastPage) => lastPage.nextPage,
 	});
+
+export const _getPolls = ({
+	isPrivate,
+	anonymous,
+	isEditable,
+	status,
+	type,
+	creator,
+	bookmark,
+}: {
+	isPrivate?: boolean;
+	anonymous?: boolean;
+	isEditable?: boolean;
+	status?: ePollStatus;
+	type?: ePollType;
+	creator?: string;
+	bookmark?: string;
+}) =>
+	queryOptions({
+		queryKey: ["polls", isPrivate, anonymous, isEditable, status, type],
+		queryFn: async () => {
+			try {
+				console.log(
+					"params:",
+					isPrivate,
+					anonymous,
+					isEditable,
+					status,
+					type,
+					creator,
+					bookmark
+				);
+
+				const {
+					docs: polls,
+					hasNextPage,
+					nextPage,
+				} = await payload.find({
+					collection: "polls",
+					where: {
+						or: [
+							{ isPrivate: { equals: isPrivate } },
+							{ isEditable: { equals: isEditable } },
+							{ status: { equals: status } },
+							{ type: { equals: type } },
+							{ anonymous: { equals: anonymous } },
+							{ "administration.creator": { equals: creator } },
+							{ "meta.bookmarks": { contains: bookmark } },
+						],
+					},
+				});
+
+				return { polls, hasNextPage, nextPage };
+			} catch (error: any) {
+				throw new Error(error);
+			}
+		},
+	});

@@ -7,10 +7,10 @@ export const queryClient = new QueryClient({
 			console.error(error);
 		},
 	}),
-	queryCache: new QueryCache({
-		onError(error) {
-			// ! test
-			console.error(error);
-		},
-	}),
+	// queryCache: new QueryCache({
+	// 	onError(error) {
+	// 		// ! test
+	// 		console.error(error);
+	// 	},
+	// }),
 });

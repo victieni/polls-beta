@@ -1,8 +1,8 @@
-import React from "react";
 import { Icon } from "@/components/ui/icon";
 import { useColor } from "@/hooks/useColor";
 import { Tabs } from "expo-router";
-import { Home, Search, Settings, Users } from "lucide-react-native";
+import { Home, Search, Users } from "lucide-react-native";
+import React from "react";
 
 export default function WebTabsLayout() {
 	const primary = useColor("primary");
@@ -23,27 +23,24 @@ export default function WebTabsLayout() {
 					),
 				}}
 			/>
-
 			<Tabs.Screen
-				name="users"
+				name="profile"
 				options={{
-					title: "Users",
+					title: "Profile",
 					tabBarIcon: ({ color }) => (
 						<Icon name={Users} size={24} color={color} />
 					),
 				}}
 			/>
-
 			<Tabs.Screen
-				name="settings"
+				name="create"
 				options={{
-					title: "Settings",
+					title: "Create",
 					tabBarIcon: ({ color }) => (
-						<Icon name={Settings} size={24} color={color} />
+						<Icon name={Users} size={24} color={color} />
 					),
 				}}
 			/>
-
 			<Tabs.Screen
 				name="search"
 				options={{
