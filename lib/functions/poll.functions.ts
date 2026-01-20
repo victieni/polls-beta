@@ -105,8 +105,21 @@ export const getPolls = ({
 }) =>
 	infiniteQueryOptions({
 		queryKey: ["polls", isPrivate, anonymous, isEditable, status, type],
+		initialPageParam: 0,
 		queryFn: async ({ pageParam: page }) => {
 			try {
+				console.log("Page:", page);
+				console.log(
+					"params:",
+					isPrivate,
+					anonymous,
+					isEditable,
+					status,
+					type,
+					creator,
+					bookmark
+				);
+
 				const {
 					docs: polls,
 					hasNextPage,
@@ -127,13 +140,12 @@ export const getPolls = ({
 					page,
 				});
 
-				return { polls, hasNextPage, nextPage };
+				console.log("results:", polls, nextPage);
+
+				return { polls, hasNextPage, nextPage: nextPage ?? page };
 			} catch (error: any) {
 				throw new Error(error);
 			}
 		},
-		initialPageParam: 1,
-		getNextPageParam: (lastPage) => {
-			return lastPage.nextPage;
-		},
+		getNextPageParam: (lastPage) => lastPage.nextPage,
 	});

@@ -22,27 +22,9 @@ export default function PollsScreen() {
 					<TabsTrigger value="Surveys">Surveys</TabsTrigger>
 				</TabsList>
 
-				{/* <PollsSuspenseBoundary>
-					<TabsContent value="Fyp" className="h-screen">
-						<PollsFeed />
-					</TabsContent>
-
-					<TabsContent value="Elections" className="h-screen">
-						<PollsFeed type={ePollType.ELECTION} />
-					</TabsContent>
-
-					<TabsContent value="Simple" className="h-screen">
-						<PollsFeed type={ePollType.SIMPLE} />
-					</TabsContent>
-
-					<TabsContent value="Surveys" className="h-screen">
-						<PollsFeed type={ePollType.SURVEY} />
-					</TabsContent>
-				</PollsSuspenseBoundary> */}
-
 				<TabsContent value="Fyp" className="h-screen">
 					<Suspense fallback={<PollsFeed.Fallback />}>
-						<PollsFeed />
+						<PollsFeed voidMsg="Polls coming soon..."   />
 					</Suspense>
 				</TabsContent>
 

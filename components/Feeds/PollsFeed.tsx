@@ -1,11 +1,10 @@
-import { Skeleton, Text, View } from "@/components/ui";
+import { Skeleton, View } from "@/components/ui";
 import { getPolls } from "@/lib/functions/poll.functions";
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import React from "react";
 import { FlatList } from "react-native";
-import { ePollType } from "@/polls-backend/typescript/enum";
-import Void from "../layout/Void";
 import { PollCard } from "../cards/PollCard";
+import Void from "../layout/Void";
 
 export default function PollsFeed({
 	voidMsg,

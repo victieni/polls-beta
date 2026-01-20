@@ -148,44 +148,44 @@ export const Polls: CollectionConfig = {
   // indexes: [
   //   { fields: { creator: 1, status: 1 } }, // Compound index for queries
   // ],
-  hooks: {
-    beforeRead: [
-      async (d) => {
-        try {
-        } catch (error: any) {
-          throw new Error(error)
-        }
-      },
-    ],
-    beforeChange: [
-      // ? Validate start/end dates
-      async ({ data: value, operation }) => {
-        if (
-          operation === 'update' &&
-          value.startDate &&
-          value.endDate &&
-          new Date(value.startDate) > new Date(value.endDate)
-        ) {
-          throw new Error('Start date must be before end date')
-        }
-        return value
-      },
-    ],
-    afterOperation: [
-      // ? Example: Log changes to AuditLogs
-      // async ({ operation, result, req }) => {
-      //   if (operation === 'create' || operation === 'update') {
-      //     await req.payload.create({
-      //       collection: 'audit-logs',
-      //       data: {
-      //         actionType: operation === 'create' ? 'create_poll' : 'edit_option',
-      //         entityId: result.id,
-      //         user: req.user?.id,
-      //         details: { changes: result },
-      //       },
-      //     })
-      //   }
-      // },
-    ],
-  },
+  // hooks: {
+  //   beforeRead: [
+  //     async (d) => {
+  //       try {
+  //       } catch (error: any) {
+  //         throw new Error(error)
+  //       }
+  //     },
+  //   ],
+  //   beforeChange: [
+  //     // ? Validate start/end dates
+  //     async ({ data: value, operation }) => {
+  //       if (
+  //         operation === 'update' &&
+  //         value.startDate &&
+  //         value.endDate &&
+  //         new Date(value.startDate) > new Date(value.endDate)
+  //       ) {
+  //         throw new Error('Start date must be before end date')
+  //       }
+  //       return value
+  //     },
+  //   ],
+  //   afterOperation: [
+  //     // ? Example: Log changes to AuditLogs
+  //     // async ({ operation, result, req }) => {
+  //     //   if (operation === 'create' || operation === 'update') {
+  //     //     await req.payload.create({
+  //     //       collection: 'audit-logs',
+  //     //       data: {
+  //     //         actionType: operation === 'create' ? 'create_poll' : 'edit_option',
+  //     //         entityId: result.id,
+  //     //         user: req.user?.id,
+  //     //         details: { changes: result },
+  //     //       },
+  //     //     })
+  //     //   }
+  //     // },
+  //   ],
+  // },
 }
