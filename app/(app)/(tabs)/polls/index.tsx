@@ -6,7 +6,7 @@ import {
 	TabsList,
 	TabsTrigger,
 } from "@/components/ui";
-import { ePollType } from "@/polls-backend/typescript/enum";
+import { ePollStatus, ePollType } from "@/polls-backend/typescript/enum";
 import { Suspense } from "react";
 
 export default function PollsScreen() {
@@ -20,11 +20,12 @@ export default function PollsScreen() {
 					<TabsTrigger value="Elections">Elections</TabsTrigger>
 					<TabsTrigger value="Simple">Simple</TabsTrigger>
 					<TabsTrigger value="Surveys">Surveys</TabsTrigger>
+					<TabsTrigger value="Closed">Closed</TabsTrigger>
 				</TabsList>
 
 				<TabsContent value="Fyp" className="h-screen">
 					<Suspense fallback={<PollsFeed.Fallback />}>
-						<PollsFeed voidMsg="Polls coming soon..."   />
+						<PollsFeed voidMsg="Polls coming soon..." />
 					</Suspense>
 				</TabsContent>
 
@@ -43,6 +44,12 @@ export default function PollsScreen() {
 				<TabsContent value="Surveys" className="h-screen">
 					<Suspense fallback={<PollsFeed.Fallback />}>
 						<PollsFeed type={ePollType.SURVEY} />
+					</Suspense>
+				</TabsContent>
+
+				<TabsContent value="Surveys" className="h-screen">
+					<Suspense fallback={<PollsFeed.Fallback />}>
+						<PollsFeed status={ePollStatus.CLOSED} />
 					</Suspense>
 				</TabsContent>
 			</Tabs>

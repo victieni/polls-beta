@@ -13,11 +13,13 @@ import {
 	View,
 } from "@/components/ui";
 import { useColor } from "@/hooks/useColor";
+import { useCurrentUser } from "@/hooks/util.hooks";
 import { Settings, UserCircle } from "lucide-react-native";
 import React, { Suspense } from "react";
 
 export default function ProfileScreen() {
 	const primary = useColor("primary");
+	const currentUser = useCurrentUser();
 
 	return (
 		<SafeAreaView className="flex-1 p-3">
@@ -48,20 +50,20 @@ export default function ProfileScreen() {
 
 				<TabsContent value="Polls" className="h-screen">
 					<Suspense fallback={<PollsFeed.Fallback />}>
-						<PollsFeed />
+						<PollsFeed creator={currentUser.id} />
 					</Suspense>
 				</TabsContent>
 
 				<TabsContent value="Bookmarks" className="h-screen">
 					<Suspense fallback={<PollsFeed.Fallback />}>
-						<PollsFeed />
+						<PollsFeed bookmark={currentUser.id} />
 					</Suspense>
 				</TabsContent>
-				<TabsContent value="Following" className="h-screen">
+				{/* <TabsContent value="Following" className="h-screen">
 					<Suspense fallback={<PollsFeed.Fallback />}>
 						<PollsFeed />
 					</Suspense>
-				</TabsContent>
+				</TabsContent> */}
 				<TabsContent value="Participated" className="h-screen">
 					<Suspense fallback={<PollsFeed.Fallback />}>
 						<PollsFeed />

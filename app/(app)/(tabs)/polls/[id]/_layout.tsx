@@ -6,10 +6,10 @@ export default function PollLayout() {
 	return (
 		<PollsProvider>
 			<Stack screenOptions={{ headerShown: false }}>
-				<Stack.Screen name="config" />
 				<Stack.Screen name="index" />
-
+				<Stack.Screen name="config" options={{ presentation: "modal" }} />
 				<Stack.Screen name="results" />
+				<Stack.Screen name="registration" />
 			</Stack>
 		</PollsProvider>
 	);

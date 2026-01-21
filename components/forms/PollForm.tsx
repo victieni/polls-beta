@@ -13,10 +13,7 @@ import {
 import { usePolls } from "@/contexts/polls.context";
 import { usePollForm } from "@/hooks/formHooks";
 import { useColor } from "@/hooks/useColor";
-import {
-	createPoll,
-	updatePoll
-} from "@/lib/functions/poll.functions";
+import { createPoll, updatePoll } from "@/lib/functions/poll.functions";
 import { PollFormData } from "@/lib/schemas/poll.schema";
 import { ePollStatus, ePollType } from "@/polls-backend/typescript/enum";
 import { useMutation } from "@tanstack/react-query";
@@ -34,16 +31,12 @@ import {
 import React, { useTransition } from "react";
 import { Controller } from "react-hook-form";
 import { AvoidKeyboard } from "../ui/avoid-keyboard";
+import { useCurrentUser } from "@/hooks/util.hooks";
 
 export default function PollForm() {
 	const { poll, setPoll, pollOptions, reset: resetPollsContext } = usePolls();
 
-	// // ! demo only
-	// const { data } = useQuery(getPoll("69625140cfbbf666ccd94d2d"));
-	// useEffect(() => {
-	// 	setPoll(data);
-	// }, [data]);
-
+	const currentUser = useCurrentUser();
 	const { mutate: create, isPending: isCreating } = useMutation(createPoll);
 	const { mutate: update, isPending: isUpdating } = useMutation(updatePoll);
 	const [isPending, startTransition] = useTransition();
@@ -57,7 +50,7 @@ export default function PollForm() {
 		const cleanData: IPollCreate = {
 			...data,
 			administration: {
-				creator: "661a3b4c5e6f7a8b9c0d1e33",
+				creator: currentUser.id,
 			},
 			tags: [],
 		};
@@ -78,14 +71,15 @@ export default function PollForm() {
 
 	const publishHandler = () => {
 		if (!poll) return;
+
 		update(
 			{ ...poll, status: ePollStatus.OPEN },
 			{
 				onSuccess: ({ id }) => {
+					router.push({ pathname: "/polls/[id]", params: { id } });
 					console.log("Published");
 					resetForm();
 					resetPollsContext();
-					router.replace({ pathname: "/polls/[id]", params: { id } });
 				},
 			}
 		);
@@ -299,6 +293,7 @@ export default function PollForm() {
 						<DatePicker
 							{...field}
 							value={new Date(field.value!)}
+							onChange={(v) => field.onChange(v?.toISOString())}
 							mode="datetime"
 							label="Start date"
 							placeholder="Select starting date..."
@@ -313,6 +308,7 @@ export default function PollForm() {
 					render={({ field, fieldState: { error } }) => (
 						<DatePicker
 							{...field}
+							onChange={(v) => field.onChange(v?.toISOString())}
 							value={new Date(field.value!)}
 							mode="datetime"
 							label="End date"

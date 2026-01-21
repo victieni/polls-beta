@@ -50,9 +50,12 @@ export const PollSchema = z
 
 		startDate: z
 			.string()
-			.datetime({ message: "Invalid date format" })
+			// .datetime({ message: "Invalid date format" })
 			.optional(),
-		endDate: z.string().datetime({ message: "Invalid date format" }).optional(),
+		endDate: z
+			.string()
+			// .datetime({ message: "Invalid date format" })
+			.optional(),
 
 		// For categories/tags
 		tags: z.string().optional(),

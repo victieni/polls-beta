@@ -1,8 +1,6 @@
 import { Skeleton, View } from "@/components/ui";
-import { _getPolls, getPolls } from "@/lib/functions/poll.functions";
-import {
-	useSuspenseQuery
-} from "@tanstack/react-query";
+import { getPolls } from "@/lib/functions/poll.functions";
+import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import React from "react";
 import { FlatList } from "react-native";
 import { PollCard } from "../cards/PollCard";
@@ -12,14 +10,9 @@ export default function PollsFeed({
 	voidMsg,
 	...queryParams
 }: { voidMsg?: string } & Parameters<typeof getPolls>["0"]) {
-	// const { data: polls } = useSuspenseInfiniteQuery({
-	// 	...getPolls(queryParams),
-	// 	select: (data) => data.pages.flatMap((d) => d.polls),
-	// });
-
-	const { data: polls } = useSuspenseQuery({
-		..._getPolls(queryParams),
-		select: (data) => data.polls,
+	const { data: polls } = useSuspenseInfiniteQuery({
+		...getPolls(queryParams),
+		select: (data) => data.pages.flatMap((d) => d.polls),
 	});
 
 	console.log("Polls", polls);

@@ -16,14 +16,11 @@ export const createPollOption = mutationOptions({
 			throw new Error(error);
 		}
 	},
-	onSuccess(value, variables, onMutateResult, context) {
+	onSuccess(value) {
 		console.log("KEY🔑:", getPollOptions(value.poll.id).queryKey);
 		queryClient.invalidateQueries({
 			queryKey: [getPollOptions(value.poll.id).queryKey],
 		});
-	},
-	onError: (error) => {
-		console.log(error);
 	},
 });
 
@@ -39,16 +36,13 @@ export const updatePollOption = mutationOptions({
 			throw new Error(error);
 		}
 	},
-	onSuccess(value, variables, onMutateResult, context) {
+	onSuccess(value) {
 		queryClient.invalidateQueries({
 			queryKey: [
 				getPollOptions(value.poll.id).queryKey,
 				getPollOption(value.id).queryKey,
 			],
 		});
-	},
-	onError: (error) => {
-		console.log(error);
 	},
 });
 
@@ -63,16 +57,13 @@ export const deletePollOption = mutationOptions({
 			throw new Error(error);
 		}
 	},
-	onSuccess(value, variables, onMutateResult, context) {
+	onSuccess(value) {
 		queryClient.invalidateQueries({
 			queryKey: [
 				getPollOptions(value.poll.id).queryKey,
 				getPollOption(value.id).queryKey,
 			],
 		});
-	},
-	onError: (error) => {
-		console.log(error);
 	},
 });
 

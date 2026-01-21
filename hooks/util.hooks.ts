@@ -9,3 +9,15 @@ export const useCurrentUser = () => {
 
 	return currentUser;
 };
+
+export const usePollAdmin = (poll: IPoll) => {
+	const currentUser = useCurrentUser();
+
+	const admin = poll.administration.admins?.find(
+		(a) => a.user.id === currentUser.id
+	);
+
+	const isCreator = currentUser.id === poll.administration.creator.id;
+
+	return { isAdmin: !!admin || isCreator, admin };
+};

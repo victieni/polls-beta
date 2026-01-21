@@ -5,6 +5,7 @@ import {
 	Badge,
 	Button,
 	Icon,
+	Link,
 	SafeAreaView,
 	ScrollView,
 	Skeleton,
@@ -13,11 +14,13 @@ import {
 } from "@/components/ui";
 import { usePolls } from "@/contexts/polls.context";
 import { useColor } from "@/hooks/useColor";
+import { useCurrentUser, usePollAdmin } from "@/hooks/util.hooks";
 import { getPoll } from "@/lib/functions/poll.functions";
 import { getPollOptions } from "@/lib/functions/PollOption.functions";
+import { ePollType } from "@/polls-backend/typescript/enum";
 import { useSuspenseQueries } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
-import { ArrowRight, GitFork } from "lucide-react-native";
+import { ArrowRight, GitFork, Settings } from "lucide-react-native";
 import React, { Suspense, useEffect } from "react";
 
 export default function PollScreen() {
@@ -37,8 +40,12 @@ const Main = ({ id }: { id: string }) => {
 		queries: [getPoll(id), getPollOptions(id)],
 	});
 	const primaryColor = useColor("primary");
+	// const currentUser = useCurrentUser();
 
 	const { setPoll, setPollOptions } = usePolls();
+	const { isAdmin } = usePollAdmin(poll);
+
+	console.log("admin:", isAdmin)
 
 	useEffect(() => {
 		setPoll(poll);
@@ -90,6 +97,24 @@ const Main = ({ id }: { id: string }) => {
 
 				<OptionsFeed isProgress />
 				{/* <PollCard.Main poll={poll} /> */}
+
+				{isAdmin && (
+					<Link
+						href={{ pathname: "/polls/[id]/config", params: { id } }}
+						asChild
+					>
+						<Button icon={Settings}>Poll settings</Button>
+					</Link>
+				)}
+
+				{poll.controls?.registrationIsRequired && (
+					<Link
+						href={{ pathname: "/polls/[id]/registration", params: { id } }}
+						asChild
+					>
+						<Button icon={Settings}>Registration</Button>
+					</Link>
+				)}
 			</ScrollView>
 		</View>
 	);

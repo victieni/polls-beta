@@ -48,7 +48,7 @@ export const Polls: CollectionConfig = {
           relationTo: 'users',
           required: true,
           defaultValue: (req) => req.user!.id ?? undefined,
-          admin: { readOnly: true },
+          // admin: { readOnly: true },
         },
         // { name: 'admins', type: 'relationship', relationTo: 'users', hasMany: true, maxRows: 5 },
         {

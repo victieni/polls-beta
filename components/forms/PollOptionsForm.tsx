@@ -1,50 +1,49 @@
 import {
-	View,
-	Text,
-	Input,
-	Icon,
-	Button,
-	ScrollView,
 	BottomSheet,
+	Button,
+	Icon,
+	Input,
+	ScrollView,
 	useBottomSheet,
+	View,
 } from "@/components/ui";
 import { usePolls } from "@/contexts/polls.context";
 import { usePollOptionForm } from "@/hooks/formHooks";
-import React, { ComponentProps, ReactNode, Suspense, useState } from "react";
-import OptionsFeed from "../Feeds/OptionsFeed";
-import { Controller } from "react-hook-form";
-import { Edit3, Image, Plus, Trash2 } from "lucide-react-native";
-import { AvoidKeyboard } from "../ui/avoid-keyboard";
-import { useMutation } from "@tanstack/react-query";
+import { useColor } from "@/hooks/useColor";
 import {
 	createPollOption,
 	deletePollOption,
 	updatePollOption,
 } from "@/lib/functions/PollOption.functions";
 import { PollOptionFormData } from "@/lib/schemas/pollOption.schema";
+import { ePollType } from "@/polls-backend/typescript/enum";
+import { useMutation } from "@tanstack/react-query";
+import { Edit3, Image, Plus, Trash2 } from "lucide-react-native";
+import React, { ComponentProps, ReactNode, useState } from "react";
+import { Controller } from "react-hook-form";
 import { MediaAsset, MediaPicker } from "../ui/media-picker";
-import { useColor } from "@/hooks/useColor";
+import UsersCombobox from "../UsersCombobox";
 
 const Main = ({ successAction }: { successAction?: () => void }) => {
 	const { poll, pollOption, setPollOption } = usePolls();
 	const [selectedAsset, setSelectedAsset] = useState<MediaAsset[]>([]);
+	const [candidate, setCandidate] = useState<string>("");
 	const [thumbnail, setThumbnail] = useState<string>(
 		pollOption?.thumbnail ?? ""
 	);
+
+	console.log("candidate", candidate);
 
 	const destructiveColor = useColor("destructive");
 
 	const { mutate: create, isPending: isCreating } =
 		useMutation(createPollOption);
-
 	const { mutate: update, isPending: isUpdating } =
 		useMutation(updatePollOption);
-
 	const { mutate: deleteOption, isPending: isDeleting } =
 		useMutation(deletePollOption);
 
 	const form = usePollOptionForm(pollOption);
-	console.log("Editing opt:", pollOption);
 
 	if (!poll) return;
 
@@ -65,8 +64,6 @@ const Main = ({ successAction }: { successAction?: () => void }) => {
 				{
 					onSuccess: (opt) => {
 						if (successAction) successAction();
-						setPollOption(undefined);
-
 						console.log("Updated Option:", opt);
 					},
 				}
@@ -75,8 +72,6 @@ const Main = ({ successAction }: { successAction?: () => void }) => {
 			create(cleanData, {
 				onSuccess: (opt) => {
 					if (successAction) successAction();
-					setPollOption(undefined);
-
 					console.log("created Option:", opt);
 				},
 			});
@@ -140,20 +135,23 @@ const Main = ({ successAction }: { successAction?: () => void }) => {
 				/>
 
 				{/* Image picker */}
-				<MediaPicker
-					mediaType="image"
-					buttonText="Select thumbnail"
-					multiple={false}
-					maxSelection={1}
-					icon={Image}
-					variant="secondary"
-					// onError={}
-					selectedAssets={selectedAsset}
-					onSelectionChange={setSelectedAsset}
-				/>
+				{poll.type === ePollType.ELECTION ? (
+					<UsersCombobox selectAction={setCandidate} />
+				) : (
+					<MediaPicker
+						mediaType="image"
+						buttonText="Select thumbnail"
+						multiple={false}
+						maxSelection={1}
+						icon={Image}
+						variant="secondary"
+						// onError={}
+						selectedAssets={selectedAsset}
+						onSelectionChange={setSelectedAsset}
+					/>
+				)}
 			</View>
 
-			{/* Actions CREATE | UPDATE | DELETE */}
 			{pollOption ? (
 				<View className="flex-row items-center gap-x-3">
 					<Button
@@ -190,7 +188,7 @@ const Main = ({ successAction }: { successAction?: () => void }) => {
 					onPress={form.handleSubmit(submitHandler, (err) => console.log(err))}
 					className="mt-3"
 				>
-					<Text>Add</Text>
+					Add
 				</Button>
 			)}
 
@@ -209,10 +207,18 @@ const SheetTrigger = ({
 > &
 	ComponentProps<typeof Button>) => {
 	const { isVisible, close, open } = useBottomSheet();
+	const { setPollOption, poll } = usePolls();
+
+	if (!poll) return;
 
 	const touchHandler = () => {
 		if (touchAction) touchAction();
 		open();
+	};
+
+	const closeHandler = () => {
+		setPollOption(undefined);
+		close();
 	};
 
 	return (
@@ -231,11 +237,12 @@ const SheetTrigger = ({
 			)}
 			<BottomSheet
 				isVisible={isVisible}
-				onClose={close}
+				onClose={closeHandler}
 				title="Add Option"
-				snapPoints={[0.6, 0.95]}
+				// snapPoints={[0.6, 0.95]}
+				snapPoints={poll.type === ePollType.ELECTION ? [0.8] : [0.6, 0.95]}
 			>
-				<Main successAction={close} />
+				<Main successAction={closeHandler} />
 			</BottomSheet>
 		</>
 	);

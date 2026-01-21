@@ -5,7 +5,7 @@ export default function ConfigScreen() {
 	return (
 		<SafeAreaView className="flex-1 p-3">
 			<View>
-				<Text>results</Text>
+				<Text>COnfigs</Text>
 			</View>
 
 			{/* Administrations configs => Creator Only */}
