@@ -7,9 +7,15 @@ export default function PollLayout() {
 		<PollsProvider>
 			<Stack screenOptions={{ headerShown: false }}>
 				<Stack.Screen name="index" />
-				<Stack.Screen name="config" options={{ presentation: "modal" }} />
+				<Stack.Screen
+					name="config"
+					options={{ presentation: "modal", sheetGrabberVisible: true }}
+				/>
+				<Stack.Screen
+					name="registration"
+					options={{ presentation: "modal", sheetGrabberVisible: true }}
+				/>
 				<Stack.Screen name="results" />
-				<Stack.Screen name="registration" />
 			</Stack>
 		</PollsProvider>
 	);

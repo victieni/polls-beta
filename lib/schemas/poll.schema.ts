@@ -1,4 +1,6 @@
 import { ePollStatus, ePollType } from "@/polls-backend/typescript/enum";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 export const PollControlsSchema = z.object({
@@ -78,3 +80,21 @@ export const PollSchema = z
 export type PollFormData = z.infer<typeof PollSchema>;
 export type PollControlsFormData = z.infer<typeof PollControlsSchema>;
 export type AdminFormData = z.infer<typeof adminFormSchema>;
+
+export const usePollControlsForm = (control?: IPoll["controls"]) =>
+	useForm({
+		resolver: zodResolver(PollControlsSchema),
+		defaultValues: {
+			isPrivate: control?.isPrivate || false,
+			isMultipleChoice: control?.isMultipleChoice || false,
+			progressIsHidden: control?.progressIsHidden || false,
+			allowAnonymous: control?.allowAnonymous || false,
+			allowCustomResponse: control?.allowCustomResponse || true,
+			isEditable: control?.isEditable || true,
+			registrationIsRequired: control?.registrationIsRequired || false,
+			candidateIsAllowedToEditOption:
+				control?.candidateIsAllowedToEditOption || true,
+			votesNumberIsLimited: control?.votesNumberIsLimited || false,
+			maxVotes: control?.maxVotes || "",
+		},
+	});

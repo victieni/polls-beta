@@ -7,25 +7,31 @@ import React, { useState } from "react";
 import { Button, Icon, Text } from "../ui";
 
 export default function BookmarkBtn({ poll }: { poll: IPoll }) {
-	const { mutate, isPending } = useMutation(updatePoll);
+	const { mutate: update, isPending } = useMutation(updatePoll);
 	const [bookmarksArr, setBookmarksArr] = useState<string[]>(
 		poll.meta?.bookmarks?.map((b) => b.id) ?? []
 	);
 	const currentUser = useCurrentUser();
 
 	const primaryColor = useColor("primary");
-	const foreground = useColor("foreground");
+	const secondaryForeground = useColor("secondaryForeground");
 
 	const hasBookMarked = !!bookmarksArr.find((id) => id === currentUser.id);
 
+	// console.log("out", hasBookMarked, bookmarksArr);
 	const bookmarkHandler = () => {
-		if (hasBookMarked) {
-			setBookmarksArr((prev) => prev.filter((id) => id !== currentUser.id));
-		} else {
-			setBookmarksArr((prev) => [...prev, currentUser.id]);
-		}
+		let cleanData: string[];
 
-		mutate({ ...poll, meta: { bookmarks: bookmarksArr } });
+		if (hasBookMarked) {
+			// setBookmarksArr((prev) => prev.filter((id) => id !== currentUser.id));
+			cleanData = bookmarksArr.filter((id) => id !== currentUser.id);
+		} else {
+			// setBookmarksArr((prev) => [...prev, currentUser.id]);
+			cleanData = [...bookmarksArr, currentUser.id];
+		}
+		setBookmarksArr(cleanData);
+		console.log("in", hasBookMarked, cleanData);
+		update({ ...poll, meta: { bookmarks: cleanData } });
 	};
 
 	return (
@@ -39,11 +45,13 @@ export default function BookmarkBtn({ poll }: { poll: IPoll }) {
 			<Icon
 				name={Bookmark}
 				size={17}
-				fill={hasBookMarked ? primaryColor : undefined}
-				stroke={hasBookMarked ? primaryColor : foreground}
+				fill={hasBookMarked ? primaryColor : "transparent"}
+				stroke={hasBookMarked ? primaryColor : secondaryForeground}
 			/>
 			<Text
-				className={`${hasBookMarked ?? "text-primary"} font-medium text-sm`}
+				className={`${
+					hasBookMarked ? "text-primary!" : ""
+				} font-medium text-sm`}
 			>
 				{bookmarksArr.length}
 			</Text>

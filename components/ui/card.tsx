@@ -2,20 +2,22 @@ import { Text } from "@/components/ui/text";
 import { View } from "@/components/ui/view";
 import { useColor } from "@/hooks/useColor";
 import { BORDER_RADIUS } from "@/theme/globals";
+import { ComponentProps } from "react";
 import { TextStyle, ViewStyle } from "react-native";
 import { withUniwind } from "uniwind";
 
-interface CardProps {
+interface CardProps extends ComponentProps<typeof View> {
 	children?: React.ReactNode;
 	style?: ViewStyle;
 }
 
-export const Card = withUniwind(({ children, style }: CardProps) => {
+export const Card = withUniwind(({ children, style, ...props }: CardProps) => {
 	const cardColor = useColor("card");
 	const foregroundColor = useColor("foreground");
 
 	return (
 		<View
+			{...props}
 			style={[
 				{
 					width: "100%",

@@ -6,14 +6,8 @@ export default function _layout() {
 		<Stack screenOptions={{ headerShown: false }}>
 			<Stack.Screen name="index" />
 			<Stack.Screen name="adminPanel" />
-			<Stack.Screen
-				name="controls"
-				options={{ presentation: "modal", sheetGrabberVisible: true }}
-			/>
-			<Stack.Screen
-				name="registration"
-				options={{ presentation: "modal", sheetGrabberVisible: true }}
-			/>
+			<Stack.Screen name="controls" />
+			<Stack.Screen name="registration" />
 		</Stack>
 	);
 }

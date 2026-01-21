@@ -14,7 +14,7 @@ import { AvoidKeyboard } from "@/components/ui/avoid-keyboard";
 import { useSignIn } from "@clerk/clerk-expo";
 import { useRouter } from "expo-router";
 import React, { useState, useTransition } from "react";
-import { Lock, Mail } from "lucide-react-native";
+import { Lock, Mail, UserCircle } from "lucide-react-native";
 
 export default function Page() {
 	const { signIn, setActive, isLoaded } = useSignIn();
@@ -56,10 +56,9 @@ export default function Page() {
 
 	return (
 		<SafeAreaView className="flex-1 p-3 gap-y-3 justify-center items-center ">
-			<AuthHeader />
-
-			<View className="gap-y-2 items-center flex-1 justify-center">
-				<Text variant="title" className="textprimary">
+				<AuthHeader />
+			<View className="gap-y-2 items-center justify-center flex-1">
+				<Text variant="title" className="text-primary">
 					Sign in
 				</Text>
 				<Input
@@ -79,6 +78,7 @@ export default function Page() {
 				<Button
 					disabled={isPending}
 					loading={isPending}
+					icon={UserCircle}
 					onPress={onSignInPress}
 				>
 					Continue
@@ -87,7 +87,9 @@ export default function Page() {
 				<View className="flex-row items-center justify-center gap-x-2">
 					<Text variant="caption">Don't have an account?</Text>
 					<Link href="/(app)/auth/sign-up">
-						<Text variant="link">Sign up</Text>
+						<Text variant="link" className="text-primary">
+							Sign up
+						</Text>
 					</Link>
 				</View>
 

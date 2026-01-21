@@ -20,7 +20,7 @@ import { getPollOptions } from "@/lib/functions/PollOption.functions";
 import { ePollType } from "@/polls-backend/typescript/enum";
 import { useSuspenseQueries } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
-import { ArrowRight, GitFork, Settings } from "lucide-react-native";
+import { ArrowRight, GitFork, Settings, ShieldUser } from "lucide-react-native";
 import React, { Suspense, useEffect } from "react";
 
 export default function PollScreen() {
@@ -39,13 +39,12 @@ const Main = ({ id }: { id: string }) => {
 	const [{ data: poll }, { data: pollOptions }] = useSuspenseQueries({
 		queries: [getPoll(id), getPollOptions(id)],
 	});
+
 	const primaryColor = useColor("primary");
 	// const currentUser = useCurrentUser();
 
 	const { setPoll, setPollOptions } = usePolls();
-	const { isAdmin } = usePollAdmin(poll);
-
-	console.log("admin:", isAdmin)
+	const { isAdmin, isCreator } = usePollAdmin(poll);
 
 	useEffect(() => {
 		setPoll(poll);
@@ -96,9 +95,8 @@ const Main = ({ id }: { id: string }) => {
 				</View>
 
 				<OptionsFeed isProgress />
-				{/* <PollCard.Main poll={poll} /> */}
 
-				{isAdmin && (
+				{(isAdmin || isCreator) && (
 					<Link
 						href={{ pathname: "/polls/[id]/config", params: { id } }}
 						asChild
@@ -112,7 +110,9 @@ const Main = ({ id }: { id: string }) => {
 						href={{ pathname: "/polls/[id]/registration", params: { id } }}
 						asChild
 					>
-						<Button icon={Settings}>Registration</Button>
+						<Button icon={ShieldUser} variant="outline">
+							Registration
+						</Button>
 					</Link>
 				)}
 			</ScrollView>

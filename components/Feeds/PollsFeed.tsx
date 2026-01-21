@@ -15,7 +15,7 @@ export default function PollsFeed({
 		select: (data) => data.pages.flatMap((d) => d.polls),
 	});
 
-	console.log("Polls", polls);
+	console.log("Polls", polls.length);
 
 	return (
 		// ? DisPlay void Element.

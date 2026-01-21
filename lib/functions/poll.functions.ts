@@ -43,7 +43,8 @@ export const updatePoll = mutationOptions({
 
 	onSuccess: (data) => {
 		queryClient.invalidateQueries({
-			queryKey: [getPoll(data.id).queryKey, getPolls({}).queryKey],
+			// queryKey: [getPoll(data.id).queryKey, getPolls({}).queryKey],
+			queryKey: ["polls"],
 		});
 	},
 });
@@ -73,7 +74,7 @@ export const deletePoll = () =>
 
 export const getPoll = (id: IPoll["id"]) =>
 	queryOptions({
-		queryKey: ["poll", id],
+		queryKey: ["polls", id],
 		queryFn: async () => {
 			try {
 				return await payload.findByID({
@@ -84,6 +85,7 @@ export const getPoll = (id: IPoll["id"]) =>
 				throw new Error(error);
 			}
 		},
+		staleTime: 1000 * 60 * 5,
 	});
 
 export const getPolls = ({
@@ -104,8 +106,8 @@ export const getPolls = ({
 	bookmark?: string;
 }) =>
 	infiniteQueryOptions({
-		// queryKey: ["polls", isPrivate, anonymous, isEditable, status, type],
-		queryKey: ["polls"],
+		queryKey: ["polls", isPrivate, anonymous, isEditable, status, type],
+		// queryKey: ["polls"],
 		initialPageParam: 0,
 		queryFn: async ({ pageParam: page }) => {
 			try {
@@ -134,5 +136,6 @@ export const getPolls = ({
 				throw new Error(error);
 			}
 		},
+		staleTime: 1000 * 60 * 15,
 		getNextPageParam: (lastPage) => lastPage.nextPage,
 	});

@@ -118,7 +118,7 @@ export default function SignUpScreen() {
 	return (
 		<SafeAreaView className="flex-1 p-3 items-center justify-center gap-y-2">
 			<AuthHeader />
-			<View className="items-center gap-y-2">
+			<View className="flex-1 justify-center items-center gap-y-2">
 				<Text variant="title" className="text-primary">
 					Create Account
 				</Text>

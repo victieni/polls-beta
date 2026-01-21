@@ -14,6 +14,7 @@ import { Link, useRouter } from "expo-router";
 import { ArrowRight } from "lucide-react-native";
 import React, { ComponentProps, Suspense } from "react";
 import OptionsFeed from "../Feeds/OptionsFeed";
+import { useQueryClient } from "@tanstack/react-query";
 
 function Main({
 	poll,
@@ -21,6 +22,7 @@ function Main({
 	...props
 }: { poll: IPoll } & ComponentProps<typeof Card>) {
 	const router = useRouter();
+	const queryClient = useQueryClient();
 
 	return (
 		<PollsProvider initPoll={poll}>

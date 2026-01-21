@@ -19,5 +19,5 @@ export const usePollAdmin = (poll: IPoll) => {
 
 	const isCreator = currentUser.id === poll.administration.creator.id;
 
-	return { isAdmin: !!admin || isCreator, admin };
+	return { isAdmin: !!admin, isCreator, admin };
 };
