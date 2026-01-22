@@ -23,10 +23,8 @@ export default function BookmarkBtn({ poll }: { poll: IPoll }) {
 		let cleanData: string[];
 
 		if (hasBookMarked) {
-			// setBookmarksArr((prev) => prev.filter((id) => id !== currentUser.id));
 			cleanData = bookmarksArr.filter((id) => id !== currentUser.id);
 		} else {
-			// setBookmarksArr((prev) => [...prev, currentUser.id]);
 			cleanData = [...bookmarksArr, currentUser.id];
 		}
 		setBookmarksArr(cleanData);

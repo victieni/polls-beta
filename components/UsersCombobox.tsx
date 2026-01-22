@@ -1,6 +1,7 @@
 import { getInfiniteUsers } from "@/lib/functions/user.functions";
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import React, { Dispatch, SetStateAction, useState } from "react";
+import Void from "./layout/Void";
 import {
 	Combobox,
 	ComboboxContent,
@@ -11,24 +12,22 @@ import {
 	ComboboxTrigger,
 	ComboboxValue,
 	OptionType,
-	Text,
-	View,
 } from "./ui";
-import Void from "./layout/Void";
-import { AvoidKeyboard } from "./ui/avoid-keyboard";
 
 export default function UsersCombobox({
 	placeholder,
 	selectAction,
+	defaultValue,
 }: {
 	placeholder?: string;
-	selectAction: Dispatch<SetStateAction<string>>;
+	selectAction: Dispatch<SetStateAction<OptionType | null>>;
+	defaultValue: OptionType | null;
 }) {
 	const { data: users } = useSuspenseInfiniteQuery({
 		...getInfiniteUsers({ limit: 0 }),
 		select: (data) => data.pages.flatMap((u) => u.users),
 	});
-	const [value, setValue] = useState<OptionType | null>(null);
+	const [value, setValue] = useState<OptionType | null>(defaultValue);
 
 	console.log("selected", value);
 
@@ -41,7 +40,6 @@ export default function UsersCombobox({
 			<ComboboxContent>
 				<ComboboxInput placeholder="Search by name..." />
 
-				{/* <AvoidKeyboard /> */}
 				<ComboboxList>
 					<ComboboxEmpty>
 						<Void msg="No user found😢." />
@@ -51,12 +49,13 @@ export default function UsersCombobox({
 						<ComboboxItem
 							key={user.id}
 							value={user.id}
-							onSelect={(v) => selectAction(v.value)}
+							onSelect={(v) => selectAction(v)}
 							searchValue={`${user.fname} ${user.lname} ${user.username}`}
 						>{`@${user.fname} ${user.lname}`}</ComboboxItem>
 					))}
 				</ComboboxList>
 			</ComboboxContent>
+			{/* <AvoidKeyboard /> // ! Fix */}
 		</Combobox>
 	);
 }

@@ -1,6 +1,7 @@
 import { getUser } from "@/lib/functions/user.functions";
 import { useAuth } from "@clerk/clerk-expo";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { useResolveClassNames } from "uniwind";
 
 export const useCurrentUser = () => {
 	const clerkId = useAuth().userId!;
@@ -21,3 +22,9 @@ export const usePollAdmin = (poll: IPoll) => {
 
 	return { isAdmin: !!admin, isCreator, admin };
 };
+
+// export const useClassNames = () => {
+// 	const x = useResolveClassNames("")
+
+// return () => {}
+// }

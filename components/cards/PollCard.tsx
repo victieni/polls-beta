@@ -10,23 +10,32 @@ import {
 	View,
 } from "@/components/ui";
 import { PollsProvider } from "@/contexts/polls.context";
-import { Link, useRouter } from "expo-router";
+import { getPoll } from "@/lib/functions/poll.functions";
+import { useQueryClient } from "@tanstack/react-query";
+import { Link } from "expo-router";
 import { ArrowRight } from "lucide-react-native";
 import React, { ComponentProps, Suspense } from "react";
 import OptionsFeed from "../Feeds/OptionsFeed";
-import { useQueryClient } from "@tanstack/react-query";
 
 function Main({
 	poll,
 	className,
 	...props
 }: { poll: IPoll } & ComponentProps<typeof Card>) {
-	const router = useRouter();
 	const queryClient = useQueryClient();
+
+	const touchHandler = () => {
+		console.log("prefetching:", poll.title);
+		queryClient.prefetchQuery(getPoll(poll.id)); //? prefetch Poll details.
+	};
 
 	return (
 		<PollsProvider initPoll={poll}>
-			<Card {...props} className={`${className} h-[70vh] shadow-md`}>
+			<Card
+				{...props}
+				onTouchStart={touchHandler}
+				className={`${className} h-[70vh] shadow-md`}
+			>
 				<CardContent className="gap-y-3">
 					<CardHeader>
 						<CardTitle>{poll.title}</CardTitle>
@@ -55,7 +64,7 @@ function Main({
 }
 
 const Skeleton = ({ className, ...props }: ComponentProps<typeof Card>) => (
-	<Card {...props} className={`${className} h-80 `}>
+	<Card {...props} className={`${className} h-[70vh] `}>
 		<CardContent>
 			<CardHeader>
 				<Skeleton className="h-5" />

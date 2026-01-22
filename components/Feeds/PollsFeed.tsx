@@ -42,7 +42,7 @@ PollsFeed.Fallback = () => {
 	return (
 		<View className="flex-1 gap-y-2">
 			{[...Array(7)].map((_, i) => (
-				<Skeleton key={i} className="h-52 rounded-2xl" />
+				<Skeleton key={i} className="h-[70vh] rounded-2xl" />
 			))}
 		</View>
 	);

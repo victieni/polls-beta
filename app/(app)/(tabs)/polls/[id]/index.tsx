@@ -14,10 +14,9 @@ import {
 } from "@/components/ui";
 import { usePolls } from "@/contexts/polls.context";
 import { useColor } from "@/hooks/useColor";
-import { useCurrentUser, usePollAdmin } from "@/hooks/util.hooks";
+import { usePollAdmin } from "@/hooks/util.hooks";
 import { getPoll } from "@/lib/functions/poll.functions";
 import { getPollOptions } from "@/lib/functions/PollOption.functions";
-import { ePollType } from "@/polls-backend/typescript/enum";
 import { useSuspenseQueries } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
 import { ArrowRight, GitFork, Settings, ShieldUser } from "lucide-react-native";
@@ -41,7 +40,6 @@ const Main = ({ id }: { id: string }) => {
 	});
 
 	const primaryColor = useColor("primary");
-	// const currentUser = useCurrentUser();
 
 	const { setPoll, setPollOptions } = usePolls();
 	const { isAdmin, isCreator } = usePollAdmin(poll);
@@ -78,7 +76,7 @@ const Main = ({ id }: { id: string }) => {
 					</View>
 
 					<View className="flex-row items-center justify-between">
-						<Badge className="w-fit flex-row items-center gap-x-1 bg-primary/40 dark:bg-primary/20 border-2 border-primary py-1">
+						<Badge className="w-fit flex-row items-center gap-x-1 bg-primary/10 dark:bg-primary/20 border-2 border-primary py-1">
 							<Icon
 								name={GitFork}
 								size="15"

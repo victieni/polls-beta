@@ -3,6 +3,7 @@ import {
 	Button,
 	Icon,
 	Input,
+	OptionType,
 	ScrollView,
 	useBottomSheet,
 	View,
@@ -27,12 +28,21 @@ import UsersCombobox from "../UsersCombobox";
 const Main = ({ successAction }: { successAction?: () => void }) => {
 	const { poll, pollOption, setPollOption } = usePolls();
 	const [selectedAsset, setSelectedAsset] = useState<MediaAsset[]>([]);
-	const [candidate, setCandidate] = useState<string>("");
+	const [selectedCandidate, setSelectedCandidate] = useState<OptionType | null>(
+		pollOption?.candidate
+			? {
+					value: pollOption.candidate.id,
+					label: `@${pollOption.candidate.fname} ${pollOption.candidate.lname}`,
+			  }
+			: null
+	);
+
+	// const [candidate, setCandidate] = useState<string>(
+	// 	pollOption?.candidate?.id || ""
+	// );
 	const [thumbnail, setThumbnail] = useState<string>(
 		pollOption?.thumbnail ?? ""
 	);
-
-	console.log("candidate", candidate);
 
 	const destructiveColor = useColor("destructive");
 
@@ -56,6 +66,7 @@ const Main = ({ successAction }: { successAction?: () => void }) => {
 			...data,
 			poll: poll.id,
 			thumbnail,
+			candidate: selectedCandidate?.value ?? "",
 		};
 
 		if (pollOption) {
@@ -72,6 +83,7 @@ const Main = ({ successAction }: { successAction?: () => void }) => {
 			create(cleanData, {
 				onSuccess: (opt) => {
 					if (successAction) successAction();
+
 					console.log("created Option:", opt);
 				},
 			});
@@ -136,7 +148,10 @@ const Main = ({ successAction }: { successAction?: () => void }) => {
 
 				{/* Image picker */}
 				{poll.type === ePollType.ELECTION ? (
-					<UsersCombobox selectAction={setCandidate} />
+					<UsersCombobox
+						selectAction={setSelectedCandidate}
+						defaultValue={selectedCandidate}
+					/>
 				) : (
 					<MediaPicker
 						mediaType="image"
@@ -191,8 +206,6 @@ const Main = ({ successAction }: { successAction?: () => void }) => {
 					Add
 				</Button>
 			)}
-
-			{/* <AvoidKeyboard /> */}
 		</ScrollView>
 	);
 };
@@ -240,7 +253,7 @@ const SheetTrigger = ({
 				onClose={closeHandler}
 				title="Add Option"
 				// snapPoints={[0.6, 0.95]}
-				snapPoints={poll.type === ePollType.ELECTION ? [0.8] : [0.6, 0.95]}
+				snapPoints={poll.type === ePollType.ELECTION ? [0.6, 0.8] : [0.6, 0.95]}
 			>
 				<Main successAction={closeHandler} />
 			</BottomSheet>

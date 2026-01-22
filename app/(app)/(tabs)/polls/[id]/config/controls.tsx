@@ -1,15 +1,20 @@
 import BackBtn from "@/components/btns/BackBtn";
 import {
+	BottomSheet,
+	Button,
 	Card,
 	CardContent,
 	Icon,
+	Input,
 	SafeAreaView,
 	ScrollView,
 	Separator,
 	Switch,
 	Text,
+	useBottomSheet,
 	View,
 } from "@/components/ui";
+import { AvoidKeyboard } from "@/components/ui/avoid-keyboard";
 import { usePolls } from "@/contexts/polls.context";
 import { useColor } from "@/hooks/useColor";
 import { updatePoll } from "@/lib/functions/poll.functions";
@@ -49,7 +54,7 @@ export default function ControlScreen() {
 				</Text>
 			</View>
 
-			<ScrollView collapsable contentContainerClassName="flex-2 gap-y-3">
+			<ScrollView contentContainerClassName="flex-2 gap-y-3">
 				<View className="gap-y-2">
 					<Text variant={"subtitle"}>Privacy & Access Control</Text>
 					<Card>
@@ -106,7 +111,21 @@ export default function ControlScreen() {
 								icon={StopCircle}
 								form={form}
 								hideSeparator
+								// hideSeparator={!poll.controls?.votesNumberIsLimited}
 							/>
+
+							{poll.controls?.votesNumberIsLimited && (
+								<View className="gap-y-2 ml-7 p-2 pl-3 rounded-4xl mt-2 bg-muted flex-row justify-between items-center gap-x-3">
+									<View className="flex-row items-center gap-x-2">
+										<Text>Maximum Votes:</Text>
+										<Text className="text-primary font-medium">
+											{poll.controls?.maxVotes}
+										</Text>
+									</View>
+
+									<MaxVotesFormTrigger form={form} />
+								</View>
+							)}
 						</CardContent>
 					</Card>
 				</View>
@@ -162,22 +181,22 @@ const ControlSwitch = ({
 	form: ReturnType<typeof usePollControlsForm>;
 }) => {
 	const poll = usePolls().poll!;
+	const primaryColor = useColor("primary");
 
 	const { mutate: update, isPending } = useMutation(updatePoll);
 
 	const switchHandler = (data: PollControlsFormData) => {
 		const cleanData: IPoll = {
 			...poll,
-			// controls: data,
 			controls: { ...form.watch(), maxVotes: undefined },
 		};
-		
+
 		update(cleanData);
 	};
 
 	return (
 		<View className="flex-row items-start gap-x-3">
-			<Icon name={icon} />
+			<Icon name={icon} color={primaryColor} />
 			<View className="flex-1">
 				<Controller
 					control={form.control}
@@ -185,13 +204,9 @@ const ControlSwitch = ({
 					render={({ field }) => (
 						<Switch
 							{...field}
-							value={field.value as boolean} // ! Monitor *(risky)
-							onValueChange={
-								(v) => field.onChange(v) // ! Monitor *(risky)
-							}
-							onChange={form.handleSubmit(switchHandler, (err) =>
-								console.log(err)
-							)}
+							value={field.value as boolean}
+							onValueChange={(v) => field.onChange(v)}
+							onChange={form.handleSubmit(switchHandler)}
 							label={label}
 							disabled={isPending}
 							className="pb-0!"
@@ -206,5 +221,67 @@ const ControlSwitch = ({
 				{hideSeparator || <Separator className="my-2" />}
 			</View>
 		</View>
+	);
+};
+
+const MaxVotesFormTrigger = ({
+	form,
+}: {
+	form: ReturnType<typeof usePollControlsForm>;
+}) => {
+	const poll = usePolls().poll!;
+
+	const { mutate: update, isPending } = useMutation(updatePoll);
+	const { close, isVisible, open } = useBottomSheet();
+
+	const saveHandler = (data: PollControlsFormData) => {
+		const cleanData: IPoll = {
+			...poll,
+			controls: { ...form.watch(), maxVotes: form.watch("maxVotes") as number },
+		};
+
+		update(cleanData, {
+			onSuccess() {
+				close();
+			},
+		});
+	};
+
+	return (
+		<>
+			<Button icon={Edit3} size="icon" onPress={open} />
+
+			<BottomSheet
+				isVisible={isVisible}
+				onClose={close}
+				title="Set maximum votes."
+			>
+				<Controller
+					control={form.control}
+					name="maxVotes"
+					render={({ field, fieldState: { error } }) => (
+						<Input
+							// {...field}
+							value={field.value as string}
+							onChangeText={field.onChange}
+							label="Max votes"
+							variant="outline"
+							keyboardType="number-pad"
+							placeholder="maximum number of votes..."
+							error={error?.message}
+						/>
+					)}
+				/>
+				<Button
+					onPress={form.handleSubmit(saveHandler)}
+					disabled={isPending}
+					loading={isPending}
+					className="mt-3"
+				>
+					Save
+				</Button>
+				<AvoidKeyboard />
+			</BottomSheet>
+		</>
 	);
 };

@@ -19,7 +19,8 @@ export const createPollOption = mutationOptions({
 	onSuccess(value) {
 		console.log("KEY🔑:", getPollOptions(value.poll.id).queryKey);
 		queryClient.invalidateQueries({
-			queryKey: [getPollOptions(value.poll.id).queryKey],
+			// queryKey: [getPollOptions(value.poll.id).queryKey],
+			queryKey: ["pollOptions", { poll: value.poll.id }],
 		});
 	},
 });
@@ -38,10 +39,11 @@ export const updatePollOption = mutationOptions({
 	},
 	onSuccess(value) {
 		queryClient.invalidateQueries({
-			queryKey: [
-				getPollOptions(value.poll.id).queryKey,
-				getPollOption(value.id).queryKey,
-			],
+			// queryKey: [
+			// 	getPollOptions(value.poll.id).queryKey,
+			// 	getPollOption(value.id).queryKey,
+			// ],
+			queryKey: ["pollOptions", { poll: value.poll.id }],
 		});
 	},
 });
@@ -59,10 +61,11 @@ export const deletePollOption = mutationOptions({
 	},
 	onSuccess(value) {
 		queryClient.invalidateQueries({
-			queryKey: [
-				getPollOptions(value.poll.id).queryKey,
-				getPollOption(value.id).queryKey,
-			],
+			// queryKey: [
+			// 	getPollOptions(value.poll.id).queryKey,
+			// 	getPollOption(value.id).queryKey,
+			// ],
+			queryKey: ["pollOptions", { poll: value.poll.id }],
 		});
 	},
 });
@@ -72,7 +75,7 @@ export const deletePollOption = mutationOptions({
  */
 export const getPollOptions = (pollId: IPoll["id"]) =>
 	queryOptions({
-		queryKey: ["pollOptions", pollId],
+		queryKey: ["pollOptions", { poll: pollId }],
 		queryFn: async () => {
 			try {
 				const { docs: options } = await payload.find({
@@ -91,7 +94,7 @@ export const getPollOptions = (pollId: IPoll["id"]) =>
 
 export const getPollOption = (id: IPollOption["id"]) =>
 	queryOptions({
-		queryKey: ["PollOption", id],
+		queryKey: ["pollOptions", id],
 		queryFn: async () => {
 			try {
 				return await payload.findByID({
