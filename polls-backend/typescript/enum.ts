@@ -22,3 +22,9 @@ export enum eAdminPermissions {
 
   REGISTRATION_VERIFICATION = 'registration_verification',
 }
+
+export enum eRegistrationsStatus {
+  PENDING = 'Pending',
+  APPROVED = 'Approved',
+  REJECTED = 'Rejected',
+}

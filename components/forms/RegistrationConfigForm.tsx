@@ -13,16 +13,10 @@ import {
 } from "@/lib/functions/registration.functions";
 import { usePolls } from "@/contexts/polls.context";
 
-export function Main({
-	successAction,
-	registration,
-}: {
-	successAction?: () => void;
-	registration?: IRegistration;
-}) {
+export function Main({ successAction }: { successAction?: () => void }) {
 	const [validIds, setValidIds] = useState<string>("");
 
-	const poll = usePolls().poll!;
+	const { poll, registration } = usePolls();
 	const { handleSubmit, control, watch } =
 		useRegistrationConfigForm(registration);
 
@@ -30,6 +24,8 @@ export function Main({
 		useMutation(updateRegistration);
 	const { mutate: create, isPending: isCreating } =
 		useMutation(createRegistration);
+
+	if (!poll) return;
 
 	const submitHandler = (data: RegistrationFormData) => {
 		const cleanData: IRegistrationCreate = {
@@ -94,7 +90,7 @@ export function Main({
 				<View className="flex-row items-center justify-between">
 					<Text variant="subtitle">Auto Verification</Text>
 					<Button
-					disabled={!validIds}
+						disabled={!validIds}
 						size="sm"
 						variant="ghost"
 						onPress={() => setValidIds("")}
@@ -140,12 +136,10 @@ export function Main({
 const Trigger = ({
 	className,
 	children,
-	registration,
 	...props
-}: {
-	registration?: IRegistration;
-} & ComponentProps<typeof Button>) => {
+}: ComponentProps<typeof Button>) => {
 	const { close, open, isVisible } = useBottomSheet();
+	const { registration } = usePolls();
 
 	return (
 		<>
@@ -154,12 +148,12 @@ const Trigger = ({
 			) : (
 				<Button
 					{...props}
+					size={"icon"}
 					icon={Settings2}
 					onPress={open}
+					variant="secondary"
 					className={`${className} `}
-				>
-					Configure
-				</Button>
+				/>
 			)}
 			<BottomSheet
 				title={registration ? "Edit registration" : "Configure registration"}

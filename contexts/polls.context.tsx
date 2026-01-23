@@ -12,11 +12,13 @@ interface Props extends IContext {
 	pollOption?: IPollOption;
 	pollOptions: IPollOption[];
 	admin?: IPollAdmin;
+	registration?: IRegistration;
 
 	setPoll: Dispatch<SetStateAction<IPoll | undefined>>;
 	setPollOption: Dispatch<SetStateAction<IPollOption | undefined>>;
 	setPollOptions: Dispatch<SetStateAction<IPollOption[]>>;
 	setAdmin: Dispatch<SetStateAction<IPollAdmin | undefined>>;
+	setRegistration: Dispatch<SetStateAction<IRegistration | undefined>>;
 }
 
 const PollContext = createContext<null | Props>(null);
@@ -40,12 +42,14 @@ export const PollsProvider = ({
 	const [pollOption, setPollOption] = useState<IPollOption>();
 	const [pollOptions, setPollOptions] = useState<IPollOption[]>([]);
 	const [admin, setAdmin] = useState<IPollAdmin>();
+	const [registration, setRegistration] = useState<IRegistration>();
 
 	const reset = () => {
 		setPoll(undefined);
 		setPollOption(undefined);
 		setPollOptions([]);
 		setAdmin(undefined);
+		setRegistration(undefined);
 	};
 
 	const contextValue: Props = {
@@ -56,8 +60,10 @@ export const PollsProvider = ({
 		setAdmin,
 		pollOption,
 		pollOptions,
+		registration,
 		setPollOption,
 		setPollOptions,
+		setRegistration,
 	};
 
 	return (

@@ -1,4 +1,5 @@
 import { CollectionConfig } from 'payload'
+import { eRegistrationsStatus } from 'typescript/enum'
 
 export const Registration: CollectionConfig = {
   slug: 'registration',
@@ -24,7 +25,12 @@ export const Registration: CollectionConfig = {
       type: 'array',
       fields: [
         { name: 'registrationId', type: 'text', required: true },
-        { name: 'isApproved', type: 'checkbox', defaultValue: false },
+        {
+          name: 'status',
+          type: 'select',
+          options: Object.entries(eRegistrationsStatus).map(([label, value]) => ({ label, value })),
+          defaultValue: eRegistrationsStatus.PENDING,
+        },
         { name: 'user', type: 'relationship', relationTo: 'users', required: true },
       ],
     },

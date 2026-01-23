@@ -273,7 +273,7 @@ export interface Registration {
   voters?:
     | {
         registrationId: string;
-        isApproved?: boolean | null;
+        status?: ('Pending' | 'Approved' | 'Rejected') | null;
         user: string | User;
         id?: string | null;
       }[]
@@ -602,7 +602,7 @@ export interface RegistrationSelect<T extends boolean = true> {
     | T
     | {
         registrationId?: T;
-        isApproved?: T;
+        status?: T;
         user?: T;
         id?: T;
       };

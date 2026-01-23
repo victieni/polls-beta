@@ -1,6 +1,7 @@
 import BackBtn from "@/components/btns/BackBtn";
 import BookmarkBtn from "@/components/btns/BookmarkBtn";
 import OptionsFeed from "@/components/Feeds/OptionsFeed";
+import { RegisterForm } from "@/components/forms/RegisterForm";
 import {
 	Badge,
 	Button,
@@ -17,7 +18,8 @@ import { useColor } from "@/hooks/useColor";
 import { usePollAdmin } from "@/hooks/util.hooks";
 import { getPoll } from "@/lib/functions/poll.functions";
 import { getPollOptions } from "@/lib/functions/PollOption.functions";
-import { useSuspenseQueries } from "@tanstack/react-query";
+import { getRegistration } from "@/lib/functions/registration.functions";
+import { useSuspenseQueries, useSuspenseQuery } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
 import { ArrowRight, GitFork, Settings, ShieldUser } from "lucide-react-native";
 import React, { Suspense, useEffect } from "react";
@@ -35,19 +37,28 @@ export default function PollScreen() {
 }
 
 const Main = ({ id }: { id: string }) => {
-	const [{ data: poll }, { data: pollOptions }] = useSuspenseQueries({
-		queries: [getPoll(id), getPollOptions(id)],
+	const [
+		{ data: poll },
+		{ data: pollOptions },
+		{
+			data: [registration],
+		},
+	] = useSuspenseQueries({
+		queries: [getPoll(id), getPollOptions(id), getRegistration(id)],
 	});
+
+	// const {} = useSuspenseQuery({ ...getRegistration(id) });
 
 	const primaryColor = useColor("primary");
 
-	const { setPoll, setPollOptions } = usePolls();
+	const { setPoll, setPollOptions, setRegistration } = usePolls();
 	const { isAdmin, isCreator } = usePollAdmin(poll);
 
 	useEffect(() => {
 		setPoll(poll);
 		setPollOptions(pollOptions);
-	}, [poll, `${pollOptions}`]);
+		if (poll.controls?.registrationIsRequired) setRegistration(registration);
+	}, [poll, `${pollOptions}`, `${registration}`]);
 
 	return (
 		<View>
@@ -103,15 +114,16 @@ const Main = ({ id }: { id: string }) => {
 					</Link>
 				)}
 
-				{poll.controls?.registrationIsRequired && (
-					<Link
-						href={{ pathname: "/polls/[id]/registration", params: { id } }}
-						asChild
-					>
-						<Button icon={ShieldUser} variant="outline">
-							Registration
-						</Button>
-					</Link>
+				{poll.controls?.registrationIsRequired && registration && (
+					// <Link
+					// 	href={{ pathname: "/polls/[id]/registration", params: { id } }}
+					// 	asChild
+					// >
+					// 	<Button icon={ShieldUser} variant="outline">
+					// 		Registration
+					// 	</Button>
+					// </Link>
+					<RegisterForm.Trigger />
 				)}
 			</ScrollView>
 		</View>
