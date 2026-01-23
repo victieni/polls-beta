@@ -1,4 +1,5 @@
 import {
+	BottomSheet,
 	Button,
 	DatePicker,
 	Icon,
@@ -8,6 +9,7 @@ import {
 	Separator,
 	Switch,
 	Text,
+	useBottomSheet,
 	View,
 } from "@/components/ui";
 import { usePolls } from "@/contexts/polls.context";
@@ -21,19 +23,21 @@ import { useRouter } from "expo-router";
 import {
 	BookmarkCheck,
 	BookType,
+	Edit3,
 	FileQuestion,
 	FileText,
 	GitFork,
 	Option,
 	Settings2,
 	Share,
+	UserPlus,
 } from "lucide-react-native";
-import React, { useTransition } from "react";
+import React, { ComponentProps, useTransition } from "react";
 import { Controller } from "react-hook-form";
 import { AvoidKeyboard } from "../ui/avoid-keyboard";
 import { useCurrentUser } from "@/hooks/util.hooks";
 
-export default function PollForm() {
+export function Main({ successAction }: { successAction?: () => void }) {
 	const { poll, setPoll, pollOptions, reset: resetPollsContext } = usePolls();
 
 	const currentUser = useCurrentUser();
@@ -42,7 +46,6 @@ export default function PollForm() {
 	const [isPending, startTransition] = useTransition();
 
 	const router = useRouter();
-	const primaryColor = useColor("primary");
 
 	const { handleSubmit, control, reset: resetForm } = usePollForm({ poll });
 
@@ -87,13 +90,6 @@ export default function PollForm() {
 
 	return (
 		<View className="flex-1 gap-y-4">
-			<View className="flex-row items-center gap-x-1 justify-center">
-				<Icon name={BookmarkCheck} size={27} color={primaryColor} />
-				<Text variant="title" className="text-primary">
-					PollForm
-				</Text>
-			</View>
-
 			<View className="flex-1 gap-y-3">
 				<Controller
 					control={control}
@@ -355,3 +351,40 @@ export default function PollForm() {
 		</View>
 	);
 }
+
+const Trigger = ({
+	className,
+	children,
+	...props
+}: ComponentProps<typeof Button>) => {
+	const { close, open, isVisible } = useBottomSheet();
+	const primaryColor = useColor("primary");
+
+	return (
+		<>
+			{children ? (
+				<View onTouchStart={open}>{children}</View>
+			) : (
+				<Button
+					{...props}
+					onPress={open}
+					variant="secondary"
+					className={`${className} `}
+				>
+					<Icon name={Edit3} color={primaryColor} />
+					<Text className="text-primary">Edit Poll</Text>
+				</Button>
+			)}
+			<BottomSheet
+				title={"Edit poll"}
+				isVisible={isVisible}
+				onClose={close}
+				snapPoints={[0.8, 0.95]}
+			>
+				<Main successAction={close} />
+			</BottomSheet>
+		</>
+	);
+};
+
+export const PollForm = { Main, Trigger };

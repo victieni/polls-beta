@@ -19,9 +19,9 @@ export const createRegistration = mutationOptions({
 	onError: (error) => {
 		console.error(error);
 	},
-	onSuccess(data) {
+	onSuccess({ poll }) {
 		queryClient.invalidateQueries({
-			queryKey: getRegistration(data.id).queryKey,
+			queryKey: ["registration", { pollId: poll.id }],
 		});
 	},
 });
@@ -38,9 +38,9 @@ export const updateRegistration = mutationOptions({
 			throw new Error(error);
 		}
 	},
-	onSuccess(data) {
+	onSuccess({ poll }) {
 		queryClient.invalidateQueries({
-			queryKey: getRegistration(data.id).queryKey,
+			queryKey: ["registration", { pollId: poll.id }],
 		});
 	},
 	onError: (error) => {
@@ -59,9 +59,9 @@ export const deleteRegistration = mutationOptions({
 			throw new Error(error);
 		}
 	},
-	onSuccess(data) {
+	onSuccess({ poll }) {
 		queryClient.invalidateQueries({
-			queryKey: getRegistration(data.id).queryKey,
+			queryKey: ["registration", { pollId: poll.id }],
 		});
 	},
 	onError: (error) => {
@@ -74,16 +74,15 @@ export const deleteRegistration = mutationOptions({
  */
 export const getRegistration = (pollId: IPoll["id"]) =>
 	queryOptions({
-		queryKey: ["registration", pollId],
+		queryKey: ["registration", { pollId }],
 		queryFn: async () => {
 			try {
-				const {
-					docs: [registration],
-				} = await payload.find({
+				const { docs: registration } = await payload.find({
 					collection: "registration",
 					where: {
 						poll: { equals: pollId },
 					},
+					limit: 1,
 				});
 
 				return registration;

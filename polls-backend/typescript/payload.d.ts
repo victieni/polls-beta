@@ -267,7 +267,7 @@ export interface PollOption {
  */
 export interface Registration {
   id: string;
-  poll: string | User;
+  poll: string | Poll;
   prompt: string;
   description?: string | null;
   voters?:

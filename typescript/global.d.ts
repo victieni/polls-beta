@@ -43,6 +43,8 @@ declare global {
 	> &
 		Partial<Pick<Response, "id" | "createdAt" | "sizes" | "updatedAt">>;
 
+	type IPollAdmin = NonNullable<IPoll["administration"]["admins"]>[number];
+
 	interface IContext {
 		reset: () => void;
 	}

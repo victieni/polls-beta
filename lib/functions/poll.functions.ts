@@ -49,24 +49,23 @@ export const updatePoll = mutationOptions({
 	},
 });
 
-export const deletePoll = () =>
-	mutationOptions({
-		mutationFn: async (id: IPoll["id"]) => {
-			try {
-				return await payload.delete({
-					collection: "polls",
-					id,
-				});
-			} catch (error: any) {
-				throw new Error(error);
-			}
-		},
-		onSuccess: (data) => {
-			queryClient.invalidateQueries({
-				queryKey: [getPoll(data.id).queryKey, getPolls({}).queryKey],
+export const deletePoll = mutationOptions({
+	mutationFn: async (id: IPoll["id"]) => {
+		try {
+			return await payload.delete({
+				collection: "polls",
+				id,
 			});
-		},
-	});
+		} catch (error: any) {
+			throw new Error(error);
+		}
+	},
+	onSuccess: (data) => {
+		queryClient.invalidateQueries({
+			queryKey: [getPoll(data.id).queryKey, getPolls({}).queryKey],
+		});
+	},
+});
 
 /**
  * @Queries

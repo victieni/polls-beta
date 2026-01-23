@@ -44,6 +44,9 @@ importers:
       '@uploadthing/expo':
         specifier: ^7.2.6
         version: 7.2.6(expo-constants@18.0.12)(expo-document-picker@14.0.8(expo@54.0.30))(expo-image-picker@17.0.10(expo@54.0.30))(react-native@0.81.5(@babel/core@7.28.5)(@types/react@19.1.17)(bufferutil@4.1.0)(react@19.1.0)(utf-8-validate@5.0.10))(react@19.1.0)(uploadthing@7.7.4(tailwindcss@4.1.18))
+      bcrypt:
+        specifier: ^6.0.0
+        version: 6.0.0
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -2493,6 +2496,10 @@ packages:
     resolution: {integrity: sha512-Sg0xJUNDU1sJNGdfGWhVHX0kkZ+HWcvmVymJbj6NSgZZmW/8S9Y2HQ5euytnIgakgxN6papOAWiwDo1ctFDcoQ==}
     hasBin: true
 
+  bcrypt@6.0.0:
+    resolution: {integrity: sha512-cU8v/EGSrnH+HnxV2z0J7/blxH8gq7Xh2JFT6Aroax7UohdmiJJlxApMxtKfuI7z68NvvVcmR78k2LbT6efhRg==}
+    engines: {node: '>= 18'}
+
   better-opn@3.0.2:
     resolution: {integrity: sha512-aVNobHnJqLiUelTaHat9DZ1qM2w0C0Eym4LPI/3JxOnSokGVdsl1T1kN7TFvsEAD8G47A6VKQ0TVHqbBnYMJlQ==}
     engines: {node: '>=12.0.0'}
@@ -4362,6 +4369,10 @@ packages:
 
   nested-error-stacks@2.0.1:
     resolution: {integrity: sha512-SrQrok4CATudVzBS7coSz26QRSmlK9TzzoFbeKfcPBUFPjcQM9Rqvr/DlJkOrwI/0KcgvMub1n1g5Jt9EgRn4A==}
+
+  node-addon-api@8.5.0:
+    resolution: {integrity: sha512-/bRZty2mXUIFY/xU5HLvveNHlswNJej+RnxBjOMkidWfwZzgTbPG1E3K5TOxRLOR+5hX7bSofy8yf1hZevMS8A==}
+    engines: {node: ^18 || ^20 || >= 21}
 
   node-fetch@2.7.0:
     resolution: {integrity: sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==}
@@ -8618,6 +8629,11 @@ snapshots:
 
   baseline-browser-mapping@2.9.11: {}
 
+  bcrypt@6.0.0:
+    dependencies:
+      node-addon-api: 8.5.0
+      node-gyp-build: 4.8.4
+
   better-opn@3.0.2:
     dependencies:
       open: 8.4.2
@@ -10749,6 +10765,8 @@ snapshots:
 
   nested-error-stacks@2.0.1: {}
 
+  node-addon-api@8.5.0: {}
+
   node-fetch@2.7.0:
     dependencies:
       whatwg-url: 5.0.0
@@ -10760,8 +10778,7 @@ snapshots:
       detect-libc: 2.1.2
     optional: true
 
-  node-gyp-build@4.8.4:
-    optional: true
+  node-gyp-build@4.8.4: {}
 
   node-int64@0.4.0: {}
 

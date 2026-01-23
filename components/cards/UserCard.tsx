@@ -1,15 +1,23 @@
-import React from "react";
-import { Avatar, AvatarFallback, AvatarImage, Card, CardContent, Text, View } from "../ui";
+import React, { ComponentProps } from "react";
+import {
+	Avatar,
+	AvatarFallback,
+	AvatarImage,
+	Card,
+	CardContent,
+	Text,
+	View,
+} from "../ui";
 
 export default function UserCard({
 	user,
 	className,
+	...props
 }: {
 	user: IUser;
-	className?: string;
-}) {
+} & ComponentProps<typeof Card>) {
 	return (
-		<Card className={className}>
+		<Card {...props} className={`${className}`}>
 			<CardContent className="flex-row gap-x-2">
 				<Avatar>
 					<AvatarImage source={{ uri: user.imageUrl! }} />

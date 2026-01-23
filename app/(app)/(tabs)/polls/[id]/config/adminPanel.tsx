@@ -1,11 +1,20 @@
 import BackBtn from "@/components/btns/BackBtn";
+import UserCard from "@/components/cards/UserCard";
+import { AdminForm } from "@/components/forms/AdminForm";
+import Void from "@/components/layout/Void";
 import { Icon, SafeAreaView, Text, View } from "@/components/ui";
+import { usePolls } from "@/contexts/polls.context";
 import { useColor } from "@/hooks/useColor";
 import { UserCircle } from "lucide-react-native";
 import React from "react";
 
 export default function AdminConfigScreen() {
 	const primaryColor = useColor("primary");
+	const { poll, setAdmin } = usePolls();
+
+	if (!poll) return;
+	const admins = poll.administration.admins || [];
+
 	return (
 		<SafeAreaView className="flex-1 p-3">
 			<View className="py-2 mb-4 relative flex-row items-center justify-center gap-x-1">
@@ -20,8 +29,22 @@ export default function AdminConfigScreen() {
 					Administrators
 				</Text>
 			</View>
-			<View>
-				<Text>Admin Config</Text>
+
+			<View className="relative flex-1 gap-y-2">
+				{admins.length > 0 ? (
+					admins.map((a) => (
+						<AdminForm.Trigger key={a.id}>
+							<UserCard
+								user={a.user as IUser}
+								onTouchStart={() => setAdmin(a)}
+							/>
+						</AdminForm.Trigger>
+					))
+				) : (
+					<Void msg="Poll has no admins. Click button bellow to add an admin👇" />
+				)}
+
+				<AdminForm.Trigger className="absolute bottom-0 right-0 w-full" />
 			</View>
 		</SafeAreaView>
 	);

@@ -13,7 +13,7 @@ export const Registration: CollectionConfig = {
     {
       name: 'poll',
       type: 'relationship',
-      relationTo: 'users',
+      relationTo: 'polls',
       required: true,
       unique: true, // ! One-to-one with Polls -> poll can have only one registration.
     },

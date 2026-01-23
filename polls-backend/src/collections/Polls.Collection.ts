@@ -65,6 +65,7 @@ export const Polls: CollectionConfig = {
                 { name: 'updateOptions', type: 'checkbox', defaultValue: false },
                 { name: 'updateRegistration', type: 'checkbox', defaultValue: false },
                 { name: 'verifyVoters', type: 'checkbox', defaultValue: true },
+                // todo audit logs access.
               ],
             },
           ],
